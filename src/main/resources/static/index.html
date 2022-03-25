@@ -18,26 +18,98 @@
                     <a class="nav-link active" aria-current="page" href="index.html">Acceuil</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">S'inscrire</a>
+                    <a id="connexionButton" class="nav-link active" aria-current="page" href="#">Connexion</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a id="pseudo" class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
-
+                        Hello
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#">Voir mon profil</a></li>
                         <li><a class="dropdown-item" href="#">Déconnexion</a></li>
                     </ul>
                 </li>
-                </a>
-
             </ul>
         </div>
     </div>
 </nav>
+<div>
+    <div id="popupConnexion" style="display: none;" class="modal-dialog modal-login">
+        <!--Connexion compte -->
+        <div id="connexionCompte" class="modal-content" style="background-color: darkgray">
+            <div class="modal-header">
+                <h4 class="modal-title" style="color: black">Connexion</h4>
+                <button id="closePopup" type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">x
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-sm-2 col-form-label">Pseudo</label>
+                    <input type="text" class="form-control" required="required" id="pseudoConnexion"
+                           placeholder="Votre pseudo">
+                </div>
 
+                <div class="form-group">
+                    <label for="passwordConnexion" class="col-sm-2 col-form-label">Password</label>
+                    <input type="password" class="form-control" id="passwordConnexion" required="required"
+                           placeholder="Mot de passe">
+                </div>
+
+            </div>
+            <div class="modal-footer justify-content-between">
+                <a href="#" id="createUser">Pas de compte ?</a>
+                <input type="submit" class="btn btn-primary" value="Login">
+            </div>
+        </div>
+
+        <!--Création compte -->
+        <div id="createCompte" class="modal-content" style="background-color: darkgray; display: none;">
+            <div class="modal-header">
+                <h4 class="modal-title" style="color: black">Créer un compte</h4>
+                <button id="closePopup2" type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">x
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="col-sm-2 col-form-label">Pseudo</label>
+                    <input type="text" class="form-control" required="required" id="pseudoCreation"
+                           placeholder="Votre pseudo">
+                </div>
+
+                <div class="form-group">
+                    <label for="passwordCreation" class="col-sm-2 col-form-label">Password</label>
+                    <input type="password" class="form-control" id="passwordCreation" required="required"
+                           placeholder="Mot de passe">
+                </div>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <span id="errorCreationCompte" style="color: red; font-size: x-small"></span>
+                <input id="boutonCreationCompte" type="submit" class="btn btn-primary" value="Créer un compte">
+            </div>
+        </div>
+    </div>
+
+
+    <div id="popupConnexionOk" style="display: none;" class="modal-dialog modal-login">
+        <div class="modal-content">
+            <p style="color: green; font-size: xxx-large; font-style: italic;">
+                Vous êtes bien connectée !
+            </p>
+        </div>
+    </div>
+    <!--https://css-tricks.com/snippets/css/typewriter-effect/-->
+    <h1>
+        <p class="typewrite" data-period="2000"
+           data-type='[ "Bienvenue dans le blog des animaux.", "Vous pouvez lire des articles de chiens... de chats et même de lapins." ]'>
+            <span class="wrap"></span>
+        </p>
+    </h1>
+</div>
 <script src="bootstrap-js/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/index.js"></script>
 </body>
 </html>
