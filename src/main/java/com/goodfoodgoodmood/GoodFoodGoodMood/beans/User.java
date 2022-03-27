@@ -16,11 +16,11 @@ public class User {
     public User() {
     }
 
-    public User(String pseudo, String mail, String password, Allergie allergie) {
+    public User(String pseudo, String mail, String password, Allergie alergie) {
         this.pseudo = pseudo;
         this.mail = mail;
         this.password = password;
-        this.allergie = allergie;
+        this.allergie = alergie;
     }
 
     public String getPseudo() {
