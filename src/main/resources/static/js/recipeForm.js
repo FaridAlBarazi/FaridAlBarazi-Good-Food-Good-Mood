@@ -1,23 +1,20 @@
-// Adaptez votre page envoiAnimal.html pour lui ajouter un formulaire à 3 champs de texte pour
-// indiquer les caractéristiques de l’animal et un bouton d’envoi. Faites en sorte que cliquer sur le
-// bouton d’envoi transmette à la méthode du contrôleur Java recuperationAnimal l’animal ainsi
-// renseigné dans le formulaire
-$("#Valider").click( ()=> {
-    let valeurs={
-        nom: $("#nom").val(),
-        espece: $("#espece").val(),
-        age: $("#age").val()
-    };
-    console.log(JSON.stringify(valeurs));
+let survey_options = document.getElementById('survey_options');
+let add_more_fields = document.getElementById('add_more_fields');
+let remove_fields = document.getElementById('remove_fields');
 
-    $.ajax({
-        type:"POST",
-        headers:{"Content-Type":"application/json"},
-        url: "http://localhost:8080/API/recuperationAnimal",
-        data:JSON.stringify(valeurs),
-        success: function (resultat){
-            alert("l'API m'a retourné :"+ resultat);
-        }
-    });
+add_more_fields.onclick = function(){
+    let newField = document.createElement('input');
+    newField.setAttribute('type','text');
+    newField.setAttribute('name','survey_options[]');
+    newField.setAttribute('class','survey_options');
+    newField.setAttribute('siz',50);
+    newField.setAttribute('placeholder','Another ingredient');
+    survey_options.appendChild(newField);
+}
 
-})
+remove_fields.onclick = function(){
+    let input_tags = survey_options.getElementsByTagName('input');
+    if(input_tags.length > 3) {
+        survey_options.removeChild(input_tags[(input_tags.length) - 1]);
+    }
+}
