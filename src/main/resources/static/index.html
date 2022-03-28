@@ -20,14 +20,13 @@
                 <li class="nav-item">
                     <a id="connexionButton" class="nav-link active" aria-current="page" href="#">Connexion</a>
                 </li>
-                <li class="nav-item dropdown">
+                <li id="dropdown" style="display: none" class="nav-item dropdown">
                     <a id="pseudo" class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Hello
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="#">Voir mon profil</a></li>
-                        <li><a class="dropdown-item" href="#">Déconnexion</a></li>
+                        <li><a id="deconnexion" class="dropdown-item" href="#">Déconnexion</a></li>
                     </ul>
                 </li>
             </ul>
@@ -37,10 +36,10 @@
 <div>
     <div id="popupConnexion" style="display: none;" class="modal-dialog modal-login">
         <!--Connexion compte -->
-        <div id="connexionCompte" class="modal-content" style="background-color: darkgray">
+        <div id="connexionCompte" class="modal-content" style="background-color: darkgray; display: block">
             <div class="modal-header">
                 <h4 class="modal-title" style="color: black">Connexion</h4>
-                <button id="closePopup" type="button" class="close" data-dismiss="modal"
+                <button id="closePopupConnexion" type="button" class="close" data-dismiss="modal"
                         aria-hidden="true">x
                 </button>
             </div>
@@ -60,7 +59,8 @@
             </div>
             <div class="modal-footer justify-content-between">
                 <a href="#" id="createUser">Pas de compte ?</a>
-                <input type="submit" class="btn btn-primary" value="Login">
+                <span id="errorConnexion" style="color: red; font-size: x-small"></span>
+                <input id="boutonSeConnecter" type="submit" class="btn btn-primary" value="Se connecter">
             </div>
         </div>
 
@@ -68,7 +68,7 @@
         <div id="createCompte" class="modal-content" style="background-color: darkgray; display: none;">
             <div class="modal-header">
                 <h4 class="modal-title" style="color: black">Créer un compte</h4>
-                <button id="closePopup2" type="button" class="close" data-dismiss="modal"
+                <button id="closePopupCreationCompte" type="button" class="close" data-dismiss="modal"
                         aria-hidden="true">x
                 </button>
             </div>
@@ -77,6 +77,12 @@
                     <label class="col-sm-2 col-form-label">Pseudo</label>
                     <input type="text" class="form-control" required="required" id="pseudoCreation"
                            placeholder="Votre pseudo">
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 col-form-label">E-mail</label>
+                    <input type="email" class="form-control" required="required" id="mailCreation"
+                           placeholder="Votre mail">
                 </div>
 
                 <div class="form-group">
@@ -90,23 +96,57 @@
                 <input id="boutonCreationCompte" type="submit" class="btn btn-primary" value="Créer un compte">
             </div>
         </div>
-    </div>
 
-
-    <div id="popupConnexionOk" style="display: none;" class="modal-dialog modal-login">
-        <div class="modal-content">
-            <p style="color: green; font-size: xxx-large; font-style: italic;">
-                Vous êtes bien connectée !
-            </p>
+        <!--Définition des allergies-->
+        <div id="allergies" class="modal-content" style="background-color: darkgray; display: none;">
+            <div class="modal-header">
+                <h4 class="modal-title" style="color: black">Personnalisation de votre compte</h4>
+                <button id="closePopupAllergies" type="button" class="close" data-dismiss="modal"
+                        aria-hidden="true">x
+                </button>
+            </div>
+            <!-- Checked checkbox -->
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="checkbox" value="aucun" id="aucun" checked/>
+                <label class="form-check-label" for="aucun">Aucun</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="checkbox" value="lactose" id="lactose" checked/>
+                <label class="form-check-label" for="lactose">Lactose</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="checkbox" value="arachide" id="arachide" />
+                <label class="form-check-label" for="arachide">Arachide</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="checkbox" value="fruit_a_coque" id="fruit_a_coque" />
+                <label class="form-check-label" for="fruit_a_coque">Fruits à coques</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="checkbox" value="crustace" id="crustace" />
+                <label class="form-check-label" for="crustace">Crustacés</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="checkbox" value="moutarde" id="moutarde" />
+                <label class="form-check-label" for="moutarde">Moutarde</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="checkbox" value="soja" id="soja" />
+                <label class="form-check-label" for="soja">Soja</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="checkbox" value="graine_cesame" id="graine_cesame" />
+                <label class="form-check-label" for="graine_cesame"> Graines de sésame</label>
+            </div>
+            <div class="modal-footer justify-content-between">
+                <span id="errorAllergie" style="color: red; font-size: x-small"></span>
+                <input id="validerAllergies" type="submit" class="btn btn-primary" value="Valider">
+            </div>
         </div>
     </div>
-    <!--https://css-tricks.com/snippets/css/typewriter-effect/-->
-    <h1>
-        <p class="typewrite" data-period="2000"
-           data-type='[ "Bienvenue dans le blog des animaux.", "Vous pouvez lire des articles de chiens... de chats et même de lapins." ]'>
-            <span class="wrap"></span>
-        </p>
-    </h1>
+
+<button id="boutonTest">Test</button>
+
 </div>
 <script src="bootstrap-js/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

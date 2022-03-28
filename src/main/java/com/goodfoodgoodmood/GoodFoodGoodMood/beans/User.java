@@ -1,6 +1,8 @@
 package com.goodfoodgoodmood.GoodFoodGoodMood.beans;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class User {
@@ -10,17 +12,28 @@ public class User {
     private String pseudo;
     private String mail;
     private String password;
-    @Enumerated(EnumType.ORDINAL)
-    private Allergie allergie;
+
+    @ElementCollection(targetClass = TypeAllergie.class)
+    @JoinTable(name = "userAllergie", joinColumns = @JoinColumn(name = "userID"))
+    @Column(name = "allergie", nullable = false)
+    @Enumerated(EnumType.STRING)
+    Collection<TypeAllergie> allergie;
 
     public User() {
     }
 
-    public User(String pseudo, String mail, String password, Allergie alergie) {
+    public User(String pseudo, String mail, String password) {
         this.pseudo = pseudo;
         this.mail = mail;
         this.password = password;
-        this.allergie = alergie;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getPseudo() {
@@ -47,11 +60,11 @@ public class User {
         this.password = password;
     }
 
-    public Allergie getAllergie() {
+    public Collection<TypeAllergie> getAllergie() {
         return allergie;
     }
 
-    public void setAllergie(Allergie allergie) {
+    public void setAllergie(Collection<TypeAllergie> allergie) {
         this.allergie = allergie;
     }
 }

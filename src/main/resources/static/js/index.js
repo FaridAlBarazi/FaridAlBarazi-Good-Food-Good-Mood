@@ -4,7 +4,7 @@ $("#connexionButton").click(()=>{
 })
 
 // // Lorsqu'on clique sur le X, ça ferme le popup
-$("#closePopup").click(()=>{
+$("#closePopupConnexion").click(()=>{
     $("#popupConnexion").css("display", "none");
 })
 
@@ -16,7 +16,7 @@ $("#createUser").click(()=>{
 })
 
 // // Lorsqu'on clique sur le X, ça ferme le popup
-$("#closePopup2").click(()=>{
+$("#closePopupCreationCompte").click(()=>{
     $("#createCompte").css("display", "none");
 })
 
@@ -24,11 +24,11 @@ $("#closePopup2").click(()=>{
 $("#boutonCreationCompte").click(()=>{
     let utilisateur = {
         pseudo : $("#pseudoCreation").val(),
-        mail : "nathancia@icloud.com",
+        mail : $("#mailCreation").val(),
         password : $("#passwordCreation").val(),
-        allergie : "Aucun",
+        allergie : [],
     }
-
+    console.log(utilisateur)
     $.ajax({
         type : "POST",
         headers : {"Content-Type": "application/json"},
@@ -36,10 +36,94 @@ $("#boutonCreationCompte").click(()=>{
         data : JSON.stringify(utilisateur),
         success : function(resultat){
             $("#errorCreationCompte").html("Votre compte a bien été créé ! ");
-            $("#errorCreationCompte").css("color", "green")
+            $("#errorCreationCompte").css("color", "green");
+            $("#createCompte").css("display", "none");
+            $("#allergies").css("display", "block");
         },
         error: function(XMLHttpRequest, textStatus, errorThrown) {
             $("#errorCreationCompte").html("Cet utilisateur est déjà utilisé");
         }
     })
+})
+
+$("#boutonSeConnecter").click(()=>{
+    let utilisateur = {
+        pseudo : $("#pseudoConnexion").val(),
+        password : $("#passwordConnexion").val()
+    }
+
+    $.ajax({
+        type : "POST",
+        headers : {"Content-Type": "application/json"},
+        url : "http://localhost:8080/API/connexion",
+        data : JSON.stringify(utilisateur),
+        success : function(resultat){
+            $("#popupConnexion").css("display", "none");
+            $("#dropdown").css("display", "block")
+            $("#connexionButton").css("display", "none");
+            $("#pseudo").html($("#pseudoConnexion").val());
+        },
+        error: function(xhr, textStatus) {
+            console.log(xhr.status);
+            if(xhr.status == 400){
+                $("#errorConnexion").html("Le mot de passe est incorrect");
+            }else{
+                $("#errorConnexion").html("Aucun compte à ce nom existe");
+            }
+
+        }
+    })
+})
+
+$("#deconnexion").click(()=>{
+    $.get("http://localhost:8080/API/deconnexion", ()=>{
+        $("#dropdown").css("display", "none")
+        $("#connexionButton").css("display", "block");
+        $("#pseudo").html("");
+        $("#pseudoConnexion").val('');
+        $("#passwordConnexion").val('');
+    })
+})
+
+$("#validerAllergies").click(()=>{
+    let yourArray = [];
+    $("input:checkbox[name=checkbox]:checked").each(function(){
+        yourArray.push($(this).val());
+    });
+
+    let obj={};
+    obj.allergie = yourArray;
+    obj.userName = $("#pseudoCreation").val();
+
+    $.ajax({
+        type : "PATCH",
+        headers : {"Content-Type": "application/json"},
+        url : "http://localhost:8080/API/saveAllergie",
+        data : JSON.stringify(yourArray, $("#pseudoCreation").val()),
+        success : function(resultat){
+            $("closePopupAllergies").css("display", "none");
+            $("#errorConnexion").html("Votre inscription à bien été pris en compte");
+        },
+        error: function(xhr, textStatus) {
+            console.log(xhr.status);
+            if(xhr.status == 400){
+                $("#errorConnexion").html("Le mot de passe est incorrect");
+            }else{
+                $("#errorConnexion").html("Aucun compte à ce nom existe");
+            }
+
+        }
+    })
+
+})
+
+$("#boutonTest").click(()=>{
+    $.ajax({
+        type : "PATCH",
+        url : "http://localhost:8080/API/saveAllergie",
+        success : function(resultat){
+            alert("ok")
+        }
+    })
+
 })
