@@ -100,7 +100,6 @@ $("#validerAllergies").click(()=>{
         url : "http://localhost:8080/API/saveAllergie",
         data : JSON.stringify(obj),
         success : function(resultat){
-
             $("#errorAllergie").html("Votre compte a bien été créé ! ");
             $("#errorAllergie").css("color", "green");
             $("#allergies").css("display", "none");
