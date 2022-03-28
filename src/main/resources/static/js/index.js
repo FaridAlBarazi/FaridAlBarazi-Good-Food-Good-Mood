@@ -92,14 +92,15 @@ $("#validerAllergies").click(()=>{
     });
 
     let obj={};
-    obj.allergie = yourArray;
-    obj.userName = $("#pseudoCreation").val();
-
+    obj.allergies = yourArray;
+    obj.username = $("#pseudoCreation").val();
+    console.log(obj)
+    console.log(typeof(obj));
     $.ajax({
         type : "PATCH",
         headers : {"Content-Type": "application/json"},
         url : "http://localhost:8080/API/saveAllergie",
-        data : JSON.stringify(yourArray, $("#pseudoCreation").val()),
+        data : JSON.stringify(obj),
         success : function(resultat){
             $("closePopupAllergies").css("display", "none");
             $("#errorConnexion").html("Votre inscription à bien été pris en compte");
@@ -111,19 +112,17 @@ $("#validerAllergies").click(()=>{
             }else{
                 $("#errorConnexion").html("Aucun compte à ce nom existe");
             }
-
         }
     })
 
 })
 
-$("#boutonTest").click(()=>{
+/*$("#boutonTest").click(()=>{
     $.ajax({
         type : "PATCH",
-        url : "http://localhost:8080/API/saveAllergie",
+        url : "http://localhost:8080/API/test",
         success : function(resultat){
             alert("ok")
         }
     })
-
-})
+})*/

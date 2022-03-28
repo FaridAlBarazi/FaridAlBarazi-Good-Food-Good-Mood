@@ -7,5 +7,9 @@ public enum TypeAllergie {
     Glutten,
     Oeuf,
     Poisson,
+    Crustace,
+    Graine_cesame,
+    Soja,
+    Moutarde,
     Fruit_a_coque;
 }
