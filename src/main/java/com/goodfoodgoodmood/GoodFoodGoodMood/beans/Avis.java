@@ -12,16 +12,18 @@ public class Avis {
     //On indique que l'Id est la clé primaire
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String date;
-    private int ID;
-    private String description;
 
+    private int ID;
+    private String pseudo;
+    private String date;
+    private String description;
 
     @Override
     public String toString() {
         return "Avis{" +
-                "date='" + date + '\'' +
-                ", ID=" + ID +
+                "ID=" + ID +
+                ", pseudo='" + pseudo + '\'' +
+                ", date='" + date + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }
@@ -29,12 +31,11 @@ public class Avis {
     public Avis() {
     }
 
-    public Avis(String date, int ID, String description) {
+    public Avis(String pseudo, String date, String description) {
+        this.pseudo = pseudo;
         this.date = date;
-        this.ID = ID;
         this.description = description;
     }
-
 
     public String getDate() {
         return date;
@@ -58,5 +59,13 @@ public class Avis {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
     }
 }
