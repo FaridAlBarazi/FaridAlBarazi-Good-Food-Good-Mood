@@ -19,6 +19,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     Collection<TypeAllergie> allergie;
 
+    @OneToMany
+    List<Recettes> recettes;
+
+
     public User() {
     }
 

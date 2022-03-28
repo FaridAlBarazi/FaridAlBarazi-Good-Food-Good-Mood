@@ -35,8 +35,6 @@ $("#boutonCreationCompte").click(()=>{
         url : "http://localhost:8080/API/inscription",
         data : JSON.stringify(utilisateur),
         success : function(resultat){
-            $("#errorCreationCompte").html("Votre compte a bien été créé ! ");
-            $("#errorCreationCompte").css("color", "green");
             $("#createCompte").css("display", "none");
             $("#allergies").css("display", "block");
         },
@@ -102,8 +100,10 @@ $("#validerAllergies").click(()=>{
         url : "http://localhost:8080/API/saveAllergie",
         data : JSON.stringify(obj),
         success : function(resultat){
-            $("closePopupAllergies").css("display", "none");
-            $("#errorConnexion").html("Votre inscription à bien été pris en compte");
+            $("#errorAllergie").html("Votre compte a bien été créé ! ");
+            $("#errorAllergie").css("color", "green");
+            $("#allergies").css("display", "none");
+            $("#pseudo").html($("#pseudoCreation").val());
         },
         error: function(xhr, textStatus) {
             console.log(xhr.status);
@@ -116,6 +116,7 @@ $("#validerAllergies").click(()=>{
     })
 
 })
+
 
 /*$("#boutonTest").click(()=>{
     $.ajax({
