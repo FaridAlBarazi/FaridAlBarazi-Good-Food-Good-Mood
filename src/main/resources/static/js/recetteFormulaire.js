@@ -16,7 +16,7 @@ $(document).ready(function () {
             })
         )
 
-        var arr = [
+        let arr = [
             {val : "gramme", text: 'gramme'},
             {val : "litre", text: 'litre'},
             {val : "millilitre", text: 'millilitre'},
@@ -24,7 +24,7 @@ $(document).ready(function () {
             {val : "cuillère à café", text: 'cuillère à café'}
         ];
 
-        var sel = $('<select>').appendTo($("#divIngredient"));
+        let sel = $('<select>').appendTo($("#divIngredient"));
         $(arr).each(function() {
             sel.append($("<option>").attr('value',this.val).text(this.text));
         });
