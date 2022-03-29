@@ -9,15 +9,23 @@ public class Recettes {
     // indique que ID est la clés primaire
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID ;
+    private int ID;
     private String name;
     private int duree;
     private String preparation;
     private String specialite;
 
-   // indique le lien avec les ingredients
-@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-private List<Ingredients> ingredients;
+    // indique le lien avec les ingredients
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Ingredients> ingredients;
+
+    public Recettes(String name, int duree, String preparation, String specialite, List<Ingredients> ingredients) {
+        this.name = name;
+        this.duree = duree;
+        this.preparation = preparation;
+        this.specialite = specialite;
+        this.ingredients = ingredients;
+    }
 
     @Override
     public String toString() {

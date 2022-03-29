@@ -1,4 +1,4 @@
-package com.goodfoodgoodmood.GoodFoodGoodMood.beans;
+package com.goodfoodgoodmood.GoodFoodGoodMood.modeles;
 
 import java.util.List;
 

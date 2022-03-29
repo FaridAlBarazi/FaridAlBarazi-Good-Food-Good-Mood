@@ -1,6 +1,6 @@
 package com.goodfoodgoodmood.GoodFoodGoodMood.controllers;
 
-import com.goodfoodgoodmood.GoodFoodGoodMood.beans.Information;
+import com.goodfoodgoodmood.GoodFoodGoodMood.modeles.Information;
 import com.goodfoodgoodmood.GoodFoodGoodMood.beans.TypeAllergie;
 import com.goodfoodgoodmood.GoodFoodGoodMood.beans.User;
 import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.UserRepositories;
@@ -13,11 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
