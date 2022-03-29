@@ -3,37 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Ajout de recette </title>
-    <link rel=""stylsheet" type="text/css">
-<!--    include font awsome-->
-    <link rel=""stylsheet" type="text/css" href=http://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="recipeForm.css">
+    <!-- include font awesome -->
+    <link rel="stylesheet" type="text/css"
+          href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-<!-- formulaire à 3 champs de texte pour-->
-<!--indiquer les caractéristiques de l’animal et un bouton d’envoi. Faites en sorte que cliquer sur le-->
-<!--bouton d’envoi transmette à la méthode du contrôleur Java recuperationAnimal l’animal ainsi-->
-<!--renseigné dans le formulaire-->
+
 <h1>Nouvelle recette</h1>
 <div class="wrapper">
-    <div id="survey_options">
-        <input type="text" name="survey_options[]" class="survey_options" size="50" placeholder="nom de la preparation">
-        <input type="text" name="survey_options[]" class="survey_options" size="50" placeholder="temps de préparation">
-        <input type="text" name="survey_options[]" class="survey_options" size="50" placeholder="Premier incredient">
-
-        <input type="text" name="survey_options[]" class="survey_options" size="50" placeholder="autre ingredient">
+    <div id="Element primaire">
+        <label>Nom de la préparation </label>
+        <input type="text" name="survey_options[]" class="survey_options" size="50" placeholder="nom de la preparation"><br>
+        <label>Temps de préparation </label>
+        <input id="temps" type="text" name="survey_options[]" class="survey_options" size="50"
+               placeholder="temps de préparation"><br>
+        <label>Premier ingredient </label>
+        <input id="ingredient 1"type="text" name="survey_options[]" class="survey_options" size="50"
+               placeholder="Premier ingredient"><br>
     </div>
+    <div id="survey_options">
+
+        <label> ingredient 2 </label>
+        <input id="ingredient 2" type="text" name="survey_options[]" class="survey_options" size="50" placeholder="ingredient 2"><br>
+    </div>
+    <div class="controls">
+        <a href="#" id="add_more_fields"><i class="fa fa-plus"></i>Add More</a>
+        <a href="#" id="remove_fields"><i class="fa fa-plus"></i>Remove Field</a>
+    </div>
+    <label>Détailles de préparation </label>
+    <input type="textarea" name="survey_options[]" class="survey_options" size="50" placeholder="CookingDetail"><br>
+
+</div>
+
+
+
 <div>
     <input value="Envoyer" type="submit" id="Valider"> <br>
-    <label>Detailles de préparation </label>
-    <input type="text" name="survey_options[]" class="survey_options" placeholder="CookingDetail" id="CookingDetail">
-    <br>
-
-</div>
-    <div class="controls"></div>
-<a href="#" id="add_more_fields"><i class="fa fa-plus"></i>Add More</a>
-<a href="#" id="remove_fields"><i class="fa fa-plus"></i>Remove Field</a>
-    </div>
 </div>
 
+
+</div>
+
+</div>
+
+
+<script src="bootstrap-js/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="js/recipeForm.js"></script>
 
