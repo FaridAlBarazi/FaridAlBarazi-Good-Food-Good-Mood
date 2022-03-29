@@ -1,9 +1,7 @@
 package com.goodfoodgoodmood.GoodFoodGoodMood.beans;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Recettes {
@@ -13,30 +11,35 @@ public class Recettes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID ;
     private String name;
-    private String ingredient;
-    private int durée;
-    private int Healthy;
+    private int duree;
+    private String preparation;
+    private String specialite;
+
+   // indique le lien avec les ingredients
+@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+private List<Ingredients> ingredients;
 
     @Override
     public String toString() {
         return "Recettes{" +
-                "name='" + name + '\'' +
-                ", ingredient='" + ingredient + '\'' +
-                ", durée=" + durée +
-                ", ='"  + '\'' +
-                ", Healthy=" + Healthy +
+                "ID=" + ID +
+                ", name='" + name + '\'' +
+                ", duree=" + duree +
+                ", préparation='" + preparation + '\'' +
+                ", specialite='" + specialite + '\'' +
+                ", ingredients=" + ingredients +
                 '}';
     }
 
     public Recettes() {
     }
 
-    public Recettes(String name, String ingredient, int durée, String specialité, int healthy) {
-        this.name = name;
-        this.ingredient = ingredient;
-        this.durée = durée;
-//        Specialité = specialité;
-        Healthy = healthy;
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getName() {
@@ -47,29 +50,35 @@ public class Recettes {
         this.name = name;
     }
 
-    public String getIngredient() {
-        return ingredient;
+    public int getDuree() {
+        return duree;
     }
 
-    public void setIngredient(String ingredient) {
-        this.ingredient = ingredient;
+    public void setDuree(int duree) {
+        this.duree = duree;
     }
 
-    public int getDurée() {
-        return durée;
+    public String getPreparation() {
+        return preparation;
     }
 
-    public void setDurée(int durée) {
-        this.durée = durée;
+    public void setPreparation(String préparation) {
+        this.preparation = préparation;
     }
 
-
-
-    public int getHealthy() {
-        return Healthy;
+    public String getSpecialite() {
+        return specialite;
     }
 
-    public void setHealthy(int healthy) {
-        Healthy = healthy;
+    public void setSpecialite(String specialite) {
+        this.specialite = specialite;
+    }
+
+    public List<Ingredients> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(List<Ingredients> ingredients) {
+        this.ingredients = ingredients;
     }
 }

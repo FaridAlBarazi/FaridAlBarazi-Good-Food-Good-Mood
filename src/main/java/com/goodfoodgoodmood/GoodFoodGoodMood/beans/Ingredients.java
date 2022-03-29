@@ -1,9 +1,7 @@
 package com.goodfoodgoodmood.GoodFoodGoodMood.beans;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 
@@ -14,7 +12,11 @@ public class Ingredients {
     private int ID ;
     private String nom;
     private String unit;
-    private int quantité;
+    private int quantite;
+
+    // indique la relation avec les recettes
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    List<Recettes> recettes;
 
     public Ingredients() {
     }
@@ -24,14 +26,14 @@ public class Ingredients {
         return "Ingredients{" +
                 "nom='" + nom + '\'' +
                 ", mesure='" + unit + '\'' +
-                ", quantité=" + quantité +
+                ", quantité=" + quantite +
                 '}';
     }
 
     public Ingredients(String nom, String mesure, int quantité) {
         this.nom = nom;
         this.unit = mesure;
-        this.quantité = quantité;
+        this.quantite = quantité;
     }
 
     public String getNom() {
@@ -50,11 +52,11 @@ public class Ingredients {
         this.unit = unit;
     }
 
-    public int getQuantité() {
-        return quantité;
+    public int getQuantite() {
+        return quantite;
     }
 
-    public void setQuantité(int quantité) {
-        this.quantité = quantité;
+    public void setQuantite(int quantite) {
+        this.quantite = quantite;
     }
 }
