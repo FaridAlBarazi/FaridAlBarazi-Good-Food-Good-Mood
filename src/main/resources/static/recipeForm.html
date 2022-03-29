@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajout de recette </title>
+    <link rel=""stylsheet" type="text/css">
+<!--    include font awsome-->
+    <link rel=""stylsheet" type="text/css" href=http://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<!-- formulaire à 3 champs de texte pour-->
+<!--indiquer les caractéristiques de l’animal et un bouton d’envoi. Faites en sorte que cliquer sur le-->
+<!--bouton d’envoi transmette à la méthode du contrôleur Java recuperationAnimal l’animal ainsi-->
+<!--renseigné dans le formulaire-->
+<h1>Nouvelle recette</h1>
+<div class="wrapper">
+    <div id="survey_options">
+        <input type="text" name="survey_options[]" class="survey_options" size="50" placeholder="nom de la preparation">
+        <input type="text" name="survey_options[]" class="survey_options" size="50" placeholder="temps de préparation">
+        <input type="text" name="survey_options[]" class="survey_options" size="50" placeholder="Premier incredient">
+
+        <input type="text" name="survey_options[]" class="survey_options" size="50" placeholder="autre ingredient">
+    </div>
+<div>
+    <input value="Envoyer" type="submit" id="Valider"> <br>
+    <label>Detailles de préparation </label>
+    <input type="text" name="survey_options[]" class="survey_options" placeholder="CookingDetail" id="CookingDetail">
+    <br>
+
+</div>
+    <div class="controls"></div>
+<a href="#" id="add_more_fields"><i class="fa fa-plus"></i>Add More</a>
+<a href="#" id="remove_fields"><i class="fa fa-plus"></i>Remove Field</a>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/recipeForm.js"></script>
+
+
+</body>
+</html>

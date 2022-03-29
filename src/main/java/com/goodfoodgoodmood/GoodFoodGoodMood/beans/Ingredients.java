@@ -13,7 +13,7 @@ public class Ingredients {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID ;
     private String nom;
-    private String mesure;
+    private String unit;
     private int quantité;
 
     public Ingredients() {
@@ -23,14 +23,14 @@ public class Ingredients {
     public String toString() {
         return "Ingredients{" +
                 "nom='" + nom + '\'' +
-                ", mesure='" + mesure + '\'' +
+                ", mesure='" + unit + '\'' +
                 ", quantité=" + quantité +
                 '}';
     }
 
     public Ingredients(String nom, String mesure, int quantité) {
         this.nom = nom;
-        this.mesure = mesure;
+        this.unit = mesure;
         this.quantité = quantité;
     }
 
@@ -43,11 +43,11 @@ public class Ingredients {
     }
 
     public String getMesure() {
-        return mesure;
+        return unit;
     }
 
     public void setMesure(String mesure) {
-        this.mesure = mesure;
+        this.unit = unit;
     }
 
     public int getQuantité() {
