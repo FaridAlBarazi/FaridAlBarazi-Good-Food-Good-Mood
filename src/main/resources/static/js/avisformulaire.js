@@ -51,8 +51,24 @@ function resetStars(note=0){
 
 let obj={pseudo:"hanna84",date:"12/12/2021",description:"la recette est super facile à réaliser"};
 
+function getCookie(name) {
+    let dc = document.cookie;
+    let prefix = name + "=";
+    let begin = dc.indexOf("; " + prefix);
+    if (begin == -1) {
+        begin = dc.indexOf(prefix);
+        if (begin != 0) return null;
+    } else {
+        begin += 2;
+        let end = document.cookie.indexOf(";", begin);
+        if (end == -1) {
+            end = dc.length;
+        }
+    }
+    return decodeURI(dc.substring(begin + prefix.length));
+}
 $("#monBouton").click(() =>{
-    //obj.pseudo=$("#nomUser").val();
+    obj.pseudo=getCookie("pseudo");
     obj.date=$("#date").val();
     obj.description=$("#exempleCommentaire").val();
     obj.note=$("#note").val();
