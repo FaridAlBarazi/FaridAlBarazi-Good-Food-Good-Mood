@@ -67,6 +67,33 @@ function getCookie(name) {
     }
     return decodeURI(dc.substring(begin + prefix.length));
 }
+
+if (getCookie("pseudo") == null) {
+    $("#recette").css("display", "none");
+    $("#boutonAvis").css("display", "none");
+} else {
+    $("#connexionButton").css("display", "none");
+    $("#dropdown").css("display", "block");
+    $("#pseudo").html(getCookie("pseudo"));
+    $("#recette").css("display", "block");
+    $("#boutonAvis").css("display", "block");
+}
+
+// deconnexion
+
+$("#deconnexion").click(() => {
+    $.get("http://localhost:8080/API/deconnexion", () => {
+        $("#dropdown").css("display", "none")
+        $("#connexionButton").css("display", "block");
+        $("#pseudo").html("");
+        $("#pseudoConnexion").val('');
+        $("#passwordConnexion").val('');
+        $("#recette").css("display", "none");
+        $("#boutonAvis").css("display", "none");
+        document.location.href = "index.html";
+    })
+})
+
 $("#monBouton").click(() =>{
     obj.pseudo=getCookie("pseudo");
     obj.date=$("#date").val();
