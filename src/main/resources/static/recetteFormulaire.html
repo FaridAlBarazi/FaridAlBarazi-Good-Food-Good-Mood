@@ -88,47 +88,7 @@
 <script>
 
 
-    $("#envoieRecette").click(() => {
 
-        let ingredient = [
-            {
-                nom: "tomate",
-                unit: "aucune",
-                quantite: 2
-            },
-            {
-                nom: "lait",
-                unit: "ml",
-                quantite: 500
-            }
-        ]
-
-        let recette = {
-            name: "a",
-            duree: 1,
-            preparation: "a aa a",
-            specialite: "a",
-            ingredients : ingredient
-        };
-
-
-        console.log(JSON.stringify(recette));
-        // recette.name=$("#nomRecette").val();
-        // recette.ingredients=$("#divIngredient").val();
-        // recette.preparation=$("#floating-Textarea").val();
-        // recette.duree=$("#dureRecette").val();
-        // recette.specialite=$("#specialiteRecette").val();
-
-        $.ajax({
-            type: "POST",
-            headers: {"Content-Type": "application/json"},
-            url: "http://localhost:8080/API/recuperationRecette",
-            data: JSON.stringify(recette),
-            success: (retour) => {
-                alert(retour);
-            }
-        });
-    });
 
 </script>
 <script src="bootstrap-js/bootstrap/bootstrap.bundle.min.js"></script>
