@@ -30,10 +30,10 @@ public class Ingredients {
                 '}';
     }
 
-    public Ingredients(String nom, String mesure, int quantité) {
+    public Ingredients(String nom, String mesure, int quantite) {
         this.nom = nom;
         this.unit = mesure;
-        this.quantite = quantité;
+        this.quantite = quantite;
     }
 
     public String getNom() {

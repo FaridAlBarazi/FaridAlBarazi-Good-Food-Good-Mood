@@ -14,7 +14,7 @@ public class RecettesController {
 
     @PostMapping("/recuperationRecette")
     public String recuperationRecette(@RequestBody Recettes recette) {
-
+        System.out.println(recette);
         recetteRepositories.save(recette);
         return "ok";
     }
