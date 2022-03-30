@@ -45,10 +45,11 @@ add_more_fields.onclick = function () {
         {val: "cuillère à soupe", text: 'cuillère à soupe'},
         {val: "cuillère à café", text: 'cuillère à café'}
     ];
-    let sel = $('<select>').appendTo($("#survey_options"));
-    $(arr).each(function () {
-        sel.append($("<option>").attr('value', this.val).text(this.text));
-    })
+
+    let sel = $('<select>').appendTo($("#divIngredient"));
+    $(arr).each(function() {
+        sel.append($("<option>").attr('value',this.val).text(this.text));
+    });
 
 
 }
@@ -62,7 +63,7 @@ remove_fields.onclick = function () {
         survey_options.removeChild(input_tags[(input_tags.length) - 1]);
 
         // delete the select part of the form
-        del(document.querySelector("#survey_options > select"))
+
 
 
 
