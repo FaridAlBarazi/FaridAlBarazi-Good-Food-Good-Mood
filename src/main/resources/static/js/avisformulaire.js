@@ -68,7 +68,7 @@ function getCookie(name) {
     return decodeURI(dc.substring(begin + prefix.length));
 }
 $("#monBouton").click(() =>{
-    //obj.pseudo=$("#nomUser").val();
+    obj.pseudo=getCookie("pseudo");
     obj.date=$("#date").val();
     obj.description=$("#exempleCommentaire").val();
     obj.note=$("#note").val();
