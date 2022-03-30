@@ -1,9 +1,61 @@
+// SYSTEME DE NOTATION ETOILES
+
+// On va chercher toutes les étoiles
+const stars=document.querySelectorAll(".la-star");
+// on va chercher l'input
+const note=document.querySelector("#note");
+
+// on boucle sur les etoiles pour leur ajouter des ecouteurs d'évenements
+for (star of stars){
+    // le survol
+
+    star.addEventListener("mouseover", function(){
+        resetStars();
+        this.style.color="orange";
+
+        // Element précédent de même niveau
+        let previousStar= this.previousElementSibling;
+        while(previousStar){
+            // on passe l'étoile qui précéde en rouge
+            previousStar.style.color="orange";
+            // on récupère l'étoile qui la précède
+            previousStar= previousStar.previousElementSibling;
+        }
+    });
+    // quand on clique sur l'étoile on veut récupérer la note
+
+    star.addEventListener("click", function(){
+        note.value= this.dataset.value;
+    });
+
+    // quand on enleve la sourisca reste sur la note qu'on a mit
+
+    star.addEventListener("mouseout", function(){
+        // va repasser toutes les étoiles en noires jusqu'à atteindre la note correspondant au champ note
+        resetStars(note.value);
+    });
+}
+
+
+
+function resetStars(note=0){
+    // boucle sur chaque étoile, va remettre directement les etoiles en noires ou en orange
+    for(star of stars){
+        if (star.dataset.value>note){
+            star.style.color="black";
+        } else{
+            star.style.color="orange";
+        }
+    }
+}
 
 let obj={pseudo:"hanna84",date:"12/12/2021",description:"la recette est super facile à réaliser"};
+
 $("#monBouton").click(() =>{
-    obj.pseudo=$("#nomUser").val();
+    //obj.pseudo=$("#nomUser").val();
     obj.date=$("#date").val();
     obj.description=$("#exempleCommentaire").val();
+    obj.note=$("#note").val();
 
 
     $.ajax({
@@ -14,3 +66,14 @@ $("#monBouton").click(() =>{
         success: (retour)=> {console.log(retour);}
     });
 });
+
+
+
+
+
+
+
+
+
+
+

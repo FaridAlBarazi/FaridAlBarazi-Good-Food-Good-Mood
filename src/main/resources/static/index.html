@@ -4,157 +4,257 @@
     <meta charset="UTF-8">
     <title>Good Food Good Mood</title>
     <link rel="stylesheet" href="bootstrap-css/bootstrap/bootstrap.min.css">
+    <link rel="icon" href="images/logo.jpeg" type="image/icon type">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="index.html">Acceuil</a>
-                </li>
-                <li class="nav-item">
-                    <a id="connexionButton" class="nav-link active" aria-current="page" href="#">Connexion</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="recetteFormulaire.html">Recette </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="recipeForm.html">Recipe </a>
-                </li>
-                <li class="nav-item">
-                    <a id="boutonAvis" class="nav-link active" aria-current="page" href="avisFormulaire.html">Avis</a>
-                </li>
-                <li id="dropdown" style="display: none" class="nav-item dropdown">
-                    <a id="pseudo" class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Voir mon profil</a></li>
-                        <li><a id="deconnexion" class="dropdown-item" href="#">Déconnexion</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+<nav id="navbar" class="navbar navbar-expand-lg navbar-light" style="background-color: antiquewhite;">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li id="dropdown" style="display: none" class="nav-item dropdown">
+                <a id="pseudo" class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="profilUtilisateur.html">Voir mon profil</a></li>
+                    <li><a id="deconnexion" class="dropdown-item" href="#">Déconnexion</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a class="navbar-brand mx-auto" href="#">
+            <p id="cursive">Good Food Good Mood</p>
+        </a>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" style="justify-content: end;">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <button id="connexionButton" class="nav-link active" aria-current="page">Connexion</button>
+            </li>
+            <li class="nav-item">
+                <a id="recette" class="nav-link active" aria-current="page" href="recetteFormulaire.html">Recette </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="recipeForm.html">Recipe </a>
+            </li>
+            <li class="nav-item">
+                <a id="boutonAvis" class="nav-link active" aria-current="page" href="avisFormulaire.html">Avis</a>
+            </li>
+        </ul>
     </div>
 </nav>
-<div>
-    <div id="popupConnexion" style="display: none;" class="modal-dialog modal-login">
-        <!--Connexion compte -->
-        <div id="connexionCompte" class="modal-content" style="background-color: darkgray; display: block">
-            <div class="modal-header">
-                <h4 class="modal-title" style="color: black">Connexion</h4>
-                <button id="closePopupConnexion" type="button" class="close" data-dismiss="modal"
-                        aria-hidden="true">x
-                </button>
+<div id="divPrincipal" style="height: 100vh;">
+    <h1 style="    color: wheat; text-align: center;"> Des milliers de recettes qui n'attendent que vous !
+    </h1>
+    <div>
+        <div id="popupConnexion" style="display: none;" class="modal-dialog modal-login">
+            <!--Vérification cookie-->
+            <div id="verificationCookies" class="modal-content" style="background-color: antiquewhite; display: none">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="color: black">Vous n'êtes pas connecté !</h4>
+                    <button id="closePopupCookies" type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">x
+                    </button>
+                </div>
+                <div>
+                    <span style="color: red;">Veuillez vous connecter pour accéder aux recettes.</span>
+                </div>
+                <div style="display: flex; flex-direction: row;">
+                    <input id="boutonVersSeConnecter" type="submit" class="btn btn-primary" value="Se connecter">
+                    <p>OU</p>
+                    <input id="boutonVersInscription" type="submit" class="btn btn-primary" value="S'inscrire">
+                </div>
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="col-sm-2 col-form-label">Pseudo</label>
-                    <input type="text" class="form-control" required="required" id="pseudoConnexion"
-                           placeholder="Votre pseudo">
+            <!--Connexion compte -->
+            <div id="connexionCompte" class="modal-content" style="background-color: antiquewhite; display: block">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="color: black">Connexion</h4>
+                    <button id="closePopupConnexion" type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">x
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-2 col-form-label">E-mail</label>
+                        <input type="email" class="form-control" required="required" id="pseudoConnexion"
+                               placeholder="Votre e-mail">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passwordConnexion" class="col-sm-2 col-form-label">Password</label>
+                        <input type="password" class="form-control" id="passwordConnexion" required="required"
+                               placeholder="Mot de passe">
+                    </div>
+                    <button id="forgotPassword" style="color: blue;">Mot de passe oublié</button>
                 </div>
 
-                <div class="form-group">
-                    <label for="passwordConnexion" class="col-sm-2 col-form-label">Password</label>
-                    <input type="password" class="form-control" id="passwordConnexion" required="required"
-                           placeholder="Mot de passe">
+                <div class="modal-footer justify-content-between">
+                    <button id="createUser">Pas de compte ?</button>
+                    <span id="errorConnexion" style="color: red; font-size: x-small"></span>
+                    <input id="boutonSeConnecter" type="submit" class="btn btn-primary" value="Se connecter">
+                </div>
+            </div>
+
+            <!--Création compte -->
+            <div id="createCompte" class="modal-content" style="background-color: antiquewhite; display: none;">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="color: black">Créer un compte</h4>
+                    <button id="closePopupCreationCompte" type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">x
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-2 col-form-label">Pseudo</label>
+                        <input type="text" class="form-control" required="required" id="pseudoCreation"
+                               placeholder="Votre pseudo">
+                        <span id="errorPseudo" style="display: none; color: red; font-size: x-small;">Veuillez rentrer un pseudo.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-2 col-form-label">E-mail</label>
+                        <input type="email" class="form-control" required="required" id="mailCreation"
+                               placeholder="Votre mail">
+                        <span id="errorMail" style="display: none; color: red; font-size: x-small;">Veuillez rentrer un mail valide.</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="passwordCreation" class="col-sm-2 col-form-label">Password</label>
+                        <input type="password" class="form-control" id="passwordCreation" required="required"
+                               placeholder="Mot de passe">
+                        <span id="errorPassword" style="display: none; color: red; font-size: x-small;">Veuillez rentrer un mot de passe.</span>
+                    </div>
                 </div>
 
+                <div class="modal-footer justify-content-between">
+                    <span id="errorCreationCompte" style="color: red; font-size: x-small"></span>
+                    <button id="redirectionConnexion" style="color: blue; display: none; font-size: x-small">Voulez-vous vous connecter ?</button>
+                    <input id="boutonCreationCompte" type="submit" class="btn btn-primary" value="Créer un compte">
+                </div>
             </div>
-            <div class="modal-footer justify-content-between">
-                <a href="#" id="createUser">Pas de compte ?</a>
-                <span id="errorConnexion" style="color: red; font-size: x-small"></span>
-                <input id="boutonSeConnecter" type="submit" class="btn btn-primary" value="Se connecter">
+
+            <!--Définition des allergies-->
+            <div id="allergies" class="modal-content" style="background-color: antiquewhite; display: none;">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="color: black">Personnalisation de votre compte</h4>
+                    <button id="closePopupAllergies" type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">x
+                    </button>
+                </div>
+                <!-- Checked checkbox -->
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="checkbox" value="Aucun" id="aucun" checked/>
+                    <label class="form-check-label" for="aucun">Aucun</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="checkbox" value="Lactose" id="lactose"
+                           checked/>
+                    <label class="form-check-label" for="lactose">Lactose</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="checkbox" value="Arachide" id="arachide"/>
+                    <label class="form-check-label" for="arachide">Arachide</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="checkbox" value="Fruit_a_coque"
+                           id="fruit_a_coque"/>
+                    <label class="form-check-label" for="fruit_a_coque">Fruits à coques</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="checkbox" value="Crustace" id="crustace"/>
+                    <label class="form-check-label" for="crustace">Crustacés</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="checkbox" value="Moutarde" id="moutarde"/>
+                    <label class="form-check-label" for="moutarde">Moutarde</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="checkbox" value="Soja" id="soja"/>
+                    <label class="form-check-label" for="soja">Soja</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="checkbox" value="Graine_cesame"
+                           id="graine_cesame"/>
+                    <label class="form-check-label" for="graine_cesame"> Graines de sésame</label>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <span id="errorAllergie" style="color: red; font-size: x-small"></span>
+                    <input id="validerAllergies" type="submit" class="btn btn-primary" value="Valider">
+                </div>
             </div>
+
+            <!--Mot de passe oublié-->
+            <div id="mdpOublie" class="modal-content" style="background-color: antiquewhite; display: none">
+                <div class="modal-header">
+                    <h4 class="modal-title" style="color: black">Réinitialisation mot de passe</h4>
+                    <button id="closePopupMdpOublie" type="button" class="close" data-dismiss="modal"
+                            aria-hidden="true">x
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-2 col-form-label">E-mail</label>
+                        <input type="email" class="form-control" required="required" id="mail"
+                               placeholder="Votre mail">
+                        <span id="errorMailUpdatePassword" style="display: none; color: red; font-size: x-small;">Aucun compte associé</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordConnexion" class="col-sm-2 col-form-label">Réinitialisation</label>
+                        <input type="password" class="form-control" id="passwordUpdate" required="required"
+                               placeholder="Réinitialisation mot de passe">
+                    </div>
+                </div>
+
+                <div class="modal-footer justify-content-between">
+                    <span id="validation" style="color: red; font-size: x-small"></span>
+                    <input id="boutonReinitialisation" type="submit" class="btn btn-primary" value="Réinitialiser">
+                </div>
+            </div>
+
         </div>
-
-        <!--Création compte -->
-        <div id="createCompte" class="modal-content" style="background-color: darkgray; display: none;">
-            <div class="modal-header">
-                <h4 class="modal-title" style="color: black">Créer un compte</h4>
-                <button id="closePopupCreationCompte" type="button" class="close" data-dismiss="modal"
-                        aria-hidden="true">x
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label class="col-sm-2 col-form-label">Pseudo</label>
-                    <input type="text" class="form-control" required="required" id="pseudoCreation"
-                           placeholder="Votre pseudo">
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-2 col-form-label">E-mail</label>
-                    <input type="email" class="form-control" required="required" id="mailCreation"
-                           placeholder="Votre mail">
-                </div>
-
-                <div class="form-group">
-                    <label for="passwordCreation" class="col-sm-2 col-form-label">Password</label>
-                    <input type="password" class="form-control" id="passwordCreation" required="required"
-                           placeholder="Mot de passe">
+    </div>
+    <div id="divCard0">
+        <div id="divCard">
+            <div id="theDiv" class="card" style="width: 18rem;">
+                <img id="imageCardFrench" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 id="cardTitleFrench" class="card-title"></h5>
+                    <p id="cardDescriptionFrench" class="card-text"></p>
+                    <a id="validerFrench" href="" class="btn btn-primary" onclick="return verifCookies()">Voir la
+                        recette</a>
                 </div>
             </div>
-            <div class="modal-footer justify-content-between">
-                <span id="errorCreationCompte" style="color: red; font-size: x-small"></span>
-                <input id="boutonCreationCompte" type="submit" class="btn btn-primary" value="Créer un compte">
+            <div id="theDiv2" class="card" style="width: 18rem;">
+                <img id="imageCardAmerican" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 id="cardTitleAmerican" class="card-title"></h5>
+                    <p id="cardDescriptionAmerican" class="card-text"></p>
+                    <a id="validerAmerican" href="#" class="btn btn-primary" onclick="return verifCookies()">Voir la
+                        recette</a>
+                </div>
             </div>
-        </div>
-
-        <!--Définition des allergies-->
-        <div id="allergies" class="modal-content" style="background-color: darkgray; display: none;">
-            <div class="modal-header">
-                <h4 class="modal-title" style="color: black">Personnalisation de votre compte</h4>
-                <button id="closePopupAllergies" type="button" class="close" data-dismiss="modal"
-                        aria-hidden="true">x
-                </button>
+            <div class="card" style="width: 18rem;">
+                <img id="imageCardAfrican" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 id="cardTitleAfrican" class="card-title"></h5>
+                    <p id="cardDescriptionAfrican" class="card-text"></p>
+                    <a id="validerAfrican" href="#" class="btn btn-primary" onclick="return verifCookies()">Voir la
+                        recette</a>
+                </div>
             </div>
-            <!-- Checked checkbox -->
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="checkbox" value="Aucun" id="aucun" checked/>
-                <label class="form-check-label" for="aucun">Aucun</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="checkbox" value="Lactose" id="lactose" />
-                <label class="form-check-label" for="lactose">Lactose</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="checkbox" value="Arachide" id="arachide" />
-                <label class="form-check-label" for="arachide">Arachide</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="checkbox" value="Fruit_a_coque" id="fruit_a_coque" />
-                <label class="form-check-label" for="fruit_a_coque">Fruits à coques</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="checkbox" value="Crustace" id="crustace" />
-                <label class="form-check-label" for="crustace">Crustacés</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="checkbox" value="Moutarde" id="moutarde" />
-                <label class="form-check-label" for="moutarde">Moutarde</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="checkbox" value="Soja" id="soja" />
-                <label class="form-check-label" for="soja">Soja</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="checkbox" value="Graine_cesame" id="graine_cesame" />
-                <label class="form-check-label" for="graine_cesame"> Graines de sésame</label>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <span id="errorAllergie" style="color: red; font-size: x-small"></span>
-                <input id="validerAllergies" type="submit" class="btn btn-primary" value="Valider">
+            <div class="card" style="width: 18rem;">
+                <img id="imageCardBritish" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 id="cardTitleBritish" class="card-title"></h5>
+                    <p id="cardDescriptionBritish" class="card-text"></p>
+                    <a id="validerBritish" href="#" class="btn btn-primary" onclick="return verifCookies()">Voir la
+                        recette</a>
+                </div>
             </div>
         </div>
     </div>
-
-
 </div>
 <script src="bootstrap-js/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

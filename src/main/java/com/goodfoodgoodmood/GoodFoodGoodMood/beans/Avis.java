@@ -14,25 +14,28 @@ public class Avis {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private int ID;
-    private String pseudo;
+    //private String pseudo;
     private String date;
     private String description;
+    private int note;
+
 
     @Override
     public String toString() {
         return "Avis{" +
                 "ID=" + ID +
-                ", pseudo='" + pseudo + '\'' +
+               /* ", pseudo='" + pseudo + '\'' +*/
                 ", date='" + date + '\'' +
                 ", description='" + description + '\'' +
+                ", note=" + note +
                 '}';
     }
 
     public Avis() {
     }
 
-    public Avis(String pseudo, String date, String description) {
-        this.pseudo = pseudo;
+    public Avis( String date, String description) {
+        //this.pseudo = pseudo;
         this.date = date;
         this.description = description;
     }
@@ -61,11 +64,19 @@ public class Avis {
         this.description = description;
     }
 
-    public String getPseudo() {
+    /*public String getPseudo() {
         return pseudo;
+    }*/
+
+   /* public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
+    }*/
+
+    public int getNote() {
+        return note;
     }
 
-    public void setPseudo(String pseudo) {
-        this.pseudo = pseudo;
+    public void setNote(int note) {
+        this.note = note;
     }
 }

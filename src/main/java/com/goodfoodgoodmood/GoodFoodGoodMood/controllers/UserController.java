@@ -1,6 +1,6 @@
 package com.goodfoodgoodmood.GoodFoodGoodMood.controllers;
 
-import com.goodfoodgoodmood.GoodFoodGoodMood.beans.Information;
+import com.goodfoodgoodmood.GoodFoodGoodMood.modeles.Information;
 import com.goodfoodgoodmood.GoodFoodGoodMood.beans.TypeAllergie;
 import com.goodfoodgoodmood.GoodFoodGoodMood.beans.User;
 import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.UserRepositories;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -28,12 +27,14 @@ public class UserController {
 
     @PostMapping("/connexion")
     public ResponseEntity<String> connexion(@RequestBody User userConnexion, HttpServletResponse response) {
-        User user = userRepositories.findByPseudo(userConnexion.getPseudo());
+        System.out.println("user : " + userConnexion);
+        User user = userRepositories.findByMail(userConnexion.getMail());
+        System.out.println();
         if (user != null) {
             // BCrypt.checkpw(passwordEntrer, passwordBase)
             if (BCrypt.checkpw(userConnexion.getPassword(), user.getPassword())) { // On vérifie que les passwords correspondent
                 // create a cookie
-                Cookie cookie = new Cookie("pseudo", userConnexion.getPseudo());
+                Cookie cookie = new Cookie("pseudo", user.getPseudo());
                 cookie.setMaxAge(7 * 24 * 60 * 60);
                 cookie.setPath("/"); // global cookie accessible every where
                 //add cookie to response
@@ -50,7 +51,7 @@ public class UserController {
     @PostMapping("/inscription")
     public ResponseEntity<String> inscription(@RequestBody User userSave) {
         System.out.println(userSave);
-        User user = userRepositories.findByPseudo(userSave.getPseudo());
+        User user = userRepositories.findByMail(userSave.getMail());
         System.out.println(user);
         if (user == null) {
             String hashed = BCrypt.hashpw(userSave.getPassword(), BCrypt.gensalt(12));
@@ -82,30 +83,30 @@ public class UserController {
     }
 
     @PatchMapping("/saveAllergie")
-    // List<String> allergies, @RequestBody String userName
     public void saveAllergy(@RequestBody Information obj){
-        System.out.println(obj.getAllergies());
-
-        //System.out.println("username : " + userName);
-        //System.out.println("allergies string : " + allergies);
         Collection<TypeAllergie> allergie = new ArrayList<>();
-
-        //List<String> myList = new ArrayList<>(Arrays.asList(allergies.split(",")));
-        //System.out.println("Liste : " + myList);
-        //System.out.println("1er élément de la liste : " + myList.get(0));
-        //myList.forEach(System.out::println);
         for(int i=0; i < obj.getAllergies().size(); i++){
-            System.out.println( obj.getAllergies().get(i));
             TypeAllergie test = TypeAllergie.valueOf(obj.getAllergies().get(i));
             allergie.add(test);
         }
-        System.out.println(allergie);
-        User user = userRepositories.findByPseudo(obj.getUsername());
+        User user = userRepositories.findByMail(obj.getMail());
         user.setAllergie(allergie);
         userRepositories.save(user);
-
-
     }
+
+    @PatchMapping("/updatePassword")
+    public ResponseEntity<String> updatePassword(@RequestBody List<String> obj){
+        User user = userRepositories.findByMail(obj.get(0));
+        if(user == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not ok");
+        }else{
+            String hashed = BCrypt.hashpw(obj.get(1), BCrypt.gensalt(12));
+            user.setPassword(hashed);
+            userRepositories.save(user);
+            return ResponseEntity.status(HttpStatus.OK).body("Ok");
+        }
+    }
+
 
     @PatchMapping("/test")
     public void saveAllergyTest(){
