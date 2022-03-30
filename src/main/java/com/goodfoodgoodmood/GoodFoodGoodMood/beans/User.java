@@ -22,6 +22,17 @@ public class User {
     @OneToMany
     List<Recettes> recettes;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "ID=" + ID +
+                ", pseudo='" + pseudo + '\'' +
+                ", mail='" + mail + '\'' +
+                ", password='" + password + '\'' +
+                ", allergie=" + allergie +
+                ", recettes=" + recettes +
+                '}';
+    }
 
     public User() {
     }

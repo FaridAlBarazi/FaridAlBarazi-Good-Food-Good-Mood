@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title id="titrePage">Mon profil</title>
+    <title>Recette</title>
+    <link rel="stylesheet" href="bootstrap-css/bootstrap/bootstrap.min.css">
+    <link rel="icon" href="images/logo.jpeg" type="image/icon type">
+    <link rel="stylesheet" href="css/affichageRecette.css">
 </head>
 <body>
 <nav id="navbar" class="navbar navbar-expand-lg navbar-light" style="background-color: antiquewhite;">
@@ -74,12 +77,47 @@
     </div>-->
 </nav>
 
-<div>
+<div id="divPrincipal">
     <div>
+        <h1 id="titre" style="text-align: center"></h1>
         <div>
-
+            <div id="presentation">
+                <img id="image" alt="">
+                <div id="details">
+                    <div id="duree">
+                        <div>
+                            Durée ⏰:
+                        </div>
+                        <div id="dureeCuisson"></div>
+                    </div>
+                    <div id="healthyDiv">
+                        <div>
+                            Healthy 🥗 :
+                        </div>
+                        <div id="healthy"></div>
+                    </div>
+                    <div id="cuisine2">
+                        <div>
+                            Cuisines 🍽 :
+                        </div>
+                        <div>
+                            <ul id="cuisine"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="ingredientInstruction">
+                <div id="ingredient">
+                    <ul id="listeIngredient"></ul>
+                </div>
+                <div id="instruction"></div>
+            </div>
         </div>
+
     </div>
 </div>
+<script src="bootstrap-js/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/affichageRecette.js"></script>
 </body>
-</html
+</html>
