@@ -14,26 +14,31 @@ public class Ingredients {
     private String unit;
     private int quantite;
 
-    // indique la relation avec les recettes
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    List<Recettes> recettes;
-
     public Ingredients() {
+    }
+
+    public Ingredients(String nom, String unit, int quantite) {
+        this.nom = nom;
+        this.unit = unit;
+        this.quantite = quantite;
     }
 
     @Override
     public String toString() {
         return "Ingredients{" +
-                "nom='" + nom + '\'' +
-                ", mesure='" + unit + '\'' +
-                ", quantité=" + quantite +
+                "ID=" + ID +
+                ", nom='" + nom + '\'' +
+                ", unit='" + unit + '\'' +
+                ", quantite=" + quantite +
                 '}';
     }
 
-    public Ingredients(String nom, String mesure, int quantité) {
-        this.nom = nom;
-        this.unit = mesure;
-        this.quantite = quantité;
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getNom() {
@@ -44,11 +49,11 @@ public class Ingredients {
         this.nom = nom;
     }
 
-    public String getMesure() {
+    public String getUnit() {
         return unit;
     }
 
-    public void setMesure(String mesure) {
+    public void setUnit(String unit) {
         this.unit = unit;
     }
 

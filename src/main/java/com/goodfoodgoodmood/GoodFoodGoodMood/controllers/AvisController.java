@@ -16,8 +16,8 @@ public class AvisController {
 
     @GetMapping("/ajoutAvisEnBase")
     public String ajoutAvisEnBase(){
-        Avis avis1= new Avis("06/03/2022", " avis1");
-        Avis avis2= new Avis("07/03/2022", "avis");
+        Avis avis1= new Avis("loulou","06/03/2022", " avis1");
+        Avis avis2= new Avis("doudou","07/03/2022", "avis");
         avisRepositories.save(avis1);
         avisRepositories.save(avis2);
         // Le return sert juste à assurer que la méthode va au bout

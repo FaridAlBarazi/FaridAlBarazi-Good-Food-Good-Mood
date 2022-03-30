@@ -187,6 +187,7 @@ $("#deconnexion").click(() => {
         $("#passwordConnexion").val('');
         $("#recette").css("display", "none");
         $("#boutonAvis").css("display", "none");
+        document.location.href = "index.html";
     })
 })
 

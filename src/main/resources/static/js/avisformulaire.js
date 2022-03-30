@@ -51,8 +51,51 @@ function resetStars(note=0){
 
 let obj={pseudo:"hanna84",date:"12/12/2021",description:"la recette est super facile à réaliser"};
 
+function getCookie(name) {
+    let dc = document.cookie;
+    let prefix = name + "=";
+    let begin = dc.indexOf("; " + prefix);
+    if (begin == -1) {
+        begin = dc.indexOf(prefix);
+        if (begin != 0) return null;
+    } else {
+        begin += 2;
+        let end = document.cookie.indexOf(";", begin);
+        if (end == -1) {
+            end = dc.length;
+        }
+    }
+    return decodeURI(dc.substring(begin + prefix.length));
+}
+
+if (getCookie("pseudo") == null) {
+    $("#recette").css("display", "none");
+    $("#boutonAvis").css("display", "none");
+} else {
+    $("#connexionButton").css("display", "none");
+    $("#dropdown").css("display", "block");
+    $("#pseudo").html(getCookie("pseudo"));
+    $("#recette").css("display", "block");
+    $("#boutonAvis").css("display", "block");
+}
+
+// deconnexion
+
+$("#deconnexion").click(() => {
+    $.get("http://localhost:8080/API/deconnexion", () => {
+        $("#dropdown").css("display", "none")
+        $("#connexionButton").css("display", "block");
+        $("#pseudo").html("");
+        $("#pseudoConnexion").val('');
+        $("#passwordConnexion").val('');
+        $("#recette").css("display", "none");
+        $("#boutonAvis").css("display", "none");
+        document.location.href = "index.html";
+    })
+})
+
 $("#monBouton").click(() =>{
-    //obj.pseudo=$("#nomUser").val();
+    obj.pseudo=getCookie("pseudo");
     obj.date=$("#date").val();
     obj.description=$("#exempleCommentaire").val();
     obj.note=$("#note").val();
