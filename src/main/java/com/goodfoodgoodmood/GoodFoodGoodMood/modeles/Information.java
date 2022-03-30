@@ -6,6 +6,14 @@ public class Information {
     List<String> allergies;
     String mail;
 
+    @Override
+    public String toString() {
+        return "Information{" +
+                "allergies=" + allergies +
+                ", mail='" + mail + '\'' +
+                '}';
+    }
+
     public Information(List<String> allergies, String mail) {
         this.allergies = allergies;
         this.mail = mail;

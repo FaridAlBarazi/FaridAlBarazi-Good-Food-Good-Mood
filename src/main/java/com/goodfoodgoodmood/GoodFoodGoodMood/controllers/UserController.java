@@ -84,6 +84,7 @@ public class UserController {
 
     @PatchMapping("/saveAllergie")
     public void saveAllergy(@RequestBody Information obj){
+        System.out.println(obj);
         Collection<TypeAllergie> allergie = new ArrayList<>();
         for(int i=0; i < obj.getAllergies().size(); i++){
             TypeAllergie test = TypeAllergie.valueOf(obj.getAllergies().get(i));
