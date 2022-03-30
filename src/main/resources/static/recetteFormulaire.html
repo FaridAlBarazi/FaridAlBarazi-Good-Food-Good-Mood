@@ -22,7 +22,7 @@
         </ul>
     </div>
     <div class="mx-auto order-0">
-        <a class="navbar-brand mx-auto" href="#">
+        <a class="navbar-brand mx-auto" href="index.html">
             <p id="cursive">Good Food Good Mood</p>
         </a>
     </div>
@@ -34,9 +34,9 @@
             <li class="nav-item">
                 <a id="recette" class="nav-link active" aria-current="page" href="recetteFormulaire.html">Recette </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="recipeForm.html">Recipe </a>
-            </li>
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link active" aria-current="page" href="recipeForm.html">Recipe </a>-->
+<!--            </li>-->
             <li class="nav-item">
                 <a id="boutonAvis" class="nav-link active" aria-current="page" href="avisFormulaire.html">Avis</a>
             </li>
@@ -48,44 +48,59 @@
     <div>
         <div id="boxForm">
 
-            <div class="mb-3">
+            <div class="mb-3 dimension">
                 <label for="nomRecette" class="form-label">Nom de la recette</label>
                 <input id="nomRecette" class="form-control" type="text" placeholder="Paella"
                        aria-label="default input example">
             </div>
-            <div class="mb-3">
+            <div class="mb-3 dimension">
                 <label for="specialiteRecette" class="form-label">Spécialité</label>
                 <input id="specialiteRecette" class="form-control" type="text" placeholder="Espagnole"
                        aria-label="default input example">
             </div>
-            <div class="mb-3">
+            <div class="mb-3 dimension">
                 <label for="dureRecette" class="form-label">Temps de préparation En mn</label>
                 <input id="dureRecette" class="form-control" type="text" placeholder="30"
                        aria-label="default input example">
             </div>
-            <div id="boxIngredient">
+            <div id="boxIngredient" class="dimension">
                 <label for="divIngredient" class="form-label">Les ingredients</label>
                 <div id="divIngredient"></div>
-                <button id="buttonPlus" type="button" class="btn btn-primary">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                         class="bi bi-plus" viewBox="0 0 16 16">
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                    </svg>
-                </button>
+                <div id="plusMoins">
+                    <button id="buttonPlus" type="button" class="btn btn-primary">
+                        Ajouter un ingrédient <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-plus" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                        </svg>
+                    </button>
+                    <button id="buttonMoins" type="button" class="btn btn-primary">
+                        Retirer un ingrédient <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                             class="bi bi-dash" viewBox="0 0 16 16">
+                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="form-floating dimension">
+                <textarea id="floating-Textarea" class="form-control" placeholder="Détailles de la préparation..."  style="height: 100px;weight: 150px"></textarea>
+                <label for="floating-Textarea">Detailles de Préparation</label>
+            </div>
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <button id="envoieRecette" class="btn btn-primary" type="button">Envoyer</button>
             </div>
         </div>
     </div>
 </div>
-<div class="form-floating">
-    <textarea id="floating-Textarea" class="form-control" placeholder="Détailles de la préparation..."
-              id="floatingTextarea2" style="height: 100px;weight: 150px"></textarea>
-    <label for="floating-Textarea">Detailles de Préparation</label>
-</div>
-<div class="d-grid gap-2 col-6 mx-auto">
-    <button id="envoieRecette" class="btn btn-primary" type="button">Envoyer</button>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+
+</script>
 <script src="bootstrap-js/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="js/recetteFormulaire.js"></script>
 </body>
