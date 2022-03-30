@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Information {
     List<String> allergies;
-    String username;
+    String mail;
 
-    public Information(List<String> allergies, String username) {
+    public Information(List<String> allergies, String mail) {
         this.allergies = allergies;
-        this.username = username;
+        this.mail = mail;
     }
 
     public Information() {
@@ -22,11 +22,11 @@ public class Information {
         this.allergies = allergies;
     }
 
-    public String getUsername() {
-        return username;
+    public String getMail() {
+        return mail;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setMail(String mail) {
+        this.mail = mail;
     }
 }

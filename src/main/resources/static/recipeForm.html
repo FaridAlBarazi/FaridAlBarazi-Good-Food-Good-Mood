@@ -9,7 +9,42 @@
           href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-
+<nav id="navbar" class="navbar navbar-expand-lg navbar-light" style="background-color: antiquewhite;">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li id="dropdown" style="display: none" class="nav-item dropdown">
+                <a id="pseudo" class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="profilUtilisateur.html">Voir mon profil</a></li>
+                    <li><a id="deconnexion" class="dropdown-item" href="#">Déconnexion</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a class="navbar-brand mx-auto" href="#">
+            <p id="cursive">Good Food Good Mood</p>
+        </a>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" style="justify-content: end;">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <button id="connexionButton" class="nav-link active" aria-current="page">Connexion</button>
+            </li>
+            <li class="nav-item">
+                <a id="recette" class="nav-link active" aria-current="page" href="recetteFormulaire.html">Recette </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="recipeForm.html">Recipe </a>
+            </li>
+            <li class="nav-item">
+                <a id="boutonAvis" class="nav-link active" aria-current="page" href="avisFormulaire.html">Avis</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 <h1>Nouvelle recette</h1>
 <div class="wrapper">
     <div id="Element primaire">
