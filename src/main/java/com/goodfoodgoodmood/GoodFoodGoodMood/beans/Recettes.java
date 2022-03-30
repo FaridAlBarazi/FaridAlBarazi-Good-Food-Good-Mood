@@ -70,8 +70,8 @@ public class Recettes {
         return preparation;
     }
 
-    public void setPreparation(String préparation) {
-        this.preparation = préparation;
+    public void setPreparation(String preparation) {
+        this.preparation = preparation;
     }
 
     public String getSpecialite() {
