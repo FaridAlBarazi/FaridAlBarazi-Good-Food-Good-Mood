@@ -163,22 +163,36 @@ public class UserController {
     public String removeFavoris(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         User user = userRepositories.findByMail(cookies[0].getValue());
-        Set<RecetteFavoris> favorisList = user.getFavoris();
-        int longueur = favorisList.size();
-        favorisList.remove(longueur - 1);
+        //Set<RecetteFavoris> favorisList = user.getFavoris();
+        int longueur = user.getFavoris().size();
+        System.out.println("longuuueurrr : " +longueur);
+        System.out.println("user avant : " + user);
+        //favorisList.remove(longueur - 1);
+        user.getFavoris().remove(longueur - 1);
         //System.out.println(cookies[0].getValue());
+        System.out.println("user après : " + user);
         userRepositories.save(user);
         return "ok";
     }
 
     @PatchMapping("/removeFavorisID")
     public String removeFavorisID(@RequestBody int index, HttpServletRequest request) {
+        System.out.println("index : " + index);
+
+        // Cookies
         Cookie[] cookies = request.getCookies();
+
+        // Récupération du user
         User user = userRepositories.findByMail(cookies[0].getValue());
+
+        // Récupération de la liste des favoris du user
         Set<RecetteFavoris> favorisList = user.getFavoris();
-        int longueur = favorisList.size();
+
+        // Enlever un élement de la liste
+        System.out.println("favorisList avant : " + favorisList);
         favorisList.remove(index);
-        //System.out.println(cookies[0].getValue());
+        System.out.println("favorisList apres : " + favorisList);
+
         userRepositories.save(user);
         return "ok";
     }

@@ -74,6 +74,7 @@ public class Recettes {
         this.preparation = preparation;
     }
 
+
     public String getSpecialite() {
         return specialite;
     }

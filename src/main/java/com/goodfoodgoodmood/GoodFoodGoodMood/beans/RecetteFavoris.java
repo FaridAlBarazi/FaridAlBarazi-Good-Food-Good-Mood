@@ -10,8 +10,10 @@ public class RecetteFavoris {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int ID;
+    private int idRecetteAPI;
     private String nomRecette;
     private String urlImage;
+    private String specialite;
 
     public RecetteFavoris() {
     }
@@ -20,14 +22,26 @@ public class RecetteFavoris {
     public String toString() {
         return "RecetteFavoris{" +
                 "ID=" + ID +
+                ", idRecetteAPI=" + idRecetteAPI +
                 ", nomRecette='" + nomRecette + '\'' +
                 ", urlImage='" + urlImage + '\'' +
+                ", specialite='" + specialite + '\'' +
                 '}';
     }
 
-    public RecetteFavoris(String nomRecette, String urlImage) {
+    public RecetteFavoris(int idRecetteAPI, String nomRecette, String urlImage, String specialite) {
+        this.idRecetteAPI = idRecetteAPI;
         this.nomRecette = nomRecette;
         this.urlImage = urlImage;
+        this.specialite = specialite;
+    }
+
+    public int getIdRecetteAPI() {
+        return idRecetteAPI;
+    }
+
+    public void setIdRecetteAPI(int idRecetteAPI) {
+        this.idRecetteAPI = idRecetteAPI;
     }
 
     public int getID() {
@@ -52,5 +66,13 @@ public class RecetteFavoris {
 
     public void setUrlImage(String urlImage) {
         this.urlImage = urlImage;
+    }
+
+    public String getSpecialite() {
+        return specialite;
+    }
+
+    public void setSpecialite(String specialite) {
+        this.specialite = specialite;
     }
 }

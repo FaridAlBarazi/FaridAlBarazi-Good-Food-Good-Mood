@@ -39,6 +39,7 @@ public class User {
                 ", allergie=" + allergie +
                 ", recettes=" + recettes +
                 ", avis=" + avis +
+                ", favoris=" + favoris +
                 '}';
     }
 

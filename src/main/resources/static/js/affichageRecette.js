@@ -77,8 +77,10 @@ $("#buttonCoeur").click(()=>{
     if(like==whiteHeart) {
         buttonCoeur.textContent = blackHeart;
         let recetteFavoris = {
+            idRecetteAPI : new URL(location.href).searchParams.get('id'),
             nomRecette: $("#titre").html(),
-            urlImage :  $("#image").prop('src')
+            urlImage :  $("#image").prop('src'),
+            specialite: $("#cuisine").html()
         }
         console.log(recetteFavoris)
         $.ajax({

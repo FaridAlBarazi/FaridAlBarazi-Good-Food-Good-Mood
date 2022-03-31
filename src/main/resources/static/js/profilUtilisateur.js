@@ -137,10 +137,24 @@ function afficherFavroisRecette(listFavoris) {
                     $(document.createElement('h5')).prop({
                         class: "card-title"
                     }).html(listFavoris[i].nomRecette),
-                    $(document.createElement('button')).prop({
+                    $(document.createElement('input')).prop({
                         id: ("remove" + i),
                         class: "btn btn-primary",
                         value: "Retirer des favoris"
+                    }).click(() => {
+                        console.log(i)
+                        $.ajax({
+                            type:"PATCH",
+                            url:"http://localhost:8080/API/removeFavorisID",
+                            data: JSON.stringify(i),
+                            headers: {"Content-Type":"application/json"},
+                            success: (retour)=> {console.log(retour);}
+                        });
+                    }),
+                    $(document.createElement('input')).prop({
+                        id: ("recette" + i),
+                        class: "btn btn-primary",
+                        value: "Voir la recette"
                     }).click(() => {
                         console.log()
                         $.ajax({

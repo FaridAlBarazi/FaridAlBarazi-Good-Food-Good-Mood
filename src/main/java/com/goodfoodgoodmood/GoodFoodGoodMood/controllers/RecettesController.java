@@ -1,12 +1,15 @@
 package com.goodfoodgoodmood.GoodFoodGoodMood.controllers;
 
 
+import com.goodfoodgoodmood.GoodFoodGoodMood.beans.Ingredients;
 import com.goodfoodgoodmood.GoodFoodGoodMood.beans.Recettes;
 import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.RecetteRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @RestController
 @RequestMapping("/API")
@@ -39,4 +42,20 @@ public class RecettesController {
         return mesrecettes;
     }
 
+    @GetMapping("/testIngredient/{ingredients}")
+    public List<Recettes> testIngredient(@PathVariable("ingredients") String ingredients) {
+        List<Recettes> getRecettes = new ArrayList<>();
+        List<Recettes> mesrecettes = recetteRepositories.findAll();
+        for(int i=0; i< mesrecettes.size(); i++){
+            List<Ingredients> ingredientsList = mesrecettes.get(i).getIngredients();
+            for(int j=0; j < ingredientsList.size(); j++){
+                if(ingredients.toLowerCase().equals(ingredientsList.get(j).getNom().toLowerCase())){
+                    getRecettes.add(mesrecettes.get(i));
+                }
+            }
+        }
+        System.out.println(getRecettes);
+
+        return getRecettes;
+    }
 }
