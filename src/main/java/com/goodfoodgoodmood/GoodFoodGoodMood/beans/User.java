@@ -26,8 +26,8 @@ public class User {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Avis> avis;
 
-    @ElementCollection
-    private List<Integer> favoris;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<RecetteFavoris> favoris;
 
     @Override
     public String toString() {
@@ -39,6 +39,7 @@ public class User {
                 ", allergie=" + allergie +
                 ", recettes=" + recettes +
                 ", avis=" + avis +
+                ", favoris=" + favoris +
                 '}';
     }
 
@@ -55,11 +56,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Integer> getFavoris() {
+    public Set<RecetteFavoris> getFavoris() {
         return favoris;
     }
 
-    public void setFavoris(List<Integer> favoris) {
+    public void setFavoris(Set<RecetteFavoris> favoris) {
         this.favoris = favoris;
     }
 

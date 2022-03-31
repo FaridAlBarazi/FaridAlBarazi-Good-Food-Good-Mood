@@ -1,10 +1,7 @@
 package com.goodfoodgoodmood.GoodFoodGoodMood.controllers;
 
-import com.goodfoodgoodmood.GoodFoodGoodMood.beans.Avis;
-import com.goodfoodgoodmood.GoodFoodGoodMood.beans.Recettes;
+import com.goodfoodgoodmood.GoodFoodGoodMood.beans.*;
 import com.goodfoodgoodmood.GoodFoodGoodMood.modeles.Information;
-import com.goodfoodgoodmood.GoodFoodGoodMood.beans.TypeAllergie;
-import com.goodfoodgoodmood.GoodFoodGoodMood.beans.User;
 import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.UserRepositories;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,8 +135,8 @@ public class UserController {
         return user.getAvis().size();
     }
 
-    @PatchMapping ("/recuperationAvisUser")
-    public String recuperationAvis(@RequestBody Avis monAvis, HttpServletRequest request){
+    @PatchMapping("/recuperationAvisUser")
+    public String recuperationAvis(@RequestBody Avis monAvis, HttpServletRequest request) {
         System.out.println(monAvis);
         Cookie[] cookies = request.getCookies();
         User user = userRepositories.findByMail(cookies[0].getValue());
@@ -151,11 +148,11 @@ public class UserController {
     }
 
     @PatchMapping("/addFavoris")
-    public String addFavoris(@RequestBody int idRecette,HttpServletRequest request) {
+    public String addFavoris(@RequestBody RecetteFavoris idRecette, HttpServletRequest request) {
         System.out.println(idRecette);
         Cookie[] cookies = request.getCookies();
         User user = userRepositories.findByMail(cookies[0].getValue());
-        List<Integer> favorisList = user.getFavoris();
+        Set<RecetteFavoris> favorisList = user.getFavoris();
         favorisList.add(idRecette);
         //System.out.println(cookies[0].getValue());
         userRepositories.save(user);
@@ -163,14 +160,39 @@ public class UserController {
     }
 
     @PatchMapping("/removeFavoris")
-    public String removeFavoris(@RequestBody int idRecette,HttpServletRequest request) {
-        System.out.println(idRecette);
+    public String removeFavoris(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         User user = userRepositories.findByMail(cookies[0].getValue());
-        List<Integer> favorisList = user.getFavoris();
-        int longueur = favorisList.size();
-        favorisList.remove(longueur - 1);
+        //Set<RecetteFavoris> favorisList = user.getFavoris();
+        int longueur = user.getFavoris().size();
+        System.out.println("longuuueurrr : " +longueur);
+        System.out.println("user avant : " + user);
+        //favorisList.remove(longueur - 1);
+        user.getFavoris().remove(longueur - 1);
         //System.out.println(cookies[0].getValue());
+        System.out.println("user après : " + user);
+        userRepositories.save(user);
+        return "ok";
+    }
+
+    @PatchMapping("/removeFavorisID")
+    public String removeFavorisID(@RequestBody int index, HttpServletRequest request) {
+        System.out.println("index : " + index);
+
+        // Cookies
+        Cookie[] cookies = request.getCookies();
+
+        // Récupération du user
+        User user = userRepositories.findByMail(cookies[0].getValue());
+
+        // Récupération de la liste des favoris du user
+        Set<RecetteFavoris> favorisList = user.getFavoris();
+
+        // Enlever un élement de la liste
+        System.out.println("favorisList avant : " + favorisList);
+        favorisList.remove(index);
+        System.out.println("favorisList apres : " + favorisList);
+
         userRepositories.save(user);
         return "ok";
     }
@@ -183,7 +205,7 @@ public class UserController {
     }
 
     @GetMapping("/getfavoris")
-    public List<Integer> getfavoris(HttpServletRequest request) {
+    public Set<RecetteFavoris> getfavoris(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         User user = userRepositories.findByMail(cookies[0].getValue());
         return user.getFavoris();
