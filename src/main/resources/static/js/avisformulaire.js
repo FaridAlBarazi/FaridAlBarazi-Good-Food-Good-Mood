@@ -109,8 +109,8 @@ $("#monBouton").click(() =>{
         success: (retour)=> {console.log(retour);}
     });
 
-
-    $("#monAvis").html(  "date: " + obj.date +"commentaire : " + obj.description + " note:  " +obj.note );
+// affichage de l'avis en cours
+    $("#monAvis").html("date: " + obj.date +"commentaire : " + obj.description + " note:  " +obj.note );
 
 
 });
@@ -118,21 +118,19 @@ $("#monBouton").click(() =>{
 //affichage des 4 avis les mieux notés en html
 // BOUCLE SUR UN DIV
 $.get("http://localhost:8080/API/les4avis", (retour)=>{
-    for (let i=0; i<retour.length; i++){
+    /*for (let i=0; i<retour.length; i++){
+            $("#pseudoA").html(retour[i].pseudo);
+            $("#dateA").html(retour[i].date );
+            $("#commA").html(retour[i].description );
+            $("#noteA").html(retour[i].note );
+    };*/
 
-        $("#pseudo").html(retour[i].pseudo );
-        $("#date").html(retour[i].date );
-        $("#comm").html(retour[i].description );
-        $("#note").html(retour[i].note );
+        $("#pseudo1").html(retour[0].pseudo );$("#date1").html(retour[0].date );$("#comm1").html(retour[0].description );$("#note1").html(retour[0].note );
+        $("#pseudo2").html(retour[1].pseudo );$("#date2").html(retour[1].date );$("#comm2").html(retour[1].description );$("#note2").html(retour[1].note );
+        $("#pseudo3").html(retour[2].pseudo );$("#date3").html(retour[2].date );$("#comm3").html(retour[2].description );$("#note3").html(retour[2].note );
+        $("#pseudo4").html(retour[3].pseudo );$("#date4").html(retour[3].date );$("#comm4").html(retour[3].description );$("#note4").html(retour[3].note );
 
 
-
-
-        //$("#Avis1").html( "pseudo: " + retour[0].pseudo + " commentaire: " + retour[0].description + " note: " + retour[0].note);
-        //$("#Avis2").html( "pseudo: " + retour[1].pseudo + " commentaire: " + retour[1].description + " note: " + retour[1].note);
-        //$("#Avis3").html( "pseudo: " + retour[2].pseudo + " commentaire: " + retour[2].description + " note: " + retour[2].note);
-        //$("#Avis4").html( "pseudo: " + retour[3].pseudo + " commentaire: " + retour[3].description + " note: " + retour[3].note);
-    }
 });
 
 
