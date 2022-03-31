@@ -6,4 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AvisRepositories extends JpaRepository<Avis, Integer> {
 
+    Avis findByID(int id);
 }

@@ -102,21 +102,13 @@ $("#monBouton").click(() =>{
 
 
     $.ajax({
-        type:"POST",
-        url:"http://localhost:8080/API/recuperationAvis",
+        type:"PATCH",
+        url:"http://localhost:8080/API/recuperationAvisUser",
         data: JSON.stringify(obj),
         headers: {"Content-Type":"application/json"},
         success: (retour)=> {console.log(retour);}
     });
 });
-
-
-
-
-
-
-
-
 
 
 
