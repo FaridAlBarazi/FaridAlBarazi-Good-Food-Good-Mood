@@ -153,14 +153,19 @@ public class UserController {
 
     @PatchMapping("/addFavoris")
     public String addFavoris(@RequestBody RecetteFavoris idRecette, HttpServletRequest request) {
+        RecetteFavoris recetteFavoris = recetteFavoriRepositories.findByIdRecetteAPI(idRecette.getIdRecetteAPI());
+
         System.out.println(idRecette);
-        Cookie[] cookies = request.getCookies();
-        User user = userRepositories.findByMail(cookies[0].getValue());
-        Set<RecetteFavoris> favorisList = user.getFavoris();
-        favorisList.add(idRecette);
-        //System.out.println(cookies[0].getValue());
-        userRepositories.save(user);
-        return "ok";
+        if(recetteFavoris == null){
+            Cookie[] cookies = request.getCookies();
+            User user = userRepositories.findByMail(cookies[0].getValue());
+            Set<RecetteFavoris> favorisList = user.getFavoris();
+            favorisList.add(idRecette);
+            //System.out.println(cookies[0].getValue());
+            userRepositories.save(user);
+            return "ok";
+        }
+        return "pas ok";
     }
 
     @PatchMapping("/removeFavoris")

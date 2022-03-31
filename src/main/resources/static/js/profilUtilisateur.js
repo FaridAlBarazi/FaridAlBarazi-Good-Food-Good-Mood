@@ -43,7 +43,7 @@ $("#deconnexion").click(() => {
 })
 
 
-$("#profilNom").html("Bonjour " + getCookie("pseudo") + " !");
+$("#profilNom").html("Bonjour " + getCookie("pseudo") + " 😃!");
 
 $.ajax({
     type: "GET",
@@ -104,7 +104,7 @@ function getInfoRecette(id) {
 
 }
 
-//console.log(getInfoRecette(633754));
+
 function getFavorisRecette() {
     $.ajax({
         type: "GET",
@@ -115,12 +115,8 @@ function getFavorisRecette() {
     })
 }
 
-function removeFavoris(remove) {
-    console.log(remove);
-}
-
 function afficherFavroisRecette(listFavoris) {
-    console.log(listFavoris)
+    console.log(listFavoris);
     for (let i = 0; i < listFavoris.length; i++) {
         $("#cardFavoris").append(
             $(document.createElement('div')).prop({
@@ -144,11 +140,13 @@ function afficherFavroisRecette(listFavoris) {
                     }).click(() => {
                         console.log(i)
                         $.ajax({
-                            type:"PATCH",
-                            url:"http://localhost:8080/API/removeFavorisID",
-                            data: JSON.stringify(i),
-                            headers: {"Content-Type":"application/json"},
-                            success: (retour)=> {console.log(retour);}
+                            type: "PATCH",
+                            url: "http://localhost:8080/API/removeFavoris",
+                            data: JSON.stringify(listFavoris[i].idRecetteAPI),
+                            headers: {"Content-Type": "application/json"},
+                            success: (retour) => {
+                                location.reload();
+                            }
                         });
                     }),
                     $(document.createElement('input')).prop({
@@ -158,17 +156,20 @@ function afficherFavroisRecette(listFavoris) {
                     }).click(() => {
                         console.log()
                         $.ajax({
-                            type:"PATCH",
-                            url:"http://localhost:8080/API/removeFavorisID",
+                            type: "PATCH",
+                            url: "http://localhost:8080/API/removeFavorisID",
                             data: JSON.stringify(i),
-                            headers: {"Content-Type":"application/json"},
-                            success: (retour)=> {console.log(retour);}
+                            headers: {"Content-Type": "application/json"},
+                            success: (retour) => {
+                                console.log(retour);
+                            }
                         });
                     })
                 )
             )
         )
     }
+
 }
 
 
@@ -179,6 +180,9 @@ function getnbrFavorisRecette() {
         success: (retour) => {
             if (retour > 0) {
                 getFavorisRecette();
+            } else {
+                $("#cardFavoris").css("display", "none");
+                $("#aucuneRecette").css("display", "block");
             }
         }
     })
