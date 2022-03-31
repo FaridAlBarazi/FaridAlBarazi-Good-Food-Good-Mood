@@ -6,6 +6,9 @@ import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.AvisRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/API")
 public class AvisController {
@@ -29,6 +32,19 @@ public class AvisController {
         System.out.println(monAvis);
         avisRepositories.save(monAvis);
         return "OK";
+    }
+
+
+    @GetMapping ("/getAllAvis")
+    public List<Avis> getAllAvis(){
+        List<Avis> listeAvis= avisRepositories.findAll();
+        return listeAvis;
+    }
+
+    @GetMapping("/les4DerniersAvis")
+    public List<Avis> les4DernierAvis(){
+        List<Avis> listeAvis4=avisRepositories.findTop4ByOrderByDate();
+        return(listeAvis4);
     }
 
 }

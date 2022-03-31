@@ -51,6 +51,7 @@ function resetStars(note=0){
 
 let obj={pseudo:"hanna84",date:"12/12/2021",description:"la recette est super facile à réaliser"};
 
+// fonction cookie pour récupérer le pseudo
 function getCookie(name) {
     let dc = document.cookie;
     let prefix = name + "=";
@@ -67,12 +68,26 @@ function getCookie(name) {
     }
     return decodeURI(dc.substring(begin + prefix.length));
 }
+
+// Ajout des avis en base
+
+var tableauAvis=[];
+var tableau=[];
+
+tableau.push()
 $("#monBouton").click(() =>{
+
     obj.pseudo=getCookie("pseudo");
     obj.date=$("#date").val();
     obj.description=$("#exempleCommentaire").val();
     obj.note=$("#note").val();
 
+    tableauAvis.push(obj);
+    console.log(tableauAvis);
+    for (let i=0; i<tableauAvis.length;i++){
+        tableau.push(tableauAvis[i]);
+        console.log(tableau);
+    }
 
     $.ajax({
         type:"POST",
@@ -81,7 +96,37 @@ $("#monBouton").click(() =>{
         headers: {"Content-Type":"application/json"},
         success: (retour)=> {console.log(retour);}
     });
+
+        /*for (let i=0; i<tableauAvis.length; i++) {
+            $("#monAvis").html("son nom est " + tableauAvis[i].nom + " commentaire : " + tableauAvis[i].description + " note:  " + tableauAvis[i].note);
+
+        };*/
+
 });
+
+// Catastrophe
+let objet={pseudo:"hanna",date:"12/12/2021",description:"superrrrr", note:5 }
+$.get("http://localhost:8080/API/les4DerniersAvis", (retour)=>{
+    for (let i=0; i<retour.length; i++){
+        let tableau=[];
+        tableau.push(retour);
+       // $("#lesAvis").html(tableau);
+        console.log(tableau);
+    }
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
