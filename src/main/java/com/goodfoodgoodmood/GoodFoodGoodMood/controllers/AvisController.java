@@ -2,13 +2,20 @@ package com.goodfoodgoodmood.GoodFoodGoodMood.controllers;
 
 
 import com.goodfoodgoodmood.GoodFoodGoodMood.beans.Avis;
+import com.goodfoodgoodmood.GoodFoodGoodMood.beans.User;
 import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.AvisRepositories;
+import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.UserRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/API")
 public class AvisController {
+    @Autowired
+    private UserRepositories userRepositories;
 
     @Autowired
     private AvisRepositories avisRepositories;
@@ -30,5 +37,4 @@ public class AvisController {
         avisRepositories.save(monAvis);
         return "OK";
     }
-
 }

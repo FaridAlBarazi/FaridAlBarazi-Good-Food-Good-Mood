@@ -162,9 +162,9 @@ let ingredient = [];
     recette.ingredients = ingredient;
     console.log(JSON.stringify(recette));
     $.ajax({
-        type: "POST",
+        type: "PATCH",
         headers: {"Content-Type": "application/json"},
-        url: "http://localhost:8080/API/recuperationRecette",
+        url: "http://localhost:8080/API/recuperationRecetteUser",
         data: JSON.stringify(recette),
         success: (retour) => {
             alert(retour);

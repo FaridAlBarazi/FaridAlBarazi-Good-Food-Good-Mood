@@ -3,6 +3,7 @@ package com.goodfoodgoodmood.GoodFoodGoodMood.beans;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -17,10 +18,15 @@ public class User {
     @JoinTable(name = "userAllergie", joinColumns = @JoinColumn(name = "userID"))
     @Column(name = "allergie", nullable = false)
     @Enumerated(EnumType.STRING)
-    Collection<TypeAllergie> allergie;
+    private Collection<TypeAllergie> allergie;
 
-    @OneToMany
-    List<Recettes> recettes;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Recettes> recettes;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Set<Avis> avis;
+
+    private String favoris;
 
     @Override
     public String toString() {
@@ -31,10 +37,15 @@ public class User {
                 ", password='" + password + '\'' +
                 ", allergie=" + allergie +
                 ", recettes=" + recettes +
+                ", avis=" + avis +
                 '}';
     }
 
     public User() {
+    }
+
+    public void ajouterRecette(Recettes recette) {
+        this.recettes.add(recette);
     }
 
     public User(String pseudo, String mail, String password) {
@@ -81,5 +92,21 @@ public class User {
 
     public void setAllergie(Collection<TypeAllergie> allergie) {
         this.allergie = allergie;
+    }
+
+    public Set<Recettes> getRecettes() {
+        return recettes;
+    }
+
+    public void setRecettes(Set<Recettes> recettes) {
+        this.recettes = recettes;
+    }
+
+    public Set<Avis> getAvis() {
+        return avis;
+    }
+
+    public void setAvis(Set<Avis> avis) {
+        this.avis = avis;
     }
 }
