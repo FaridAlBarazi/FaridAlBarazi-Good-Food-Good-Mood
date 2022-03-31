@@ -1,0 +1,17 @@
+#recherche{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    border: antiquewhite;
+    background: antiquewhite;
+}
+#divPrincipal2{
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/recette1.jpeg");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+
+}

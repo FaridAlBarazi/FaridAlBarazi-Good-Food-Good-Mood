@@ -2,3 +2,33 @@
     font-family:'Monotype Corsiva','Apple Chancery','ITC Zapf Chancery','URW Chancery L',cursive;
     font-size: x-large;
 }
+
+#cardFavoris{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    justify-content: center;
+    justify-content: space-around;
+}
+
+#divRecettes{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#favoris, #recettePublie, #avisPublie{
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 1em 10px black;
+    margin: auto 3em;
+    padding: 1em;
+    margin-bottom: 5em;
+    margin-top: 2%;
+}
+
+#recettePublie{
+    display: flex;
+    flex-direction: column;
+}

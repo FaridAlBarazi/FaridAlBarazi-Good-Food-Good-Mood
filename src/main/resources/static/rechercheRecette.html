@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <head>
+    <meta charset="UTF-8">
+    <title>Recherche</title>
+    <link rel="stylesheet" href="bootstrap-css/bootstrap/bootstrap.min.css">
+    <link rel="icon" href="images/logo.jpeg" type="image/icon type">
+    <link rel="stylesheet" href="css/rechercheRecette.css">
+  </head>
+<body>
+<nav id="navbar" class="navbar navbar-expand-lg navbar-light" style="background-color: antiquewhite;">
+  <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+    <ul class="navbar-nav mr-auto">
+      <li id="dropdown" style="display: none" class="nav-item dropdown">
+        <a id="pseudo" class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+           data-bs-toggle="dropdown" aria-expanded="false">
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="profilUtilisateur.html">Voir mon profil</a></li>
+          <li><a id="deconnexion" class="dropdown-item" href="#">Déconnexion</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="mx-auto order-0">
+    <a class="navbar-brand mx-auto" href="#">
+      <p id="cursive">Good Food Good Mood</p>
+    </a>
+  </div>
+  <div class="navbar-collapse collapse w-100 order-3 dual-collapse2" style="justify-content: end;">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a id="connexionButton" class="nav-link active" aria-current="page" href="#">Connexion</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" aria-current="page" href="recetteFormulaire.html">Recette </a>
+      </li>
+      <li class="nav-item">
+        <a id="boutonAvis" class="nav-link active" aria-current="page" href="avisFormulaire.html">Avis</a>
+      </li>
+    </ul>
+  </div>
+  <!--<div style="width: 100%; display: flex;">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav  mb-2 mb-lg-0">
+              <li class="nav-item">
+                  <a id="accueil" class="navbar-brand mx-auto" aria-current="page" href="index.html">
+                      <p id="cursive">Good Food Good Mood</p>
+                  </a>
+              </li>
+          </ul>
+          <ul id="ul" class="navbar-nav  mb-2 mb-lg-0">
+              <li class="nav-item">
+                  <a id="connexionButton" class="nav-link active" aria-current="page" href="#">Connexion</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="recetteFormulaire.html">Recette </a>
+              </li>
+              <li class="nav-item">
+                  <a id="boutonAvis" class="nav-link active" aria-current="page" href="avisFormulaire.html">Avis</a>
+              </li>
+              <li id="dropdown" style="display: none" class="nav-item dropdown">
+                  <a id="pseudo" class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button"
+                     data-bs-toggle="dropdown" aria-expanded="false">
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                      <li><a class="dropdown-item" href="profilUtilisateur.html">Voir mon profil</a></li>
+                      <li><a id="deconnexion" class="dropdown-item" href="#">Déconnexion</a></li>
+                  </ul>
+              </li>
+          </ul>
+      </div>
+  </div>-->
+</nav>
+<div id="divPrincipal2">
+  <br><br>
+  <h1 style="    color: wheat; text-align: center;"> Des milliers de recettes qui n'attendent que vous !
+  </h1>
+  <br><br>
+<select id="myselect1" class="form-select form-select" aria-label=".form-select-lg example">
+  <option >Que voulez-vous..   </option>
+  <option >Recettes de notre site</option>
+  <option >Recettes utilisateurs</option>
+</select>
+  <br><br>
+<select id="myselect2" class="form-select form-select" aria-label=".form-select-lg example">
+  <option >Selectionner votre choix </option>
+  <option >Par specialité</option>
+  <option >Par_ingredient</option>
+  <option >Par le nom de la recette</option>
+</select>
+  <br><br>
+<input id="inputRecherche" type="text"/>
+  <br><br>
+<button id="recherche">♥ ♥ Rechercher ♥ ♥</button>
+  <br><br><br><br><br><br><br><br><br><br>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="bootstrap-js/bootstrap/bootstrap.bundle.min.js"></script>
+<script src="js/rechercheRecette.js"></script>
+</body>
+</html>
