@@ -118,11 +118,20 @@ $("#monBouton").click(() =>{
 //affichage des 4 avis les mieux notés en html
 // BOUCLE SUR UN DIV
 $.get("http://localhost:8080/API/les4avis", (retour)=>{
-    for (let i=1; i<retour.length; i++){
-        $("#Avis1").html( "pseudo: " + retour[0].pseudo + " commentaire: " + retour[0].description + " note: " + retour[0].note);
-        $("#Avis2").html( "pseudo: " + retour[1].pseudo + " commentaire: " + retour[1].description + " note: " + retour[1].note);
-        $("#Avis3").html( "pseudo: " + retour[2].pseudo + " commentaire: " + retour[2].description + " note: " + retour[2].note);
-        $("#Avis4").html( "pseudo: " + retour[3].pseudo + " commentaire: " + retour[3].description + " note: " + retour[3].note);
+    for (let i=0; i<retour.length; i++){
+
+        $("#pseudo").html(retour[i].pseudo );
+        $("#date").html(retour[i].date );
+        $("#comm").html(retour[i].description );
+        $("#note").html(retour[i].note );
+
+
+
+
+        //$("#Avis1").html( "pseudo: " + retour[0].pseudo + " commentaire: " + retour[0].description + " note: " + retour[0].note);
+        //$("#Avis2").html( "pseudo: " + retour[1].pseudo + " commentaire: " + retour[1].description + " note: " + retour[1].note);
+        //$("#Avis3").html( "pseudo: " + retour[2].pseudo + " commentaire: " + retour[2].description + " note: " + retour[2].note);
+        //$("#Avis4").html( "pseudo: " + retour[3].pseudo + " commentaire: " + retour[3].description + " note: " + retour[3].note);
     }
 });
 
