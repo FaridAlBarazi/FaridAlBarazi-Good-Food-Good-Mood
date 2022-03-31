@@ -108,7 +108,36 @@ $("#monBouton").click(() =>{
         headers: {"Content-Type":"application/json"},
         success: (retour)=> {console.log(retour);}
     });
+
+// affichage de l'avis en cours
+    $("#monAvis").html("date: " + obj.date +"commentaire : " + obj.description + " note:  " +obj.note );
+
+
 });
+
+//affichage des 4 avis les mieux notés en html
+// BOUCLE SUR UN DIV
+$.get("http://localhost:8080/API/les4avis", (retour)=>{
+    /*for (let i=0; i<retour.length; i++){
+            $("#pseudoA").html(retour[i].pseudo);
+            $("#dateA").html(retour[i].date );
+            $("#commA").html(retour[i].description );
+            $("#noteA").html(retour[i].note );
+    };*/
+
+        $("#pseudo1").html(retour[0].pseudo );$("#date1").html(retour[0].date );$("#comm1").html(retour[0].description );$("#note1").html(retour[0].note );
+        $("#pseudo2").html(retour[1].pseudo );$("#date2").html(retour[1].date );$("#comm2").html(retour[1].description );$("#note2").html(retour[1].note );
+        $("#pseudo3").html(retour[2].pseudo );$("#date3").html(retour[2].date );$("#comm3").html(retour[2].description );$("#note3").html(retour[2].note );
+        $("#pseudo4").html(retour[3].pseudo );$("#date4").html(retour[3].date );$("#comm4").html(retour[3].description );$("#note4").html(retour[3].note );
+
+
+});
+
+
+
+
+
+
 
 
 
