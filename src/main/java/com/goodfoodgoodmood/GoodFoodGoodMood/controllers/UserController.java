@@ -2,6 +2,7 @@ package com.goodfoodgoodmood.GoodFoodGoodMood.controllers;
 
 import com.goodfoodgoodmood.GoodFoodGoodMood.beans.*;
 import com.goodfoodgoodmood.GoodFoodGoodMood.modeles.Information;
+import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.RecetteFavoriRepositories;
 import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.UserRepositories;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ import java.util.stream.Collectors;
 public class UserController {
     @Autowired
     private UserRepositories userRepositories;
+
+    @Autowired
+    private RecetteFavoriRepositories recetteFavoriRepositories;
 
     @PostMapping("/connexion")
     public ResponseEntity<String> connexion(@RequestBody User userConnexion, HttpServletResponse response) {
@@ -160,16 +164,16 @@ public class UserController {
     }
 
     @PatchMapping("/removeFavoris")
-    public String removeFavoris(HttpServletRequest request) {
+    public String removeFavoris(@RequestBody int idRecette, HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
+        // Recuperation user
         User user = userRepositories.findByMail(cookies[0].getValue());
         //Set<RecetteFavoris> favorisList = user.getFavoris();
-        int longueur = user.getFavoris().size();
-        System.out.println("longuuueurrr : " +longueur);
+        RecetteFavoris recetteFavoris = recetteFavoriRepositories.findByIdRecetteAPI(idRecette);
+        System.out.println("recette favori : " + recetteFavoris);
         System.out.println("user avant : " + user);
-        //favorisList.remove(longueur - 1);
-        user.getFavoris().remove(longueur - 1);
-        //System.out.println(cookies[0].getValue());
+
+        user.getFavoris().remove(recetteFavoris);
         System.out.println("user après : " + user);
         userRepositories.save(user);
         return "ok";
