@@ -175,6 +175,20 @@ public class UserController {
         return "ok";
     }
 
+    @GetMapping("/nbrFavoris")
+    public int nbrFavoris(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        User user = userRepositories.findByMail(cookies[0].getValue());
+        return user.getFavoris().size();
+    }
+
+    @GetMapping("/getfavoris")
+    public List<Integer> getfavoris(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        User user = userRepositories.findByMail(cookies[0].getValue());
+        return user.getFavoris();
+    }
+
     @PatchMapping("/test")
     public void saveAllergyTest() {
         User user = userRepositories.findByPseudo("Nat");
