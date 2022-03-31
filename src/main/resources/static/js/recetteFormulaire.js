@@ -42,6 +42,40 @@ $("#deconnexion").click(() => {
     })
 })
 
+// select pour les specialité
+let spec = [
+    {val : "African", text: 'African'},
+    {val : "American", text: 'American'},
+    {val : "British", text: 'British'},
+    {val : "Cajun", text: 'Cajun'},
+    {val : "Caribbean", text: 'Caribbean'},
+    {val : "Chinese", text: 'Chinese'},
+    {val : "Eastern European", text: 'Eastern European'},
+    {val : "European", text: 'European'},
+    {val : "French", text: 'French'},
+    {val : "German", text: 'German'},
+    {val : "Greek", text: 'Greek'},
+    {val : "Indian", text: 'Indian'},
+    {val : "Irish", text: 'Irish'},
+    {val : "Italian", text: 'Italian'},
+    {val : "Japanese", text: 'Japanese'},
+    {val : "Jewish", text: 'Jewish'},
+    {val : "Korean", text: 'Korean'},
+    {val : "Latin", text: 'Latin'},
+    {val : "American Mediterranean", text: 'American Mediterranean'},
+    {val : "Mexican", text: 'Mexican'},
+    {val : "Middle Eastern", text: 'Middle Eastern'},
+    {val : "Nordic", text: 'Nordic'},
+    {val : "Southern", text: 'Southern'},
+    {val : "Spanish", text: 'Spanish'},
+    {val : "Thai", text: 'Thai'},
+    {val : "Vietnamese", text: 'Vietnamese'}
+
+];
+let selec = $("<select id='selectspecialite'>").appendTo($("#specialiteRecette"));
+$(spec).each(function() {
+    selec.append($("<option>").attr('value',this.val).text(this.text));
+});
 
 // On définit le nombre de champs
 let nbrChamp = 2;
@@ -158,7 +192,7 @@ let ingredient = [];
     recette.name=$("#nomRecette").val();
     recette.duree=$("#dureRecette").val();
     recette.preparation=$("#floating-Textarea").val();
-    recette.specialite=$("#specialiteRecette").val();
+    recette.specialite=$("#selectspecialite").find(":selected").text()
     recette.ingredients = ingredient;
     console.log(JSON.stringify(recette));
     $.ajax({
