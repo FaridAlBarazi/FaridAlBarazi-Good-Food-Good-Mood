@@ -2,16 +2,20 @@ package com.goodfoodgoodmood.GoodFoodGoodMood.controllers;
 
 
 import com.goodfoodgoodmood.GoodFoodGoodMood.beans.Avis;
+import com.goodfoodgoodmood.GoodFoodGoodMood.beans.User;
 import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.AvisRepositories;
+import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.UserRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/API")
 public class AvisController {
+    @Autowired
+    private UserRepositories userRepositories;
 
     @Autowired
     private AvisRepositories avisRepositories;
@@ -33,18 +37,4 @@ public class AvisController {
         avisRepositories.save(monAvis);
         return "OK";
     }
-
-
-    @GetMapping ("/getAllAvis")
-    public List<Avis> getAllAvis(){
-        List<Avis> listeAvis= avisRepositories.findAll();
-        return listeAvis;
-    }
-
-    @GetMapping("/les4DerniersAvis")
-    public List<Avis> les4DernierAvis(){
-        List<Avis> listeAvis4=avisRepositories.findTop4ByOrderByDate();
-        return(listeAvis4);
-    }
-
 }

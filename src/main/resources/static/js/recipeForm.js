@@ -11,7 +11,7 @@ $(document).ready(function () {
         {val: "cuillère à café", text: 'cuillère à café'}
     ];
 
-    let sel = $('<select>').appendTo($("#Element primaire"));
+    let sel = $('<select>').appendTo($("#Element_primaire"));
     $(arr).each(function () {
         sel.append($("<option>").attr('value', this.val).text(this.text));
     });
@@ -71,3 +71,4 @@ remove_fields.onclick = function () {
 
     }
 }
+

@@ -9,7 +9,27 @@
     display: flex;
 }
 
+#connexionButton{
+    border: antiquewhite;
+    background: antiquewhite;
+}
+
+#cursive{
+    font-family:'Monotype Corsiva','Apple Chancery','ITC Zapf Chancery','URW Chancery L',cursive;
+    font-size: x-large;
+}
+
+.dimension{
+    width: 50%;
+}
+
 #divIngredient{
     display: flex;
     flex-direction: column;
+}
+
+#plusMoins{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }

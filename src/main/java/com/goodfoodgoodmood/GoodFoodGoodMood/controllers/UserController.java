@@ -1,5 +1,7 @@
 package com.goodfoodgoodmood.GoodFoodGoodMood.controllers;
 
+import com.goodfoodgoodmood.GoodFoodGoodMood.beans.Avis;
+import com.goodfoodgoodmood.GoodFoodGoodMood.beans.Recettes;
 import com.goodfoodgoodmood.GoodFoodGoodMood.modeles.Information;
 import com.goodfoodgoodmood.GoodFoodGoodMood.beans.TypeAllergie;
 import com.goodfoodgoodmood.GoodFoodGoodMood.beans.User;
@@ -13,10 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -35,10 +34,14 @@ public class UserController {
             if (BCrypt.checkpw(userConnexion.getPassword(), user.getPassword())) { // On vérifie que les passwords correspondent
                 // create a cookie
                 Cookie cookie = new Cookie("pseudo", user.getPseudo());
+                Cookie cookie2 = new Cookie("mail", user.getMail());
                 cookie.setMaxAge(7 * 24 * 60 * 60);
                 cookie.setPath("/"); // global cookie accessible every where
+                cookie2.setMaxAge(7 * 24 * 60 * 60);
+                cookie2.setPath("/"); // global cookie accessible every where
                 //add cookie to response
                 response.addCookie(cookie);
+                response.addCookie(cookie2);
                 return ResponseEntity.status(HttpStatus.OK).body("Ok");
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erreur mdp");
@@ -83,9 +86,9 @@ public class UserController {
     }
 
     @PatchMapping("/saveAllergie")
-    public void saveAllergy(@RequestBody Information obj){
+    public void saveAllergy(@RequestBody Information obj) {
         Collection<TypeAllergie> allergie = new ArrayList<>();
-        for(int i=0; i < obj.getAllergies().size(); i++){
+        for (int i = 0; i < obj.getAllergies().size(); i++) {
             TypeAllergie test = TypeAllergie.valueOf(obj.getAllergies().get(i));
             allergie.add(test);
         }
@@ -95,11 +98,11 @@ public class UserController {
     }
 
     @PatchMapping("/updatePassword")
-    public ResponseEntity<String> updatePassword(@RequestBody List<String> obj){
+    public ResponseEntity<String> updatePassword(@RequestBody List<String> obj) {
         User user = userRepositories.findByMail(obj.get(0));
-        if(user == null){
+        if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not ok");
-        }else{
+        } else {
             String hashed = BCrypt.hashpw(obj.get(1), BCrypt.gensalt(12));
             user.setPassword(hashed);
             userRepositories.save(user);
@@ -107,9 +110,73 @@ public class UserController {
         }
     }
 
+    @PatchMapping("/recuperationRecetteUser")
+    public String recuperationRecetteUser(@RequestBody Recettes recette, HttpServletRequest request) {
+        System.out.println(recette);
+        Cookie[] cookies = request.getCookies();
+        User user = userRepositories.findByMail(cookies[0].getValue());
+        Set<Recettes> recettesList = user.getRecettes();
+        user.getRecettes().add(recette);
+        //System.out.println(cookies[0].getValue());
+        userRepositories.save(user);
+        return "ok";
+    }
+
+    @GetMapping("/nbrRecettes")
+    public int nbrRecettes(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        User user = userRepositories.findByMail(cookies[0].getValue());
+        System.out.println(user.getRecettes().size());
+        return user.getRecettes().size();
+    }
+
+    @GetMapping("/nbrAvis")
+    public int nbrAvis(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        User user = userRepositories.findByMail(cookies[0].getValue());
+        System.out.println(user.getAvis().size());
+        return user.getAvis().size();
+    }
+
+    @PatchMapping ("/recuperationAvisUser")
+    public String recuperationAvis(@RequestBody Avis monAvis, HttpServletRequest request){
+        System.out.println(monAvis);
+        Cookie[] cookies = request.getCookies();
+        User user = userRepositories.findByMail(cookies[0].getValue());
+        Set<Avis> avisSet = user.getAvis();
+        user.getAvis().add(monAvis);
+        //System.out.println(cookies[0].getValue());
+        userRepositories.save(user);
+        return "ok";
+    }
+
+    @PatchMapping("/addFavoris")
+    public String addFavoris(@RequestBody int idRecette,HttpServletRequest request) {
+        System.out.println(idRecette);
+        Cookie[] cookies = request.getCookies();
+        User user = userRepositories.findByMail(cookies[0].getValue());
+        List<Integer> favorisList = user.getFavoris();
+        favorisList.add(idRecette);
+        //System.out.println(cookies[0].getValue());
+        userRepositories.save(user);
+        return "ok";
+    }
+
+    @PatchMapping("/removeFavoris")
+    public String removeFavoris(@RequestBody int idRecette,HttpServletRequest request) {
+        System.out.println(idRecette);
+        Cookie[] cookies = request.getCookies();
+        User user = userRepositories.findByMail(cookies[0].getValue());
+        List<Integer> favorisList = user.getFavoris();
+        int longueur = favorisList.size();
+        favorisList.remove(longueur - 1);
+        //System.out.println(cookies[0].getValue());
+        userRepositories.save(user);
+        return "ok";
+    }
 
     @PatchMapping("/test")
-    public void saveAllergyTest(){
+    public void saveAllergyTest() {
         User user = userRepositories.findByPseudo("Nat");
         Collection<TypeAllergie> allergies = new ArrayList<>();
         allergies.add(TypeAllergie.Aucun);
@@ -117,4 +184,6 @@ public class UserController {
         user.setAllergie(allergies);
         userRepositories.save(user);
     }
+
+
 }
