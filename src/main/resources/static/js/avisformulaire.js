@@ -113,23 +113,22 @@ $("#monBouton").click(() => {
 // affichage de l'avis en cours
     $("#monAvis").html("date: " + obj.date + "commentaire : " + obj.description + " note:  " + obj.note);
 
-    //suppresion de l'avis
-    $("#boutonDelete").click(()=>{
-        $.ajax({
-            type: "DELETE",
-            url: "http://localhost:8080/API/suppresionAvis",
-            data: JSON.stringify(obj),
-            headers: {"Content-Type": "application/json"},
-            success: (retour) => {
-                console.log(retour);
-            }
-        });
 
-        $("#monAvis").html("commentaire supprimé");
+});
+//suppresion de l'avis
+$("#boutonDelete").click(()=>{
+    $.ajax({
+        type: "DELETE",
+        url: "http://localhost:8080/API/suppressionAvis",
+        data: JSON.stringify(obj),
+        headers: {"Content-Type": "application/json"},
+        success: (retour) => {
+
+            console.log(retour);
+            $("#monAvis").html("commentaire supprimé");
+        }
     });
 });
-
-
 
 
 

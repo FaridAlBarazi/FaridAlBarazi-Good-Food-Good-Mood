@@ -39,7 +39,7 @@ public class AvisController {
         return "OK";
     }
 
-    @DeleteMapping("/suppresionAvis")
+    @DeleteMapping("/suppressionAvis")
     public String suppressionAvis(@RequestBody Avis monAvis){
         avisRepositories.delete(monAvis);
         return "avis bien supprimé";
