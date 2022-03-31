@@ -1,6 +1,6 @@
 //const apiKey = "462bcfeb80784d16aca500b08f087c0d";
-//const apiKey = "c764f8af433b4b9093ecfed23493b886";
-const apiKey = "0507b7d2299e4aea88421cfa97388b0e";
+const apiKey = "c764f8af433b4b9093ecfed23493b886";
+//const apiKey = "0507b7d2299e4aea88421cfa97388b0e";
 //const apiKey = "4bc3a5e0a85742e09b08d3f0fce9a84e";
 function getInfoRecette(id){
     $.ajax({
@@ -76,10 +76,15 @@ $("#buttonCoeur").click(()=>{
     const like = buttonCoeur.textContent;
     if(like==whiteHeart) {
         buttonCoeur.textContent = blackHeart;
+        let recetteFavoris = {
+            nomRecette: $("#titre").html(),
+            urlImage :  $("#image").prop('src')
+        }
+        console.log(recetteFavoris)
         $.ajax({
             type:"PATCH",
             url:"http://localhost:8080/API/addFavoris",
-            data: JSON.stringify(new URL(location.href).searchParams.get('id')),
+            data: JSON.stringify(recetteFavoris),
             headers: {"Content-Type":"application/json"},
             success: (retour)=> {console.log(retour);}
         });
