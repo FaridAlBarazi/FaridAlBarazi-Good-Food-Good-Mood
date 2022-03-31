@@ -1,6 +1,7 @@
-// var myselect = $("#myselect1").find(":selected").text();
-var myselect = $('#myselect1').val();
-$("#recherche").click(() => {
-    console.log(myselect);
 
+
+$("#recherche").click(() => {
+    var myselect1 = $("#myselect1").find(":selected").text();
+    var myselect2 = $("#myselect2").find(":selected").text();
+    console.log(myselect);
 })
