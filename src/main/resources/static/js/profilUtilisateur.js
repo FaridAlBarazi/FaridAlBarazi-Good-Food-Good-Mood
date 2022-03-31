@@ -70,3 +70,59 @@ $("#color").attr("stroke", "red");
     js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
     fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
+
+
+//const apiKey = "462bcfeb80784d16aca500b08f087c0d";
+//const apiKey = "c764f8af433b4b9093ecfed23493b886";
+const apiKey = "0507b7d2299e4aea88421cfa97388b0e";
+//const apiKey = "4bc3a5e0a85742e09b08d3f0fce9a84e";
+function getInfoRecette(id){
+    return $.ajax({
+        type: "GET",
+        url: 'https://api.spoonacular.com/recipes/' + id + '/information?includeNutrition=false&apiKey=' + apiKey,
+        success: (data) => {
+            data.image;
+        }
+    })
+}
+
+//console.log(getInfoRecette(633754));
+function getFavorisRecette(){
+    $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/API/getfavoris',
+        success: (retour) => {
+            afficherFavroisRecette(retour)
+        }
+    })
+}
+
+function afficherFavroisRecette(listFavoris){
+    for(let i = 0; i < listFavoris.length; i++){
+        $("#carouselDiv").append(
+            $(document.createElement('input')).prop({
+                id: ('favoris' + i),
+                class: "carousel-item active"
+            }).append(
+                $(document.createElement('img')).prop({
+                    class: "class=\"d-block w-100"
+                    //src: getInfoRecette(listFavoris[i].responseJSON.image)
+                })
+            )
+        )
+    }
+}
+
+function getnbrFavorisRecette(){
+    $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/API/nbrFavoris',
+        success: (retour) => {
+            if(retour > 0){
+                getFavorisRecette();
+            }
+        }
+    })
+}
+
+getnbrFavorisRecette();
