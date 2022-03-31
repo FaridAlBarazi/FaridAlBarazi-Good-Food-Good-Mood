@@ -138,13 +138,38 @@ public class UserController {
         return user.getAvis().size();
     }
 
-    @PostMapping("/recuperationAvisUser")
+    @PatchMapping ("/recuperationAvisUser")
     public String recuperationAvis(@RequestBody Avis monAvis, HttpServletRequest request){
         System.out.println(monAvis);
         Cookie[] cookies = request.getCookies();
         User user = userRepositories.findByMail(cookies[0].getValue());
         Set<Avis> avisSet = user.getAvis();
         user.getAvis().add(monAvis);
+        //System.out.println(cookies[0].getValue());
+        userRepositories.save(user);
+        return "ok";
+    }
+
+    @PatchMapping("/addFavoris")
+    public String addFavoris(@RequestBody int idRecette,HttpServletRequest request) {
+        System.out.println(idRecette);
+        Cookie[] cookies = request.getCookies();
+        User user = userRepositories.findByMail(cookies[0].getValue());
+        List<Integer> favorisList = user.getFavoris();
+        favorisList.add(idRecette);
+        //System.out.println(cookies[0].getValue());
+        userRepositories.save(user);
+        return "ok";
+    }
+
+    @PatchMapping("/removeFavoris")
+    public String removeFavoris(@RequestBody int idRecette,HttpServletRequest request) {
+        System.out.println(idRecette);
+        Cookie[] cookies = request.getCookies();
+        User user = userRepositories.findByMail(cookies[0].getValue());
+        List<Integer> favorisList = user.getFavoris();
+        int longueur = favorisList.size();
+        favorisList.remove(longueur - 1);
         //System.out.println(cookies[0].getValue());
         userRepositories.save(user);
         return "ok";
@@ -159,4 +184,6 @@ public class UserController {
         user.setAllergie(allergies);
         userRepositories.save(user);
     }
+
+
 }

@@ -102,7 +102,7 @@ $("#monBouton").click(() =>{
 
 
     $.ajax({
-        type:"POST",
+        type:"PATCH",
         url:"http://localhost:8080/API/recuperationAvisUser",
         data: JSON.stringify(obj),
         headers: {"Content-Type":"application/json"},

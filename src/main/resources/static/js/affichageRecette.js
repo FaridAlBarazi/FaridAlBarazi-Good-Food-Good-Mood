@@ -76,7 +76,21 @@ $("#buttonCoeur").click(()=>{
     const like = buttonCoeur.textContent;
     if(like==whiteHeart) {
         buttonCoeur.textContent = blackHeart;
+        $.ajax({
+            type:"PATCH",
+            url:"http://localhost:8080/API/addFavoris",
+            data: JSON.stringify(new URL(location.href).searchParams.get('id')),
+            headers: {"Content-Type":"application/json"},
+            success: (retour)=> {console.log(retour);}
+        });
     } else {
         buttonCoeur.textContent = whiteHeart;
+        $.ajax({
+            type:"PATCH",
+            url:"http://localhost:8080/API/removeFavoris",
+            data: JSON.stringify(new URL(location.href).searchParams.get('id')),
+            headers: {"Content-Type":"application/json"},
+            success: (retour)=> {console.log(retour);}
+        });
     }
 })
