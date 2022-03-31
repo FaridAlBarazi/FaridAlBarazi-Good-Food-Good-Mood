@@ -46,10 +46,9 @@ public class AvisController {
     }
 
 
-
     @GetMapping("/les4avis")
     public List<Avis> les4avis(){
-        List<Avis> listeAvis=avisRepositories.findTop4ByOrderByNote();
+        List<Avis> listeAvis=avisRepositories.findTop4ByOrderByDescriptionDesc();
         return(listeAvis);
     }
 

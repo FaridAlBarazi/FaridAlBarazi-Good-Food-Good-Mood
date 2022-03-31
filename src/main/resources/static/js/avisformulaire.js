@@ -100,6 +100,7 @@ $("#monBouton").click(() =>{
     obj.description=$("#exempleCommentaire").val();
     obj.note=$("#note").val();
 
+
     $.ajax({
         type:"PATCH",
         url:"http://localhost:8080/API/recuperationAvisUser",
@@ -108,7 +109,26 @@ $("#monBouton").click(() =>{
         success: (retour)=> {console.log(retour);}
     });
 
+
+    $("#monAvis").html(  "date: " + obj.date +"commentaire : " + obj.description + " note:  " +obj.note );
+
+
 });
+
+//affichage des 4 avis les mieux notés en html
+// BOUCLE SUR UN DIV
+$.get("http://localhost:8080/API/les4avis", (retour)=>{
+    for (let i=1; i<retour.length; i++){
+        $("#Avis1").html( "pseudo: " + retour[0].pseudo + " commentaire: " + retour[0].description + " note: " + retour[0].note);
+        $("#Avis2").html( "pseudo: " + retour[1].pseudo + " commentaire: " + retour[1].description + " note: " + retour[1].note);
+        $("#Avis3").html( "pseudo: " + retour[2].pseudo + " commentaire: " + retour[2].description + " note: " + retour[2].note);
+        $("#Avis4").html( "pseudo: " + retour[3].pseudo + " commentaire: " + retour[3].description + " note: " + retour[3].note);
+    }
+});
+
+
+
+
 
 
 

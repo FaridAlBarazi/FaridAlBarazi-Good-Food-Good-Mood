@@ -9,5 +9,5 @@ import java.util.List;
 public interface AvisRepositories extends JpaRepository<Avis, Integer> {
 
     Avis findByID(int id);
-    List<Avis> findTop4ByOrderByNote();
+    List<Avis> findTop4ByOrderByDescriptionDesc();
 }
