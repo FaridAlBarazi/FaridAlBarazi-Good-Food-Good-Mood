@@ -21,9 +21,22 @@ public class RecettesController {
         return "ok";
     }
 
-    @GetMapping("/rechercheRecette/{specialite}")
-    public List<Recettes> getAnimalWithEspece(@PathVariable("specialite") String specialite){
-        List<Recettes> mesrecettes= recetteRepositories.findBySpecialite(specialite);
+    @GetMapping("/rechercheSpecialite/{specialite}")
+    public List<Recettes> rechercheSpecialite(@PathVariable("specialite") String specialite) {
+        List<Recettes> mesrecettes = recetteRepositories.findBySpecialite(specialite);
         return mesrecettes;
     }
+
+    @GetMapping("/rechercheIngredient/{ingredients}")
+    public List<Recettes> rechercheIngredient(@PathVariable("ingredients") String ingredients) {
+        List<Recettes> mesrecettes = recetteRepositories.findByIngredients(ingredients);
+        return mesrecettes;
+    }
+
+    @GetMapping("/rechercheNomRecette/{name}")
+    public List<Recettes> rechercheNomRecette(@PathVariable("name") String name) {
+        List<Recettes> mesrecettes = recetteRepositories.findByName(name);
+        return mesrecettes;
+    }
+
 }
