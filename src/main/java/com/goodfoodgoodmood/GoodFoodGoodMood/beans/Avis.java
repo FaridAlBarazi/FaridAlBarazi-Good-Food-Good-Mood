@@ -1,6 +1,8 @@
 package com.goodfoodgoodmood.GoodFoodGoodMood.beans;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -75,4 +77,5 @@ public class Avis {
     public void setNote(int note) {
         this.note = note;
     }
+
 }
