@@ -49,7 +49,12 @@ $.ajax({
     type: "GET",
     url: 'http://localhost:8080/API/nbrRecettes',
     success: (retour) => {
-        $("#nbrRecettePublie").html("Nombre de recettes publiées : " + retour);
+        if(retour > 0){
+            $("#nbrRecettePublie").html("Nombre de recettes publiées : " + retour);
+        }else{
+            $("#nbrRecettePublie").html("Vous n'avez publié aucune recette 🙁 ");
+        }
+
     }
 })
 
@@ -57,7 +62,11 @@ $.ajax({
     type: "GET",
     url: 'http://localhost:8080/API/nbrAvis',
     success: (retour) => {
-        $("#nbrAvisPoste").html("Nombre d'avis publiés : " + retour);
+        if(retour > 0){
+            $("#nbrAvisPoste").html("Nombre d'avis publiés : " + retour);
+        }else{
+            $("#nbrAvisPoste").html("Vous n'avez posté aucun avis 🙁 ");
+        }
     }
 })
 
