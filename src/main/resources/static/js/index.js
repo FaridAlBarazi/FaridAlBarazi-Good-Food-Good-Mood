@@ -210,6 +210,7 @@ $("#validerAllergies").click(() => {
             $("#errorAllergie").html("Votre compte a bien été créé ! ");
             $("#errorAllergie").css("color", "green");
             $("#pseudo").html($("#pseudoCreation").val());
+            document.location.href = "index.html";
         },
         error: function (xhr, textStatus) {
             console.log(xhr.status);
