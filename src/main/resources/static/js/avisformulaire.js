@@ -100,7 +100,6 @@ $("#monBouton").click(() =>{
     obj.description=$("#exempleCommentaire").val();
     obj.note=$("#note").val();
 
-
     $.ajax({
         type:"PATCH",
         url:"http://localhost:8080/API/recuperationAvisUser",
@@ -108,7 +107,10 @@ $("#monBouton").click(() =>{
         headers: {"Content-Type":"application/json"},
         success: (retour)=> {console.log(retour);}
     });
+
 });
+
+
 
 
 

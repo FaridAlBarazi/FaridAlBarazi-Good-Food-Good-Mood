@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/API")
@@ -37,4 +38,19 @@ public class AvisController {
         avisRepositories.save(monAvis);
         return "OK";
     }
+
+    @GetMapping ("/getAllAvis")
+    public List<Avis> getAllAvis(){
+        List<Avis> tousLesAvis= avisRepositories.findAll();
+        return tousLesAvis;
+    }
+
+
+
+    @GetMapping("/les4avis")
+    public List<Avis> les4avis(){
+        List<Avis> listeAvis=avisRepositories.findTop4ByOrderByNote();
+        return(listeAvis);
+    }
+
 }
