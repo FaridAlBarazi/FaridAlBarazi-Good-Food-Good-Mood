@@ -113,8 +113,28 @@ $("#monBouton").click(() => {
 // affichage de l'avis en cours
     $("#monAvis").html("date: " + obj.date + "commentaire : " + obj.description + " note:  " + obj.note);
 
+    //suppresion de l'avis
+    $("#boutonDelete").click(()=>{
+        $.ajax({
+            type: "DELETE",
+            url: "http://localhost:8080/API/suppresionAvis",
+            data: JSON.stringify(obj),
+            headers: {"Content-Type": "application/json"},
+            success: (retour) => {
+                console.log(retour);
+            }
+        });
 
+        $("#monAvis").html("commentaire supprimé");
+    });
 });
+
+
+
+
+
+
+
 
 //affichage des 4 avis les mieux notés en html
 // BOUCLE SUR UN DIV
@@ -158,22 +178,27 @@ $.ajax({
                     id: ("avis" + i)
                 }).append(
                     // Ajouter li dans le div
-                    $(document.createElement('li')).html(retour[i].pseudo),
-                    $(document.createElement('li')).html(retour[i].date),
-                    $(document.createElement('li')).html(retour[i].pseudo),
-                    $(document.createElement('li')).html(retour[i].pseudo)
+                    $(document.createElement('li')).html("Pseudo: " +retour[i].pseudo),
+                    $(document.createElement('li')).html("Date :" +retour[i].date),
+                    $(document.createElement('li')).html( "Commentaire : "+retour[i].description),
+                    $(document.createElement('li')).html("Note: " +retour[i].note)
+
                 ),
                 // créer élement soit div/ p/ span
                 $(document.createElement('p')).prop({
                     id: ("avis" + i)
                 }).append(
-                    retour[i].note
-
-                )
+                   retour[i].note
+                ),
             )
         }
     }
-})
+});
+
+
+
+
+
 
 
 

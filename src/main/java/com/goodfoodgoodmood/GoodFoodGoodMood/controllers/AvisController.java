@@ -39,6 +39,12 @@ public class AvisController {
         return "OK";
     }
 
+    @DeleteMapping("/suppresionAvis")
+    public String suppressionAvis(@RequestBody Avis monAvis){
+        avisRepositories.delete(monAvis);
+        return "avis bien supprimé";
+    }
+
     @GetMapping ("/getAllAvis")
     public List<Avis> getAllAvis(){
         List<Avis> tousLesAvis= avisRepositories.findAll();
