@@ -44,38 +44,45 @@
 </nav>
 
 <div>
-    <div>
-        <div>
-            <h2 id="profilNom"></h2>
+    <div id="divGlobal">
+        <div style="display: flex; justify-content: center">
+            <h1 id="profilNom"></h1>
         </div>
-        <div>
-            <p id="nbrRecettePublie"></p>
-            <a href="#">Voir les recettes publiées</a>
 
-            <p id="nbrAvisPoste"></p>
-            <a href="#">Voir les avis publiés</a>
+        <div style="display: flex; flex-direction: column;">
+            <div style="display: flex; justify-content: center">
+                <h2>Les recettes 🍽 </h2>
+            </div>
+            <div id="divRecettes">
+                <div id="favoris">
+                    <p style="display: flex; justify-content: center; font-size: large; font-weight: bold; ">
+                        Les recettes favoris ❤️
+                    </p>
+                    <div id="cardFavoris">
+                    </div>
+                    <div id="aucuneRecette" style="display: none;">
+                        <span>Vous n'avez aucune recette en favori ! 🙁 </span>
+                    </div>
+                </div>
+                <div id="recettePublie">
+                    <p style="display: flex; justify-content: center; font-size: large; font-weight: bold; ">
+                        Les recettes publiées 📝
+                    </p>
+                    <p id="nbrRecettePublie"></p>
+                    <a href="#">Voir les recettes publiées</a>
+                </div>
+                <div id="avisPublie">
+                    <p style="display: flex; justify-content: center; font-size: large; font-weight: bold; ">
+                        Les recettes publiées ✍🏼
+                    </p>
+                    <p id="nbrAvisPoste"></p>
+                    <a href="#">Voir les avis publiés</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            <p>
-                Les recettes
-                <svg id="color" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                </svg>
-            </p>
-        </div>
-    </div>
-    <div>
-        <div id="fb-root"></div>
-        <!-- Your share button code -->
-        <div class="fb-share-button"
-             data-href="https://www.your-domain.com/your-page.html"
-             data-layout="button_count">
-        </div>
-        <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fparse.com" target="_blank" rel="noopener">
-            <img class="YOUR_FB_CSS_STYLING_CLASS" src="img/YOUR_FB_ICON_IMAGE.png" width="22px" height="22px" alt="Share on Facebook">
-        </a>
-    </div>
-    <div id="cardFavoris">
-    </div>
+
 </div>
 <script src="bootstrap-js/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
