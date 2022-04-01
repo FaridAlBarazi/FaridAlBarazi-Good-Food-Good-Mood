@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @RestController
 @RequestMapping("/API")
@@ -42,14 +41,14 @@ public class RecettesController {
         return mesrecettes;
     }
 
-    @GetMapping("/testIngredient/{ingredients}")
+    @GetMapping("/rechercheRecette/{ingredients}")
     public List<Recettes> testIngredient(@PathVariable("ingredients") String ingredients) {
         List<Recettes> getRecettes = new ArrayList<>();
         List<Recettes> mesrecettes = recetteRepositories.findAll();
-        for(int i=0; i< mesrecettes.size(); i++){
+        for (int i = 0; i < mesrecettes.size(); i++) {
             List<Ingredients> ingredientsList = mesrecettes.get(i).getIngredients();
-            for(int j=0; j < ingredientsList.size(); j++){
-                if(ingredients.toLowerCase().equals(ingredientsList.get(j).getNom().toLowerCase())){
+            for (int j = 0; j < ingredientsList.size(); j++) {
+                if (ingredients.toLowerCase().equals(ingredientsList.get(j).getNom().toLowerCase())) {
                     getRecettes.add(mesrecettes.get(i));
                 }
             }
@@ -58,4 +57,30 @@ public class RecettesController {
 
         return getRecettes;
     }
+
+    @GetMapping("/allspecialite")
+    public ArrayList<String> allspecialite() {
+        List<Recettes> mesrecettes = recetteRepositories.findAll();
+        ArrayList<String> specialiteList = new ArrayList<>();
+        for (int i = 0; i < mesrecettes.size(); i++) {
+            if (!specialiteList.contains(mesrecettes.get(i).getSpecialite()))
+            specialiteList.add(mesrecettes.get(i).getSpecialite());
+        }
+        return specialiteList;
+    }
+
+    @GetMapping("/allingredient")
+    public ArrayList<String> allingredient() {
+        List<Recettes> mesrecettes = recetteRepositories.findAll();
+        ArrayList<String> ingredientList = new ArrayList<>();
+        for (int i = 0; i < mesrecettes.size(); i++) {
+            List<Ingredients> ingredientslist = mesrecettes.get(i).getIngredients();
+            for (int j = 0; j < ingredientslist.size(); j++) {
+                if (!ingredientList.contains(ingredientslist.get(j).getNom()))
+                ingredientList.add(ingredientslist.get(j).getNom());
+            }
+        }
+        return ingredientList;
+    }
+
 }
