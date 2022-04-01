@@ -198,3 +198,10 @@ function getnbrFavorisRecette() {
 }
 
 getnbrFavorisRecette();
+
+let activities = document.getElementById("activitySelector");
+
+
+activities.addEventListener("change", function() {
+    console.log(activities.value)
+});
