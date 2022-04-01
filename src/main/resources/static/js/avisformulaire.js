@@ -107,6 +107,8 @@ $("#monBouton").click(() => {
         headers: {"Content-Type": "application/json"},
         success: (retour) => {
             console.log(retour);
+            location.reload();
+
         }
     });
 
@@ -115,38 +117,83 @@ $("#monBouton").click(() => {
 
 
 });
+
 //suppresion de l'avis
-let mesAvis=[];
-$("#boutonDelete").click(()=>{
 
-    for (let i = 0; i < mesAvis.length; i++) {
-        $.ajax({
-            type: "PATCH",
-            url: "http://localhost:8080/API/removeAvis",
-            data: JSON.stringify(mesAvis[i].id),
-            headers: {"Content-Type": "application/json"},
-            success: (retour) => {
-                location.reload();
+function getAvis() {
+    $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/API/getAllAvis',
+        success: (retour) => {
+            afficherAvis(retour)
+        }
+    })
+}
+
+
+function afficherAvis(mesAvis){
+
+    $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/API/les4avis',
+        success: (retour) => {
+            console.log(retour)
+            for (let i = 0; i < retour.length; i++) {
+                $("#affichageAvis").append(
+                    // Ajouter div dans le affichageAvis
+                    $(document.createElement('div')).prop({
+                        id: ("avis" + i)
+                    }).append(
+                        // Ajouter li dans le div
+                        $(document.createElement('li')).html("Pseudo: " +retour[i].pseudo),
+                        $(document.createElement('li')).html("Date :" +retour[i].date),
+                        $(document.createElement('li')).html( "Commentaire : "+retour[i].description),
+                        $(document.createElement('li')).html("Note: " +retour[i].note)
+
+                    ),
+                    // créer élement soit div/ p/ span
+                    $(document.createElement('div')).prop({
+                        id: ("avis" + i)
+                    }).append(
+                        //ajouter un i dans ce div
+                        retour[i].note
+                    ),
+
+                    $(document.createElement('input')).prop({
+                        id: "suppAvis",
+                        class: "btn btn-primary",
+                        value: "Supprimer avis"
+                    }).click(()=>{
+                        $.ajax({
+                            type: "PATCH",
+                            url: "http://localhost:8080/API/removeAvis",
+                            data: JSON.stringify(mesAvis[i].id),
+                            headers: {"Content-Type": "application/json"},
+                            success: (retour) => {
+                                location.reload();
+                            }
+                        });
+                    })
+                )
             }
-        });
+        }
+    });
+}
 
-        $.ajax({
-            type: "PATCH",
-            url: "http://localhost:8080/API/removeAvisID",
-            data: JSON.stringify(i),
-            headers: {"Content-Type": "application/json"},
-            success: (retour) => {
-                console.log(retour);
+
+function getnbrAvis() {
+    $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/API/nbrAvis',
+        success: (retour) => {
+            if (retour > 0) {
+                getAvis();
             }
-        });
-    }
-});
+        }
+    })
+}
 
-
-
-
-
-
+getnbrAvis();
 //affichage des 4 avis les mieux notés en html
 // BOUCLE SUR UN DIV
 /*$.get("http://localhost:8080/API/les4avis", (retour) => {
@@ -177,35 +224,6 @@ $("#boutonDelete").click(()=>{
 
 });*/
 
-$.ajax({
-    type: "GET",
-    url: 'http://localhost:8080/API/les4avis',
-    success: (retour) => {
-        console.log(retour)
-        for (let i = 0; i < retour.length; i++) {
-            $("#affichageAvis").append(
-                // Ajouter div dans le affichageAvis
-                $(document.createElement('div')).prop({
-                    id: ("avis" + i)
-                }).append(
-                    // Ajouter li dans le div
-                    $(document.createElement('li')).html("Pseudo: " +retour[i].pseudo),
-                    $(document.createElement('li')).html("Date :" +retour[i].date),
-                    $(document.createElement('li')).html( "Commentaire : "+retour[i].description),
-                    $(document.createElement('li')).html("Note: " +retour[i].note)
-
-                ),
-                // créer élement soit div/ p/ span
-                $(document.createElement('div')).prop({
-                    id: ("avis" + i)
-                }).append(
-                    //ajouter un i dans ce div
-                   retour[i].note
-                ),
-            )
-        }
-    }
-});
 
 
 
