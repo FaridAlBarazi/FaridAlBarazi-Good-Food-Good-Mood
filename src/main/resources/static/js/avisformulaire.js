@@ -107,6 +107,8 @@ $("#monBouton").click(() => {
         headers: {"Content-Type": "application/json"},
         success: (retour) => {
             console.log(retour);
+            location.reload();
+
         }
     });
 
@@ -115,6 +117,97 @@ $("#monBouton").click(() => {
 
 
 });
+
+//suppresion de l'avis
+
+function getAvis() {
+    $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/API/getAllAvis',
+        success: (retour) => {
+            console.log(retour);
+            afficherAvis(retour);
+        }
+    })
+}
+
+
+function afficherAvis(mesAvis) {
+    $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/API/les4avis',
+        success: (retour) => {
+            console.log(retour)
+            for (let i = 0; i < retour.length; i++) {
+                console.log(Date.parse(retour[i].date));
+                console.log(Date.parse(new Date()));
+                $("#affichageAvis").append(
+                    // Ajouter div dans le affichageAvis
+                    $(document.createElement('div')).prop({
+                        class: "avis"
+                    }).append(
+                        // Ajouter li dans le div
+                        $(document.createElement('p')).prop({
+                            class: "stylePseudo"
+                        }).html(retour[i].pseudo),
+                        $(document.createElement('p')).prop({
+                            class: "styleDate"
+                        }).html("Date :" + retour[i].date),
+                        $(document.createElement('p')).append(
+                            $(document.createElement('i')).prop({
+                                class: "las la-star",
+                                id: "star1" +i
+                            }),
+                            $(document.createElement('i')).prop({
+                                class: "las la-star",
+                                id: "star2" +i
+                            }),
+                            $(document.createElement('i')).prop({
+                                class: "las la-star",
+                                id: "star3" + i
+                            }),
+                            $(document.createElement('i')).prop({
+                                class: "las la-star",
+                                id: "star4" + i
+                            }),
+                            $(document.createElement('i')).prop({
+                                class: "las la-star",
+                                id: "star5" + i
+                            })
+                        ),
+
+                        $(document.createElement('p')).html(retour[i].description),
+
+                    )
+                )
+
+
+                //console.log(retour[i].note)
+                for(let j=1; j <= retour[i].note; j++){
+                    //console.log("star"+j);
+                    $("#star" +j +i).css("color", "orange");
+                }
+            }
+
+        }
+    });
+}
+
+
+function getnbrAvis() {
+    $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/API/nbrAvis',
+        success: (retour) => {
+            console.log(retour)
+            if (retour > 0) {
+                getAvis();
+            }
+        }
+    })
+}
+
+getnbrAvis();
 
 //affichage des 4 avis les mieux notés en html
 // BOUCLE SUR UN DIV
@@ -146,34 +239,11 @@ $("#monBouton").click(() => {
 
 });*/
 
-$.ajax({
-    type: "GET",
-    url: 'http://localhost:8080/API/les4avis',
-    success: (retour) => {
-        console.log(retour)
-        for (let i = 0; i < retour.length; i++) {
-            $("#affichageAvis").append(
-                // Ajouter div dans le affichageAvis
-                $(document.createElement('div')).prop({
-                    id: ("avis" + i)
-                }).append(
-                    // Ajouter li dans le div
-                    $(document.createElement('li')).html(retour[i].pseudo),
-                    $(document.createElement('li')).html(retour[i].date),
-                    $(document.createElement('li')).html(retour[i].pseudo),
-                    $(document.createElement('li')).html(retour[i].pseudo)
-                ),
-                // créer élement soit div/ p/ span
-                $(document.createElement('p')).prop({
-                    id: ("avis" + i)
-                }).append(
-                    retour[i].note
 
-                )
-            )
-        }
-    }
-})
+
+
+
+
 
 
 

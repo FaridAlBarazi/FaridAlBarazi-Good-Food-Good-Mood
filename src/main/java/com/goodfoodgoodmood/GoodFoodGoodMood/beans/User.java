@@ -20,10 +20,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Collection<TypeAllergie> allergie;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Recettes> recettes;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Avis> avis;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -45,11 +45,6 @@ public class User {
 
     public User() {
     }
-
-    public void ajouterRecette(Recettes recette) {
-        this.recettes.add(recette);
-    }
-
     public User(String pseudo, String mail, String password) {
         this.pseudo = pseudo;
         this.mail = mail;

@@ -1,6 +1,38 @@
+.avis{
+    box-shadow: 0px 0px 1em 10px black;
+    margin: auto 3em;
+    padding: 1em;
+    margin-bottom: 5em;
+    margin-top: 2%;
+    border-style: outset;
+}
+
 #cursive{
     font-family:'Monotype Corsiva','Apple Chancery','ITC Zapf Chancery','URW Chancery L',cursive;
     font-size: x-large;
+}
+
+#divPrincipal{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+#divAffichageAvis{
+    width:100%
+}
+
+#divEcrireAvis{
+    width:100%
+}
+
+.styleDate{
+    font-size: x-small;
+}
+
+
+.stylePseudo{
+    font-weight: bold;
 }
 
 

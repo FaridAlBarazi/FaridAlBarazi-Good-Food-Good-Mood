@@ -50,84 +50,49 @@
     </div>
 </nav>
 
-<div>
+<div id="divPrincipal">
 
-    Donne ton avis:
-    <br>
-    <div class="stars">
-
-        <i class="las la-star" data-value="1"></i><i class="las la-star" data-value="2"></i><i class="las la-star"
-                                                                                               data-value="3"></i><i
-            class="las la-star" data-value="4"></i><i class="las la-star" data-value="5"></i>
-
-    </div>
-    <input type="hidden" name="note" id="note" value="0">
-
-
-    <div class="mb-3">
-        <label for="date" class="form-label">Date de l'avis</label>
-        <input type="date" class="form-control" id="date" placeholder="AAAA/MM/JJ">
-    </div>
-    <div class="mb-3">
-        <label for="exempleCommentaire" class="form-label">Commentaire</label>
-        <textarea class="form-control" id="exempleCommentaire" rows="3"></textarea>
-    </div>
-
-    <div id="liveAlertPlaceholder"></div>
-    <button  id="monBouton" type="button" class="btn btn-primary" id="liveAlertBtn">Envoyer le commentaire</button>
-    <div>
-        Mon avis:
-        <span id="monAvis">Avis pas encore chargé </span>
-        <br>
-        <br>
-        Les autres avis:
-        <div id="affichageAvis"></div>
-        <!--<div id="lesAvis">
-            Premier Avis: <br>
-            <li>pseudo: <span id="pseudo1"> Pseudo</span></li>
-            <li>date: <span id="date1"> Pseudo</span></li>
-            <li>commentaire: <span id="comm1"> Pseudo</span></li>
-            <li>note:<span id="note1"> Pseudo</span></li>
-
-
-        <br>
-        Deuxième Avis: <br>
-        <li>pseudo: <span id="pseudo2"> Pseudo</span></li>
-        <li>date: <span id="date2"> Pseudo</span></li>
-        <li>commentaire: <span id="comm2"> Pseudo</span></li>
-        <li>note:<span id="note2"> Pseudo</span></li>
-
-        <br>
-        Troisième Avis: <br>
-        <li>pseudo: <span id="pseudo3"> Pseudo</span></li>
-        <li>date: <span id="date3"> Pseudo</span></li>
-        <li>commentaire: <span id="comm3"> Pseudo</span></li>
-        <li>note:<span id="note3"> Pseudo</span></li>
-
-        <br>
-        Quatrième Avis: <br>
-        <li>pseudo: <span id="pseudo4"> Pseudo</span></li>
-        <li>date: <span id="date4"> Pseudo</span></li>
-        <li>commentaire: <span id="comm4"> Pseudo</span></li>
-        <li>note:<span id="note4"> Pseudo</span></li>-->
-
-
+        <div id="divAffichageAvis">
+            <div id="affichageMonAvis"></div>
+            <div style="display: flex;flex-direction: column;">
+                <h2 style="text-align: center; margin-top: 2%; margin-bottom: 2%"> Les avis du site</h2>
+                <div id="affichageAvis"></div>
+            </div>
         </div>
 
+    <div id="divEcrireAvis">
+        Donne ton avis:
+        <br>
+        <div class="stars">
+
+            <i class="las la-star" data-value="1"></i><i class="las la-star" data-value="2"></i><i class="las la-star"
+                                                                                                   data-value="3"></i><i
+                class="las la-star" data-value="4"></i><i class="las la-star" data-value="5"></i>
+
+        </div>
+        <input type="hidden" name="note" id="note" value="0">
 
 
+        <div class="mb-3">
+            <label for="date" class="form-label">Date de l'avis</label>
+            <input type="date" class="form-control" id="date" placeholder="AAAA/MM/JJ">
+        </div>
+        <div class="mb-3">
+            <label for="exempleCommentaire" class="form-label">Commentaire</label>
+            <textarea class="form-control" id="exempleCommentaire" rows="3"></textarea>
+        </div>
 
-
-
-
-
-
+        <div id="liveAlertPlaceholder"></div>
+        <button  id="monBouton" type="button" class="btn btn-primary" id="liveAlertBtn">Envoyer le commentaire</button>
     </div>
+
 
 
 
 
 </div>
+
+
 <script src="bootstrap-js/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="js/avisformulaire.js"></script>

@@ -24,6 +24,7 @@ async function fetchAPI() {
 function generateHTML(results) {
     container.classList.remove("initial");
     let generatedHTML = "";
+    // le map permet de chercher en boucle comme un for
     results.map((result) => {
         generatedHTML += `
       <div class="item">

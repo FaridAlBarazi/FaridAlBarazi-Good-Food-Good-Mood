@@ -14,6 +14,7 @@ public class Recettes {
     private int duree;
     private String preparation;
     private String specialite;
+    private String image;
 
     // indique le lien avec les ingredients
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -33,13 +34,22 @@ public class Recettes {
                 "ID=" + ID +
                 ", name='" + name + '\'' +
                 ", duree=" + duree +
-                ", préparation='" + preparation + '\'' +
+                ", preparation='" + preparation + '\'' +
                 ", specialite='" + specialite + '\'' +
+                ", image='" + image + '\'' +
                 ", ingredients=" + ingredients +
                 '}';
     }
 
     public Recettes() {
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public int getID() {
