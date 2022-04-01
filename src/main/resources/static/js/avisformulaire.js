@@ -155,10 +155,34 @@ $.ajax({
             $("#affichageAvis").append(
                 // Ajouter div dans le affichageAvis
                 $(document.createElement('div')).prop({
-                    id: ("avis" + i)
+                    id: ("avis" + i),
+                    class:"avis"
                 }).append(
                     // Ajouter li dans le div
-                    $(document.createElement('li')).html(retour[i].pseudo),
+                    $(document.createElement('p')).html(retour[i].pseudo),
+                    $(document.createElement('p')).append(
+                        $(document.createElement('i')).prop({
+                            class: "las la-star",
+                            data :1
+                        }),
+                        $(document.createElement('i')).prop({
+                            class: "las la-star",
+                            data :2
+                        }),
+                        $(document.createElement('i')).prop({
+                            class: "las la-star",
+                            data :3
+                        }),
+                        $(document.createElement('i')).prop({
+                            class: "las la-star",
+                            data :4
+                        }),
+                        $(document.createElement('i')).prop({
+                            class: "las la-star",
+                            data :5
+                        })
+                    ),
+
                     $(document.createElement('li')).html(retour[i].date),
                     $(document.createElement('li')).html(retour[i].pseudo),
                     $(document.createElement('li')).html(retour[i].pseudo)
@@ -168,7 +192,6 @@ $.ajax({
                     id: ("avis" + i)
                 }).append(
                     retour[i].note
-
                 )
             )
         }
