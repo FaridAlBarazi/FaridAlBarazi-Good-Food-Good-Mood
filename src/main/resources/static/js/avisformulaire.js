@@ -115,6 +115,37 @@ $("#monBouton").click(() => {
 
 
 });
+//suppresion de l'avis
+let mesAvis=[];
+$("#boutonDelete").click(()=>{
+
+    for (let i = 0; i < mesAvis.length; i++) {
+        $.ajax({
+            type: "PATCH",
+            url: "http://localhost:8080/API/removeAvis",
+            data: JSON.stringify(mesAvis[i].id),
+            headers: {"Content-Type": "application/json"},
+            success: (retour) => {
+                location.reload();
+            }
+        });
+
+        $.ajax({
+            type: "PATCH",
+            url: "http://localhost:8080/API/removeAvisID",
+            data: JSON.stringify(i),
+            headers: {"Content-Type": "application/json"},
+            success: (retour) => {
+                console.log(retour);
+            }
+        });
+    }
+});
+
+
+
+
+
 
 //affichage des 4 avis les mieux notés en html
 // BOUCLE SUR UN DIV
@@ -155,48 +186,31 @@ $.ajax({
             $("#affichageAvis").append(
                 // Ajouter div dans le affichageAvis
                 $(document.createElement('div')).prop({
-                    id: ("avis" + i),
-                    class:"avis"
-                }).append(
-                    // Ajouter li dans le div
-                    $(document.createElement('p')).html(retour[i].pseudo),
-                    $(document.createElement('p')).append(
-                        $(document.createElement('i')).prop({
-                            class: "las la-star",
-                            data :1
-                        }),
-                        $(document.createElement('i')).prop({
-                            class: "las la-star",
-                            data :2
-                        }),
-                        $(document.createElement('i')).prop({
-                            class: "las la-star",
-                            data :3
-                        }),
-                        $(document.createElement('i')).prop({
-                            class: "las la-star",
-                            data :4
-                        }),
-                        $(document.createElement('i')).prop({
-                            class: "las la-star",
-                            data :5
-                        })
-                    ),
-
-                    $(document.createElement('li')).html(retour[i].date),
-                    $(document.createElement('li')).html(retour[i].pseudo),
-                    $(document.createElement('li')).html(retour[i].pseudo)
-                ),
-                // créer élement soit div/ p/ span
-                $(document.createElement('p')).prop({
                     id: ("avis" + i)
                 }).append(
-                    retour[i].note
-                )
+                    // Ajouter li dans le div
+                    $(document.createElement('li')).html("Pseudo: " +retour[i].pseudo),
+                    $(document.createElement('li')).html("Date :" +retour[i].date),
+                    $(document.createElement('li')).html( "Commentaire : "+retour[i].description),
+                    $(document.createElement('li')).html("Note: " +retour[i].note)
+
+                ),
+                // créer élement soit div/ p/ span
+                $(document.createElement('div')).prop({
+                    id: ("avis" + i)
+                }).append(
+                    //ajouter un i dans ce div
+                   retour[i].note
+                ),
             )
         }
     }
-})
+});
+
+
+
+
+
 
 
 

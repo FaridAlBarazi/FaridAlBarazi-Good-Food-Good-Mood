@@ -10,4 +10,6 @@ public interface AvisRepositories extends JpaRepository<Avis, Integer> {
 
     Avis findByID(int id);
     List<Avis> findTop4ByOrderByDescriptionDesc();
+
+
 }
