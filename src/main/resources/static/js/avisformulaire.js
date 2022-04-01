@@ -131,51 +131,77 @@ function getAvis() {
 }
 
 
-function afficherAvis(mesAvis){
-
+function afficherAvis(mesAvis) {
     $.ajax({
         type: "GET",
         url: 'http://localhost:8080/API/les4avis',
         success: (retour) => {
             console.log(retour)
             for (let i = 0; i < retour.length; i++) {
+                console.log(Date.parse(retour[i].date));
+                console.log(Date.parse(new Date()));
                 $("#affichageAvis").append(
                     // Ajouter div dans le affichageAvis
                     $(document.createElement('div')).prop({
-                        id: ("avis" + i)
+                        class: "avis"
                     }).append(
                         // Ajouter li dans le div
-                        $(document.createElement('li')).html("Pseudo: " +retour[i].pseudo),
-                        $(document.createElement('li')).html("Date :" +retour[i].date),
-                        $(document.createElement('li')).html( "Commentaire : "+retour[i].description),
-                        $(document.createElement('li')).html("Note: " +retour[i].note)
+                        $(document.createElement('p')).prop({
+                            class: "stylePseudo"
+                        }).html(retour[i].pseudo),
+                        $(document.createElement('p')).prop({
+                            class: "styleDate"
+                        }).html("Date :" + retour[i].date),
+                        $(document.createElement('p')).append(
+                            $(document.createElement('i')).prop({
+                                class: "las la-star",
+                                id: "star1" +i
+                            }),
+                            $(document.createElement('i')).prop({
+                                class: "las la-star",
+                                id: "star2" +i
+                            }),
+                            $(document.createElement('i')).prop({
+                                class: "las la-star",
+                                id: "star3" + i
+                            }),
+                            $(document.createElement('i')).prop({
+                                class: "las la-star",
+                                id: "star4" + i
+                            }),
+                            $(document.createElement('i')).prop({
+                                class: "las la-star",
+                                id: "star5" + i
+                            })
+                        ),
 
-                    ),
-                    // créer élement soit div/ p/ span
-                    $(document.createElement('div')).prop({
-                        id: ("avis" + i)
-                    }).append(
-                        //ajouter un i dans ce div
-                        retour[i].note
-                    ),
+                        $(document.createElement('p')).html(retour[i].description),
 
-                    $(document.createElement('input')).prop({
-                        id: "suppAvis",
-                        class: "btn btn-primary",
-                        value: "Supprimer avis"
-                    }).click(()=>{
-                        $.ajax({
-                            type: "PATCH",
-                            url: "http://localhost:8080/API/removeAvis",
-                            data: JSON.stringify(mesAvis[i].id),
-                            headers: {"Content-Type": "application/json"},
-                            success: (retour) => {
-                                location.reload();
-                            }
-                        });
-                    })
+                        $(document.createElement('input')).prop({
+                            id: "suppAvis",
+                            class: "btn btn-primary",
+                            value: "Supprimer avis"
+                        }).click(() => {
+                            $.ajax({
+                                type: "PATCH",
+                                url: "http://localhost:8080/API/removeAvis",
+                                data: JSON.stringify(mesAvis[i].id),
+                                headers: {"Content-Type": "application/json"},
+                                success: (retour) => {
+                                    location.reload();
+                                }
+                            });
+                        })
+                    )
                 )
+
+                //console.log(retour[i].note)
+                for(let j=1; j <= retour[i].note; j++){
+                    //console.log("star"+j);
+                    $("#star" +j +i).css("color", "orange");
+                }
             }
+
         }
     });
 }
