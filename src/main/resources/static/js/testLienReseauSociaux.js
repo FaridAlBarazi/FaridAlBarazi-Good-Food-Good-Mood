@@ -6,9 +6,9 @@ let pageUrl = location.href
 // console.log(pageUrl)
 let message="Enjoy this awesome recipe application enjoy GOOD Foo Good Mood"
 
-const whatsappApi='https://wa.me/?text=${pageUrl}.${message}';
-const telegramApi="https://t.me/share/url?url=${pageUrl}&text=${message}";
-const twitterApi=" https://twitter.com/intent/tweet?text=" //${pageUrl}.${message};
+const whatsappApi='https://wa.me/?text='+pageUrl+message;
+const telegramApi="https://t.me/share/url?url="+pageUrl+message;
+const twitterApi=" https://twitter.com/intent/tweet?text="+pageUrl+message;
 
 whatsapp.addEventListener('click', ()=> {
     // console.log('whatsapp button clicked')
