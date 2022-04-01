@@ -167,13 +167,14 @@ $("#boutonSeConnecter").click(() => {
         mail: $("#pseudoConnexion").val(),
         password: $("#passwordConnexion").val()
     }
-
     $.ajax({
         type: "POST",
         headers: {"Content-Type": "application/json"},
         url: "http://localhost:8080/API/connexion",
         data: JSON.stringify(utilisateur),
         success: function (resultat) {
+            console.log(getCookie("mail"))
+
             $("#popupConnexion").css("display", "none");
             $("#dropdown").css("display", "block")
             $("#connexionButton").css("display", "none");
@@ -328,9 +329,9 @@ let cuisine = ["French", "American", "British", "African", "Caribbean", "Chinese
     "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "Southern", "Spanish", "Thai",
     "Vietnamese"]
 
-for (let i = 0; i < 4; i++) {
+/*for (let i = 0; i < 4; i++) {
     getApi(cuisine[i]);
-}
+}*/
 
 
 $("#boutonVersInscription").click(() => {

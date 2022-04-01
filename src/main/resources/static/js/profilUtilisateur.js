@@ -47,11 +47,9 @@ $("#profilNom").html("Bonjour " + getCookie("pseudo") + " 😃!");
 
 $.ajax({
     type: "GET",
-    url: 'http://localhost:8080/API/nbrRecettes',
+    url: 'http://localhost:8080/API/nbrRecettesUser',
     success: (retour) => {
-        if(retour > 0){
-            $("#nbrRecettePublie").html("Nombre de recettes publiées : " + retour);
-        }else{
+        if(retour == 0){
             $("#nbrRecettePublie").html("Vous n'avez publié aucune recette 🙁 ");
         }
 
@@ -62,24 +60,14 @@ $.ajax({
     type: "GET",
     url: 'http://localhost:8080/API/nbrAvisUser',
     success: (retour) => {
-        if(retour > 0){
-            $("#nbrAvisPoste").html("Nombre d'avis publiés : " + retour);
-        }else{
+        if(retour == 0){
             $("#nbrAvisPoste").html("Vous n'avez posté aucun avis 🙁 ");
         }
     }
 })
 
-$("#color").attr("stroke", "red");
 
-(function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s);
-    js.id = id;
-    js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
+$("#color").attr("stroke", "red");
 
 
 //const apiKey = "462bcfeb80784d16aca500b08f087c0d";
@@ -114,6 +102,7 @@ function getInfoRecette(id) {
 }
 
 
+// RECETTES FAVORIS
 function getFavorisRecette() {
     $.ajax({
         type: "GET",
@@ -125,7 +114,7 @@ function getFavorisRecette() {
 }
 
 function afficherFavroisRecette(listFavoris) {
-    console.log(listFavoris);
+    //console.log(listFavoris);
     for (let i = 0; i < listFavoris.length; i++) {
         $("#cardFavoris").append(
             $(document.createElement('div')).prop({
@@ -170,7 +159,7 @@ function afficherFavroisRecette(listFavoris) {
                             data: JSON.stringify(i),
                             headers: {"Content-Type": "application/json"},
                             success: (retour) => {
-                                console.log(retour);
+                                //console.log(retour);
                             }
                         });
                     })
@@ -180,7 +169,6 @@ function afficherFavroisRecette(listFavoris) {
     }
 
 }
-
 
 function getnbrFavorisRecette() {
     $.ajax({
@@ -199,17 +187,96 @@ function getnbrFavorisRecette() {
 
 getnbrFavorisRecette();
 
-let activities = document.getElementById("activitySelector");
+// RECETTES PUBLIEES
+function getRecettePubliee() {
+    $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/API/allRecettesPubliees',
+        success: (retour) => {
+            //console.log(retour);
+            afficherRecettePubliee(retour);
+        }
+    })
+}
+
+function afficherRecettePubliee(listRecette) {
+    //console.log(listRecette);
+    for (let i = 0; i < listRecette.length; i++) {
+        $("#affichageRecettePubliee").append(
+            $(document.createElement('div')).prop({
+                class: "card recette",
+            }).append(
+                $(document.createElement('img')).prop({
+                    class: "card-img-top",
+                    src: listRecette[i].image
+                }),
+
+                $(document.createElement('div')).prop({
+                    class: "card-body"
+                }).append(
+                    $(document.createElement('h5')).prop({
+                        class: "card-title"
+                    }).html(listRecette[i].name),
+                    $(document.createElement('input')).prop({
+                        id: ("removeRecette" + i),
+                        class: "btn btn-primary",
+                        value: "Supprimer la recette"
+                    }).click(() => {
+                        console.log(i)
+                        $.ajax({
+                            type: "PATCH",
+                            url: "http://localhost:8080/API/removeRecettePublie",
+                            data: JSON.stringify(listRecette[i].id),
+                            headers: {"Content-Type": "application/json"},
+                            success: (retour) => {
+                                location.reload();
+                            }
+                        });
+                    }),
+                    $(document.createElement('input')).prop({
+                        id: ("recettePubliee" + i),
+                        class: "btn btn-primary",
+                        value: "Voir la recette"
+                    }).click(() => {
+                        console.log()
+                        $.ajax({
+                            type: "PATCH",
+                            url: "http://localhost:8080/API/removeFavorisID",
+                            data: JSON.stringify(i),
+                            headers: {"Content-Type": "application/json"},
+                            success: (retour) => {
+                                //console.log(retour);
+                            }
+                        });
+                    })
+                )
+            )
+        )
+    }
+
+}
+
+function getnbrRecettePubliee() {
+    $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/API/nbrRecettesUser',
+        success: (retour) => {
+            //console.log(retour)
+            if (retour > 0) {
+                getRecettePubliee();
+            }
+        }
+    })
+}
+
+getnbrRecettePubliee();
 
 
-activities.addEventListener("change", function() {
-    console.log(activities.value)
-});
-
+// AVIS
 function getAvis() {
     $.ajax({
         type: "GET",
-        url: 'http://localhost:8080/API/nbrAvisUser',
+        url: 'http://localhost:8080/API/allAvisUser',
         success: (retour) => {
             console.log(retour);
             afficherAvis(retour);
@@ -219,86 +286,80 @@ function getAvis() {
 
 
 function afficherAvis(mesAvis) {
-    $.ajax({
-        type: "GET",
-        url: 'http://localhost:8080/API/les4avis',
-        success: (retour) => {
-            console.log(retour)
-            for (let i = 0; i < retour.length; i++) {
-                console.log(Date.parse(retour[i].date));
-                console.log(Date.parse(new Date()));
-                $("#affichageAvis").append(
-                    // Ajouter div dans le affichageAvis
-                    $(document.createElement('div')).prop({
-                        class: "avis"
-                    }).append(
-                        // Ajouter li dans le div
-                        $(document.createElement('p')).prop({
-                            class: "stylePseudo"
-                        }).html(retour[i].pseudo),
-                        $(document.createElement('p')).prop({
-                            class: "styleDate"
-                        }).html("Date :" + retour[i].date),
-                        $(document.createElement('p')).append(
-                            $(document.createElement('i')).prop({
-                                class: "las la-star",
-                                id: "star1" +i
-                            }),
-                            $(document.createElement('i')).prop({
-                                class: "las la-star",
-                                id: "star2" +i
-                            }),
-                            $(document.createElement('i')).prop({
-                                class: "las la-star",
-                                id: "star3" + i
-                            }),
-                            $(document.createElement('i')).prop({
-                                class: "las la-star",
-                                id: "star4" + i
-                            }),
-                            $(document.createElement('i')).prop({
-                                class: "las la-star",
-                                id: "star5" + i
-                            })
-                        ),
+    console.log(mesAvis);
+    for (let i = 0; i < mesAvis.length; i++) {
+        $("#avisPoste").append(
+            // Ajouter div dans le affichageAvis
+            $(document.createElement('div')).prop({
+                class: "avisPublie"
+            }).append(
+                // Ajouter li dans le div
+                $(document.createElement('p')).prop({
+                    class: "stylePseudo"
+                }).html(mesAvis[i].pseudo),
+                $(document.createElement('p')).prop({
+                    class: "styleDate"
+                }).html("Date :" + mesAvis[i].date),
+                $(document.createElement('p')).append(
+                    $(document.createElement('i')).prop({
+                        class: "las la-star",
+                        id: "myStar1" +i
+                    }),
+                    $(document.createElement('i')).prop({
+                        class: "las la-star",
+                        id: "myStar2" +i
+                    }),
+                    $(document.createElement('i')).prop({
+                        class: "las la-star",
+                        id: "myStar3" + i
+                    }),
+                    $(document.createElement('i')).prop({
+                        class: "las la-star",
+                        id: "myStar4" + i
+                    }),
+                    $(document.createElement('i')).prop({
+                        class: "las la-star",
+                        id: "myStar5" + i
+                    })
+                ),
 
-                        $(document.createElement('p')).html(retour[i].description),
-
-                        $(document.createElement('input')).prop({
-                            id: "suppAvis",
-                            class: "btn btn-primary",
-                            value: "Supprimer avis"
-                        }).click(() => {
-                            $.ajax({
-                                type: "PATCH",
-                                url: "http://localhost:8080/API/removeAvis",
-                                data: JSON.stringify(mesAvis[i].id),
-                                headers: {"Content-Type": "application/json"},
-                                success: (retour) => {
-                                    location.reload();
-                                }
-                            });
-                        })
-                    )
-                )
+                $(document.createElement('p')).html(mesAvis[i].description),
+                $(document.createElement('input')).prop({
+                    id: ("avisPoste" + i),
+                    class: "btn btn-primary",
+                    value: "Supprimer cet avis"
+                }).click(() => {
+                    $.ajax({
+                        type: "PATCH",
+                        url: "http://localhost:8080/API/removeAvis",
+                        data: JSON.stringify(mesAvis[i].id),
+                        headers: {"Content-Type": "application/json"},
+                        success: (retour) => {
+                            location.reload();
+                        }
+                    });
+                }),
+                $(document.createElement('br'))
 
 
-                //console.log(retour[i].note)
-                for(let j=1; j <= retour[i].note; j++){
-                    //console.log("star"+j);
-                    $("#star" +j +i).css("color", "orange");
-                }
-            }
+            )
+        )
 
+
+        //console.log(retour[i].note)
+        for(let j=1; j <= mesAvis[i].note; j++){
+            console.log("myStar"+j+i);
+            $("#myStar" +j +i).css("color", "orange");
         }
-    });
+    }
+
 }
 
 
 function getnbrAvis() {
     $.ajax({
         type: "GET",
-        url: 'http://localhost:8080/API/nbrAvis',
+        url: 'http://localhost:8080/API/nbrAvisUser',
         success: (retour) => {
             console.log(retour)
             if (retour > 0) {
