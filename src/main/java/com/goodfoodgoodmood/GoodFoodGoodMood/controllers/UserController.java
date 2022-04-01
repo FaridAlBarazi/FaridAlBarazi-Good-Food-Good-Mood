@@ -45,14 +45,19 @@ public class UserController {
                 Cookie cookie = new Cookie("pseudo", user.getPseudo());
 
                 Cookie cookie2 = new Cookie("mail", user.getMail());
+
+                //Cookie cookie3 = new Cookie("vi ", "test");
                 cookie.setMaxAge(7 * 24 * 60 * 60);
+                //cookie3.setMaxAge(7 * 24 * 60 * 60);
                 cookie.setPath("/"); // global cookie accessible every where
                 cookie2.setMaxAge(7 * 24 * 60 * 60);
+                //cookie3.setPath("/");
                 cookie2.setPath("/"); // global cookie accessible every where
                 //add cookie to response
 
                 response.addCookie(cookie2);
                 response.addCookie(cookie);
+                //response.addCookie(cookie3);
 
                 return ResponseEntity.status(HttpStatus.OK).body("Ok");
             } else {

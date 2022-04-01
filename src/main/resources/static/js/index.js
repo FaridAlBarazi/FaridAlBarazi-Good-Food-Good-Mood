@@ -23,10 +23,10 @@ function getCookie(name) {
         if (begin != 0) return null;
     } else {
         begin += 2;
-        let end = document.cookie.indexOf(";", begin);
-        if (end == -1) {
-            end = dc.length;
-        }
+       // let end = document.cookie.indexOf(";", begin);
+        //if (end == -1) {
+        //    end = dc.length;
+       // }
     }
     return decodeURI(dc.substring(begin + prefix.length));
 }
@@ -173,8 +173,9 @@ $("#boutonSeConnecter").click(() => {
         url: "http://localhost:8080/API/connexion",
         data: JSON.stringify(utilisateur),
         success: function (resultat) {
-            console.log(getCookie("mail"))
-
+            console.log(getCookie("mail"));
+            console.log(getCookie("pseudo"));
+            //console.log(getCookie("vi"));
             $("#popupConnexion").css("display", "none");
             $("#dropdown").css("display", "block")
             $("#connexionButton").css("display", "none");
