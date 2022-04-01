@@ -89,6 +89,13 @@ public class AvisController {
     }
 
 
+    @GetMapping("/nbrAvis")
+    public int nbrAvis(HttpServletRequest request) {
+        List<Avis> tousLesAvis= avisRepositories.findAll();
+        int nbr = tousLesAvis.size();
+        return nbr;
+    }
+
     @GetMapping("/les4avis")
     public List<Avis> les4avis(){
         List<Avis> listeAvis=avisRepositories.findTop4ByOrderByDescriptionDesc();

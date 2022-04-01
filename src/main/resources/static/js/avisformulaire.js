@@ -125,7 +125,8 @@ function getAvis() {
         type: "GET",
         url: 'http://localhost:8080/API/getAllAvis',
         success: (retour) => {
-            afficherAvis(retour)
+            console.log(retour);
+            afficherAvis(retour);
         }
     })
 }
@@ -177,23 +178,9 @@ function afficherAvis(mesAvis) {
 
                         $(document.createElement('p')).html(retour[i].description),
 
-                        $(document.createElement('input')).prop({
-                            id: "suppAvis",
-                            class: "btn btn-primary",
-                            value: "Supprimer avis"
-                        }).click(() => {
-                            $.ajax({
-                                type: "PATCH",
-                                url: "http://localhost:8080/API/removeAvis",
-                                data: JSON.stringify(mesAvis[i].id),
-                                headers: {"Content-Type": "application/json"},
-                                success: (retour) => {
-                                    location.reload();
-                                }
-                            });
-                        })
                     )
                 )
+
 
                 //console.log(retour[i].note)
                 for(let j=1; j <= retour[i].note; j++){
@@ -212,6 +199,7 @@ function getnbrAvis() {
         type: "GET",
         url: 'http://localhost:8080/API/nbrAvis',
         success: (retour) => {
+            console.log(retour)
             if (retour > 0) {
                 getAvis();
             }
@@ -220,6 +208,7 @@ function getnbrAvis() {
 }
 
 getnbrAvis();
+
 //affichage des 4 avis les mieux notés en html
 // BOUCLE SUR UN DIV
 /*$.get("http://localhost:8080/API/les4avis", (retour) => {

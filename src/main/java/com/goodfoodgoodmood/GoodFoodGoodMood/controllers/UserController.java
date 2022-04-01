@@ -136,7 +136,7 @@ public class UserController {
         return user.getRecettes().size();
     }
 
-    @GetMapping("/nbrAvis")
+    @GetMapping("/nbrAvisUser")
     public int nbrAvis(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         User user = userRepositories.findByMail(cookies[0].getValue());

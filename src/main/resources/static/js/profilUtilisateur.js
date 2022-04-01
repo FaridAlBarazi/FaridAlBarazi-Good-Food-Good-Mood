@@ -60,7 +60,7 @@ $.ajax({
 
 $.ajax({
     type: "GET",
-    url: 'http://localhost:8080/API/nbrAvis',
+    url: 'http://localhost:8080/API/nbrAvisUser',
     success: (retour) => {
         if(retour > 0){
             $("#nbrAvisPoste").html("Nombre d'avis publiés : " + retour);
@@ -205,3 +205,107 @@ let activities = document.getElementById("activitySelector");
 activities.addEventListener("change", function() {
     console.log(activities.value)
 });
+
+function getAvis() {
+    $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/API/nbrAvisUser',
+        success: (retour) => {
+            console.log(retour);
+            afficherAvis(retour);
+        }
+    })
+}
+
+
+function afficherAvis(mesAvis) {
+    $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/API/les4avis',
+        success: (retour) => {
+            console.log(retour)
+            for (let i = 0; i < retour.length; i++) {
+                console.log(Date.parse(retour[i].date));
+                console.log(Date.parse(new Date()));
+                $("#affichageAvis").append(
+                    // Ajouter div dans le affichageAvis
+                    $(document.createElement('div')).prop({
+                        class: "avis"
+                    }).append(
+                        // Ajouter li dans le div
+                        $(document.createElement('p')).prop({
+                            class: "stylePseudo"
+                        }).html(retour[i].pseudo),
+                        $(document.createElement('p')).prop({
+                            class: "styleDate"
+                        }).html("Date :" + retour[i].date),
+                        $(document.createElement('p')).append(
+                            $(document.createElement('i')).prop({
+                                class: "las la-star",
+                                id: "star1" +i
+                            }),
+                            $(document.createElement('i')).prop({
+                                class: "las la-star",
+                                id: "star2" +i
+                            }),
+                            $(document.createElement('i')).prop({
+                                class: "las la-star",
+                                id: "star3" + i
+                            }),
+                            $(document.createElement('i')).prop({
+                                class: "las la-star",
+                                id: "star4" + i
+                            }),
+                            $(document.createElement('i')).prop({
+                                class: "las la-star",
+                                id: "star5" + i
+                            })
+                        ),
+
+                        $(document.createElement('p')).html(retour[i].description),
+
+                        $(document.createElement('input')).prop({
+                            id: "suppAvis",
+                            class: "btn btn-primary",
+                            value: "Supprimer avis"
+                        }).click(() => {
+                            $.ajax({
+                                type: "PATCH",
+                                url: "http://localhost:8080/API/removeAvis",
+                                data: JSON.stringify(mesAvis[i].id),
+                                headers: {"Content-Type": "application/json"},
+                                success: (retour) => {
+                                    location.reload();
+                                }
+                            });
+                        })
+                    )
+                )
+
+
+                //console.log(retour[i].note)
+                for(let j=1; j <= retour[i].note; j++){
+                    //console.log("star"+j);
+                    $("#star" +j +i).css("color", "orange");
+                }
+            }
+
+        }
+    });
+}
+
+
+function getnbrAvis() {
+    $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/API/nbrAvis',
+        success: (retour) => {
+            console.log(retour)
+            if (retour > 0) {
+                getAvis();
+            }
+        }
+    })
+}
+
+getnbrAvis();
