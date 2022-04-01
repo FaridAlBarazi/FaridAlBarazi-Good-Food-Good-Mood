@@ -1,35 +1,63 @@
-
-
-$.ajax({
-    type: "GET",
-    url:"http://localhost:8080/API/allingredient",
-    success:(retour)=>{
-        console.log(retour)
-    }
-});
-
-function selectspecialite(){
-        $.ajax({
-            type: "GET",
-            url:"http://localhost:8080/API/allspecialite",
-            success:(retour)=>{
-                console.log(retour);
-                // let selec = $("<select id='selectspecialiteingr' >").appendTo($("#SpecialiteOuIngr"));
-                // $(spec).each(function () {
-                //     selec.append($("<option>").attr('value', this.val).text(this.text));
-                // });
-
+function selectingredients() {
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/API/allingredient",
+        success: (retour) => {
+            console.log(retour)
+            let spec =  [];
+            for(let i = 0; i < retour.length; i++){
+                let x = {val: retour[i], text: retour[i]}
+                spec.push(x);
             }
-        });
+            let selec = $("<select id='selectspecialiteingr' >").appendTo($("#SpecialiteOuIngr"));
 
-    }
+            $(spec).each(function () {
+                selec.append($("<option>").attr('value', this.val).text(this.text));
+            });
+        }
+    });
+
+}
+
+function selectspecialite() {
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/API/allspecialite",
+        success: (retour) => {
+            console.log(retour);
+            let spec =  [];
+            for(let i = 0; i < retour.length; i++){
+                let x = {val: retour[i], text: retour[i]}
+                spec.push(x);
+            }
+            let selec = $("<select id='selectspecialiteingr' >").appendTo($("#SpecialiteOuIngr"));
+
+            $(spec).each(function () {
+               selec.append($("<option>").attr('value', this.val).text(this.text));
+            });
+        }
+    });
+
+}
 
 let myselect1 = document.getElementById("myselect1");
+
 myselect1.addEventListener("change", function () {
     console.log(myselect1.value)
+    $("#selectspecialiteingr").remove();
+    console.log(myselect2.value)
+    if(myselect1.value == "Recettes utilisateurs" && myselect2.value == "Par ingredient"){
+        selectingredients();
+    }else if(myselect1.value == "Recettes utilisateurs" && myselect2.value == "Par specialité"){
+        selectspecialite();
+    }else if(myselect1.value == "Recettes de notre site" && myselect2.value == "Par specialité"){
+        specialite();
+    }else if(myselect1.value == "Recettes de notre site" && myselect2.value == "Par ingredient"){
+        let selec = $("<input id='selectspecialiteingr'>").appendTo($("#SpecialiteOuIngr"));
+    }
 });
 
-function specialite(){
+function specialite() {
     let spec = [
         {val: "African", text: 'African'},
         {val: "American", text: 'American'},
@@ -64,125 +92,93 @@ function specialite(){
     });
 }
 
-var nbrchamp =0;
 let myselect2 = document.getElementById("myselect2");
+
 myselect2.addEventListener("change", function () {
+    console.log(myselect1.value);
+    $("#selectspecialiteingr").remove();
     console.log(myselect2.value)
-
-//if (myselect1 == "Recettes de notre site") {
-
-    if (nbrchamp > 0){
-        $("#selectspecialiteingr").remove();
-        nbrchamp--;
-        if (myselect2.value == "Par specialité") {
-           specialite();
-            nbrchamp++;
-        } else if (myselect2.value == "Par ingredient"){
-            let selec = $("<input id='selectspecialiteingr'>").appendTo($("#SpecialiteOuIngr"));
-            nbrchamp++;
-        }
-    }   else {
-
-    if (myselect2.value == "Par specialité") {
+    if(myselect1.value == "Recettes utilisateurs" && myselect2.value == "Par ingrédient"){
+        selectingredients();
+    }else if(myselect1.value == "Recettes utilisateurs" && myselect2.value == "Par specialité"){
+        selectspecialite();
+    }else if(myselect1.value == "Recettes de notre site" && myselect2.value == "Par specialité"){
         specialite();
-        nbrchamp++;
-    } else if (myselect2.value == "Par ingredient"){
-        let selec = $("<input id='selectspecialiteingr'>").appendTo($("#SpecialiteOuIngr"));
-        nbrchamp++;
+    }else if(myselect1.value == "Recettes de notre site" && myselect2.value == "Par ingredient"){
+        $("<input id='selectspecialiteingr'>").appendTo($("#SpecialiteOuIngr"));
     }
-    }
+
 });
 
-//else if (myselect1 == "Recettes utilisateurs") {
+//------------------------Clé API ----------------------
+//const apiKey = "462bcfeb80784d16aca500b08f087c0d";
+//const apiKey = "c764f8af433b4b9093ecfed23493b886";
+const apiKey = "0507b7d2299e4aea88421cfa97388b0e";
+//const apiKey = "4bc3a5e0a85742e09b08d3f0fce9a84e";
+//const apiKey = "e259759e2eff4a1f91671009d2d9f1f3";
+const container = document.querySelector(".card-img-top");
 
+function resultatspecialite(inputRecherche){
+    document.querySelector(".test").classList.remove("test2");
+    //$("#resultat").remove("imageResult");
+    $.ajax({
+        type: "GET",
+        url: "https://api.spoonacular.com/recipes/complexSearch?apiKey=" + apiKey + "&cuisine=" + inputRecherche ,
+        // data: JSON.stringify(inputRecherche),
+        // headers:{"Content-Type":"application/json"},
+        success: (retour) => {
+            console.log(retour)
+            for(let i = 0; i < retour.results.length; i++){
+                /*$("<img id='imageResult'>").appendTo($("#resultat")).prop({
+                    class: "card-img-top test",
+                    src: retour.results[i].image
+                }).click(()=>{
+                    window.location.href = "affichageRecette.html?id=" + retour.results[i].id;
+                })*/
+                $("#resultat").append(
+                    $(document.createElement('h3')).html(
+                        retour.results[i].title
+                    ).click(()=>{
+                        window.location.href = "affichageRecette.html?id=" + retour.results[i].id;
+                    }),
 
-//}
-//}
+                    $(document.createElement('img')).prop({
+                        id: "imageResult",
+                        class: "card-img-top",
+                        src: retour.results[i].image
+                    }).click(()=>{
+                        window.location.href = "affichageRecette.html?id=" + retour.results[i].id;
+                    })
 
+                )
+            }
+        }
+    });
+}
 
 $("#recherche").click(() => {
-    //let myselect1 = $("#myselect1").find(":selected").text();
-    // let myselect2 = $("#myselect2").find(":selected").text();
     let inputRecherche = $("#selectspecialiteingr").val();
     console.log(myselect1);
     console.log(myselect2);
     console.log(inputRecherche);
-   // console.log(selec);
 
-    //  if (myselect1 == "Recettes utilisateurs") {
-    // if (myselect2 == "Paringredient") {
-    //     $.get("http://localhost:8080/API/rechercheIngredients/" + inputRecherche, (retour) => {
-    //         console.log(retour);
-    //     })
-    // }
-    // if (myselect2 == "Par le nom de la recette") {
+    if(myselect1.value == "Recettes utilisateurs" && myselect2.value == "Par ingrédient"){
+        selectingredients();
+    }else if(myselect1.value == "Recettes utilisateurs" && myselect2.value == "Par specialité"){
+        selectspecialite();
+    }else if(myselect1.value == "Recettes de notre site" && myselect2.value == "Par specialité"){
+        resultatspecialite(inputRecherche);
+    }else if(myselect1.value == "Recettes de notre site" && myselect2.value == "Par ingredient"){
+        $("<input id='selectspecialiteingr'>").appendTo($("#SpecialiteOuIngr"));
+    }
     $.ajax({
         type: "GET",
-        url:"http://localhost:8080/API/rechercheRecette/"+inputRecherche,
+        url: "http://localhost:8080/API/rechercheRecette/" + inputRecherche,
         // data: JSON.stringify(inputRecherche),
         // headers:{"Content-Type":"application/json"},
-        success:(retour)=>{
+        success: (retour) => {
             console.log(retour)
         }
     });
-
-    //   }
-    // if (myselect2 == "Par specialité") {
-    //     $.get("http://localhost:8080/API/rechercheSpecialite"+ inputRecherche, (retour) => {
-    //         console.log(retour);
-    //     })
-    // }
-    // }
 })
-
-// // select pour les specialité
-// let myselect1 = document.getElementById("activitySelector");
-// myselect1.addEventListener("change", function() {
-//     console.log(activities.value)
-// });
-// if (myselect1 == "Recettes de notre site") {
-//     let spec = [
-//         {val : "African", text: 'African'},
-//         {val : "American", text: 'American'},
-//         {val : "British", text: 'British'},
-//         {val : "Cajun", text: 'Cajun'},
-//         {val : "Caribbean", text: 'Caribbean'},
-//         {val : "Chinese", text: 'Chinese'},
-//         {val : "Eastern European", text: 'Eastern European'},
-//         {val : "European", text: 'European'},
-//         {val : "French", text: 'French'},
-//         {val : "German", text: 'German'},
-//         {val : "Greek", text: 'Greek'},
-//         {val : "Indian", text: 'Indian'},
-//         {val : "Irish", text: 'Irish'},
-//         {val : "Italian", text: 'Italian'},
-//         {val : "Japanese", text: 'Japanese'},
-//         {val : "Jewish", text: 'Jewish'},
-//         {val : "Korean", text: 'Korean'},
-//         {val : "Latin", text: 'Latin'},
-//         {val : "American Mediterranean", text: 'American Mediterranean'},
-//         {val : "Mexican", text: 'Mexican'},
-//         {val : "Middle Eastern", text: 'Middle Eastern'},
-//         {val : "Nordic", text: 'Nordic'},
-//         {val : "Southern", text: 'Southern'},
-//         {val : "Spanish", text: 'Spanish'},
-//         {val : "Thai", text: 'Thai'},
-//         {val : "Vietnamese", text: 'Vietnamese'}
-//
-//     ];
-// }
-// else {
-//     let spec = [
-//         {val : "African", text: 'African'},
-//         {val : "American", text: 'American'},
-//         {val : "British", text: 'British'},
-//         {val : "Cajun", text: 'Cajun'},
-//         {val : "Caribbean", text: 'Caribbean'}
-//     ];
-//     let selec = $("<select id='selectspecialiterecherch'>").appendTo($("#specialiteRecherche"));
-//     $(spec).each(function() {
-//         selec.append($("<option>").attr('value',this.val).text(this.text));
-//     });
-// }
-//
 
