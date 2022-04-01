@@ -329,9 +329,9 @@ let cuisine = ["French", "American", "British", "African", "Caribbean", "Chinese
     "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "Southern", "Spanish", "Thai",
     "Vietnamese"]
 
-/*for (let i = 0; i < 4; i++) {
+for (let i = 0; i < 4; i++) {
     getApi(cuisine[i]);
-}*/
+}
 
 
 $("#boutonVersInscription").click(() => {
