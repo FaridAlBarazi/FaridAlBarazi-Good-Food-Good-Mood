@@ -155,6 +155,36 @@ function resultatspecialite(inputRecherche){
         }
     });
 }
+function resultatingredient(inputRecherche){
+    document.querySelector(".test").classList.remove("test2");
+
+    $.ajax({
+        type: "GET",
+        url: "https://api.spoonacular.com/recipes/findByIngredients?apiKey=" + apiKey + "&ingredients=" + inputRecherche ,
+        success: (retour) => {
+            console.log(retour)
+            for(let i = 0; i < retour.length; i++){
+
+                $("#resultat").append(
+                    $(document.createElement('h3')).html(
+                        retour[i].title
+                    ).click(()=>{
+                        window.location.href = "affichageRecette.html?id=" + retour[i].id;
+                    }),
+
+                    $(document.createElement('img')).prop({
+                        id: "imageResult",
+                        class: "card-img-top",
+                        src: retour[i].image
+                    }).click(()=>{
+                        window.location.href = "affichageRecette.html?id=" + retour[i].id;
+                    })
+
+                )
+            }
+        }
+    });
+}
 
 $("#recherche").click(() => {
     let inputRecherche = $("#selectspecialiteingr").val();
@@ -163,13 +193,13 @@ $("#recherche").click(() => {
     console.log(inputRecherche);
 
     if(myselect1.value == "Recettes utilisateurs" && myselect2.value == "Par ingrédient"){
-        selectingredients();
+        //a faire
     }else if(myselect1.value == "Recettes utilisateurs" && myselect2.value == "Par specialité"){
-        selectspecialite();
+       // a faire
     }else if(myselect1.value == "Recettes de notre site" && myselect2.value == "Par specialité"){
         resultatspecialite(inputRecherche);
     }else if(myselect1.value == "Recettes de notre site" && myselect2.value == "Par ingredient"){
-        $("<input id='selectspecialiteingr'>").appendTo($("#SpecialiteOuIngr"));
+        resultatingredient(inputRecherche);
     }
     $.ajax({
         type: "GET",
