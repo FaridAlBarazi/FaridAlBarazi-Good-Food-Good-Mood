@@ -2,6 +2,7 @@ package com.goodfoodgoodmood.GoodFoodGoodMood.controllers;
 
 import com.goodfoodgoodmood.GoodFoodGoodMood.beans.*;
 import com.goodfoodgoodmood.GoodFoodGoodMood.modeles.Information;
+import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.AvisRepositories;
 import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.RecetteFavoriRepositories;
 import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.UserRepositories;
 import org.mindrot.jbcrypt.BCrypt;
@@ -21,6 +22,10 @@ import java.util.stream.Collectors;
 public class UserController {
     @Autowired
     private UserRepositories userRepositories;
+
+    @Autowired
+    private AvisRepositories avisRepositories;
+
 
     @Autowired
     private RecetteFavoriRepositories recetteFavoriRepositories;
@@ -184,6 +189,30 @@ public class UserController {
         return "ok";
     }
 
+    @PatchMapping("/removeAvis")
+    public String removeAvis(@RequestBody int idAvis, HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        // Recuperation user
+        User user = userRepositories.findByMail(cookies[0].getValue());
+
+        // Tous les avis user
+        Set<Avis> mesAvis = user.getAvis();
+
+        // Récupère avis à supprimer
+        Avis monAvis=avisRepositories.findByID(idAvis);
+
+
+        System.out.println("mon avis : " +monAvis);
+        System.out.println("user avant : " + user);
+
+        //Retirer cet avis de user
+        mesAvis.remove(monAvis);
+
+        System.out.println("user après : " + user);
+        userRepositories.save(user);
+        return "ok";
+    }
+
     @PatchMapping("/removeFavorisID")
     public String removeFavorisID(@RequestBody int index, HttpServletRequest request) {
         System.out.println("index : " + index);
@@ -205,6 +234,30 @@ public class UserController {
         userRepositories.save(user);
         return "ok";
     }
+
+
+
+    /*@PatchMapping("/removeAvisID")
+    public String removeAvisID(@RequestBody int index, HttpServletRequest request) {
+        System.out.println("index : " + index);
+
+        // Cookies
+        Cookie[] cookies = request.getCookies();
+
+        // Récupération du user
+        User user = userRepositories.findByMail(cookies[0].getValue());
+
+        // Récupération de la liste des favoris du user
+        Set<Avis> mesAvis = user.getAvis();
+
+        // Enlever un élement de la liste
+        System.out.println("AvisList avant : " + mesAvis);
+        mesAvis.remove(index);
+        System.out.println("AvisList apres : " + mesAvis);
+
+        userRepositories.save(user);
+        return "ok";
+    }*/
 
     @GetMapping("/nbrFavoris")
     public int nbrFavoris(HttpServletRequest request) {

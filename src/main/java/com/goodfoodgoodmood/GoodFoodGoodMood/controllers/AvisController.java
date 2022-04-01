@@ -42,7 +42,7 @@ public class AvisController {
     }
 
 
-    @PatchMapping("/removeAvis")
+    /*@PatchMapping("/removeAvis")
     public String removeAvis(@RequestBody int idAvis, HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         // Recuperation user
@@ -79,7 +79,7 @@ public class AvisController {
 
         userRepositories.save(user);
         return "ok";
-    }
+    }*/
 
 
     @GetMapping ("/getAllAvis")
