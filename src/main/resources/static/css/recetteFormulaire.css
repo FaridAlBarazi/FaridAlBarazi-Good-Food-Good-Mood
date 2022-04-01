@@ -3,7 +3,10 @@
     display: flex;
     align-items: center;
 }
-
+#specialiteRecette{
+    flex-direction: column;
+    display: flex;
+}
 #boxIngredient{
     flex-direction: column;
     display: flex;

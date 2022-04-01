@@ -15,7 +15,7 @@
     background-size: cover;
 
 }
-.button:hover{
-    transform: scale(1.3);
 
+#resultat{
+    width: 50%;
 }

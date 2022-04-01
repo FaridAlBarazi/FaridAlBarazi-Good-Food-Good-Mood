@@ -23,10 +23,10 @@ function getCookie(name) {
         if (begin != 0) return null;
     } else {
         begin += 2;
-        let end = document.cookie.indexOf(";", begin);
-        if (end == -1) {
-            end = dc.length;
-        }
+       // let end = document.cookie.indexOf(";", begin);
+        //if (end == -1) {
+        //    end = dc.length;
+       // }
     }
     return decodeURI(dc.substring(begin + prefix.length));
 }
@@ -167,13 +167,15 @@ $("#boutonSeConnecter").click(() => {
         mail: $("#pseudoConnexion").val(),
         password: $("#passwordConnexion").val()
     }
-
     $.ajax({
         type: "POST",
         headers: {"Content-Type": "application/json"},
         url: "http://localhost:8080/API/connexion",
         data: JSON.stringify(utilisateur),
         success: function (resultat) {
+            console.log(getCookie("mail"));
+            console.log(getCookie("pseudo"));
+            //console.log(getCookie("vi"));
             $("#popupConnexion").css("display", "none");
             $("#dropdown").css("display", "block")
             $("#connexionButton").css("display", "none");
@@ -281,11 +283,11 @@ $("#closePopupAllergies").click(() => {
 
 
 //------------------------Clé API ----------------------
-//const apiKey = "462bcfeb80784d16aca500b08f087c0d";
+const apiKey = "462bcfeb80784d16aca500b08f087c0d";
 //const apiKey = "c764f8af433b4b9093ecfed23493b886";
 //const apiKey = "0507b7d2299e4aea88421cfa97388b0e";
 //const apiKey = "4bc3a5e0a85742e09b08d3f0fce9a84e";
-const apiKey = "e259759e2eff4a1f91671009d2d9f1f3";
+//const apiKey = "e259759e2eff4a1f91671009d2d9f1f3";
 
 function getImageRecette(id, specialite) {
     $.ajax({

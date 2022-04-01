@@ -4,6 +4,7 @@ import com.goodfoodgoodmood.GoodFoodGoodMood.beans.*;
 import com.goodfoodgoodmood.GoodFoodGoodMood.modeles.Information;
 import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.AvisRepositories;
 import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.RecetteFavoriRepositories;
+import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.RecetteRepositories;
 import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.UserRepositories;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class UserController {
     @Autowired
     private AvisRepositories avisRepositories;
 
+    @Autowired
+    private RecetteRepositories recetteRepositories;
 
     @Autowired
     private RecetteFavoriRepositories recetteFavoriRepositories;
@@ -40,14 +43,22 @@ public class UserController {
             if (BCrypt.checkpw(userConnexion.getPassword(), user.getPassword())) { // On vérifie que les passwords correspondent
                 // create a cookie
                 Cookie cookie = new Cookie("pseudo", user.getPseudo());
+
                 Cookie cookie2 = new Cookie("mail", user.getMail());
+
+                //Cookie cookie3 = new Cookie("vi ", "test");
                 cookie.setMaxAge(7 * 24 * 60 * 60);
+                //cookie3.setMaxAge(7 * 24 * 60 * 60);
                 cookie.setPath("/"); // global cookie accessible every where
                 cookie2.setMaxAge(7 * 24 * 60 * 60);
+                //cookie3.setPath("/");
                 cookie2.setPath("/"); // global cookie accessible every where
                 //add cookie to response
-                response.addCookie(cookie);
+
                 response.addCookie(cookie2);
+                response.addCookie(cookie);
+                //response.addCookie(cookie3);
+
                 return ResponseEntity.status(HttpStatus.OK).body("Ok");
             } else {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Erreur mdp");
@@ -77,8 +88,12 @@ public class UserController {
         cookie.setMaxAge(0);
         cookie.setPath("/");
 
+        Cookie cookie2 = new Cookie("mail", null);
+        cookie2.setMaxAge(0);
+        cookie2.setPath("/");
         //add cookie to response
         response.addCookie(cookie);
+        response.addCookie(cookie2);
     }
 
     @GetMapping("/all-cookies")
@@ -118,7 +133,7 @@ public class UserController {
 
     @PatchMapping("/recuperationRecetteUser")
     public String recuperationRecetteUser(@RequestBody Recettes recette, HttpServletRequest request) {
-        System.out.println(recette);
+        //System.out.println(recette);
         Cookie[] cookies = request.getCookies();
         User user = userRepositories.findByMail(cookies[0].getValue());
         Set<Recettes> recettesList = user.getRecettes();
@@ -128,25 +143,41 @@ public class UserController {
         return "ok";
     }
 
-    @GetMapping("/nbrRecettes")
+    @GetMapping("/nbrRecettesUser")
     public int nbrRecettes(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         User user = userRepositories.findByMail(cookies[0].getValue());
-        System.out.println(user.getRecettes().size());
+        //System.out.println(user.getRecettes().size());
         return user.getRecettes().size();
     }
 
-    @GetMapping("/nbrAvis")
+    @GetMapping("/allRecettesPubliees")
+    public Set<Recettes> allRecettesPubliees(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        User user = userRepositories.findByMail(cookies[0].getValue());
+        //System.out.println(user.getRecettes());
+        return user.getRecettes();
+    }
+
+    @GetMapping("/nbrAvisUser")
     public int nbrAvis(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         User user = userRepositories.findByMail(cookies[0].getValue());
-        System.out.println(user.getAvis().size());
+        //System.out.println(user.getAvis().size());
         return user.getAvis().size();
+    }
+
+    @GetMapping("/allAvisUser")
+    public Set<Avis> allAvisUser(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        User user = userRepositories.findByMail(cookies[0].getValue());
+        //System.out.println(user.getAvis());
+        return user.getAvis();
     }
 
     @PatchMapping("/recuperationAvisUser")
     public String recuperationAvis(@RequestBody Avis monAvis, HttpServletRequest request) {
-        System.out.println(monAvis);
+        //System.out.println(monAvis);
         Cookie[] cookies = request.getCookies();
         User user = userRepositories.findByMail(cookies[0].getValue());
         Set<Avis> avisSet = user.getAvis();
@@ -160,7 +191,7 @@ public class UserController {
     public String addFavoris(@RequestBody RecetteFavoris idRecette, HttpServletRequest request) {
         RecetteFavoris recetteFavoris = recetteFavoriRepositories.findByIdRecetteAPI(idRecette.getIdRecetteAPI());
 
-        System.out.println(idRecette);
+        //System.out.println(idRecette);
         if(recetteFavoris == null){
             Cookie[] cookies = request.getCookies();
             User user = userRepositories.findByMail(cookies[0].getValue());
@@ -180,17 +211,18 @@ public class UserController {
         User user = userRepositories.findByMail(cookies[0].getValue());
         //Set<RecetteFavoris> favorisList = user.getFavoris();
         RecetteFavoris recetteFavoris = recetteFavoriRepositories.findByIdRecetteAPI(idRecette);
-        System.out.println("recette favori : " + recetteFavoris);
-        System.out.println("user avant : " + user);
+        //System.out.println("recette favori : " + recetteFavoris);
+        //System.out.println("user avant : " + user);
 
         user.getFavoris().remove(recetteFavoris);
-        System.out.println("user après : " + user);
+        //System.out.println("user après : " + user);
         userRepositories.save(user);
         return "ok";
     }
 
     @PatchMapping("/removeAvis")
     public String removeAvis(@RequestBody int idAvis, HttpServletRequest request) {
+        System.out.println(idAvis);
         Cookie[] cookies = request.getCookies();
         // Recuperation user
         User user = userRepositories.findByMail(cookies[0].getValue());
@@ -213,7 +245,32 @@ public class UserController {
         return "ok";
     }
 
-    @PatchMapping("/removeFavorisID")
+    @PatchMapping("/removeRecettePublie")
+    public String removeRecettePublie(@RequestBody int idRecette, HttpServletRequest request) {
+        System.out.println(idRecette);
+        Cookie[] cookies = request.getCookies();
+        // Recuperation user
+        User user = userRepositories.findByMail(cookies[0].getValue());
+
+        // Tous les avis user
+        Set<Recettes> mesAvis = user.getRecettes();
+
+        // Récupère avis à supprimer
+        Recettes recette=recetteRepositories.findByID(idRecette);
+
+
+        System.out.println("recette : " +recette);
+        System.out.println("user avant : " + user);
+
+        //Retirer cet avis de user
+        mesAvis.remove(recette);
+
+        System.out.println("user après : " + user);
+        userRepositories.save(user);
+        return "ok";
+    }
+
+    /*@PatchMapping("/removeFavorisID")
     public String removeFavorisID(@RequestBody int index, HttpServletRequest request) {
         System.out.println("index : " + index);
 
@@ -233,31 +290,8 @@ public class UserController {
 
         userRepositories.save(user);
         return "ok";
-    }
-
-
-
-    /*@PatchMapping("/removeAvisID")
-    public String removeAvisID(@RequestBody int index, HttpServletRequest request) {
-        System.out.println("index : " + index);
-
-        // Cookies
-        Cookie[] cookies = request.getCookies();
-
-        // Récupération du user
-        User user = userRepositories.findByMail(cookies[0].getValue());
-
-        // Récupération de la liste des favoris du user
-        Set<Avis> mesAvis = user.getAvis();
-
-        // Enlever un élement de la liste
-        System.out.println("AvisList avant : " + mesAvis);
-        mesAvis.remove(index);
-        System.out.println("AvisList apres : " + mesAvis);
-
-        userRepositories.save(user);
-        return "ok";
     }*/
+
 
     @GetMapping("/nbrFavoris")
     public int nbrFavoris(HttpServletRequest request) {
