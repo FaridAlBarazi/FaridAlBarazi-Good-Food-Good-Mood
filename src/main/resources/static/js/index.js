@@ -1,3 +1,18 @@
+function myFunction(x) {
+    if (x.matches) { // If media query matches
+        $("#divCard").css("flex-direction", "column")
+    } else {
+        $("#divCard").css("flex-direction", "row")
+    }
+}
+
+var x = window.matchMedia("(max-width: 700px)")
+myFunction(x) // Call listener function at run time
+x.addListener(myFunction) // Attach listener function on state changes
+
+
+
+
 // Récupération du cookie
 function getCookie(name) {
     let dc = document.cookie;
@@ -210,6 +225,7 @@ $("#validerAllergies").click(() => {
             $("#errorAllergie").html("Votre compte a bien été créé ! ");
             $("#errorAllergie").css("color", "green");
             $("#pseudo").html($("#pseudoCreation").val());
+            nbrClick = 0;
             document.location.href = "index.html";
         },
         error: function (xhr, textStatus) {
@@ -224,6 +240,41 @@ $("#validerAllergies").click(() => {
 
 })
 
+let nbrClick = 0;
+$("#aucun").click(()=>{
+    nbrClick++
+    if(nbrClick%2==0){
+        $("#arachide").prop('disabled', false);
+        $("#lactose").prop('disabled', false);
+        $("#fruit_a_coque").prop('disabled', false);
+        $("#crustace").prop('disabled', false);
+        $("#moutarde").prop('disabled', false);
+        $("#graine_cesame").prop('disabled', false);
+        $("#soja").prop('disabled', false);
+    }else{
+        $("#lactose").prop('checked', false);
+        $("#lactose").prop('disabled', true);
+
+        $("#arachide").prop('checked', false);
+        $("#arachide").prop('disabled', true);
+
+        $("#fruit_a_coque").prop('disabled', true);
+        $("#fruit_a_coque").prop('checked', false);
+
+        $("#crustace").prop('disabled', true);
+        $("#crustace").prop('checked', false);
+
+        $("#moutarde").prop('disabled', true);
+        $("#moutarde").prop('checked', false);
+
+        $("#graine_cesame").prop('disabled', true);
+        $("#graine_cesame").prop('checked', false);
+
+        $("#soja").prop('disabled', true);
+        $("#soja").prop('checked', false);
+    }
+})
+
 $("#closePopupAllergies").click(() => {
     $("#allergies").css("display", "none");
 })
@@ -233,7 +284,8 @@ $("#closePopupAllergies").click(() => {
 //const apiKey = "462bcfeb80784d16aca500b08f087c0d";
 //const apiKey = "c764f8af433b4b9093ecfed23493b886";
 //const apiKey = "0507b7d2299e4aea88421cfa97388b0e";
-const apiKey = "4bc3a5e0a85742e09b08d3f0fce9a84e";
+//const apiKey = "4bc3a5e0a85742e09b08d3f0fce9a84e";
+const apiKey = "e259759e2eff4a1f91671009d2d9f1f3";
 
 function getImageRecette(id, specialite) {
     $.ajax({
