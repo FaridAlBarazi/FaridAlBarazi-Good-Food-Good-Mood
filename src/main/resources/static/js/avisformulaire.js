@@ -116,18 +116,30 @@ $("#monBouton").click(() => {
 
 });
 //suppresion de l'avis
+let mesAvis=[];
 $("#boutonDelete").click(()=>{
-    $.ajax({
-        type: "DELETE",
-        url: "http://localhost:8080/API/suppressionAvis",
-        data: JSON.stringify(obj),
-        headers: {"Content-Type": "application/json"},
-        success: (retour) => {
 
-            console.log(retour);
-            $("#monAvis").html("commentaire supprimé");
-        }
-    });
+    for (let i = 0; i < mesAvis.length; i++) {
+        $.ajax({
+            type: "PATCH",
+            url: "http://localhost:8080/API/removeAvis",
+            data: JSON.stringify(mesAvis[i].id),
+            headers: {"Content-Type": "application/json"},
+            success: (retour) => {
+                location.reload();
+            }
+        });
+
+        $.ajax({
+            type: "PATCH",
+            url: "http://localhost:8080/API/removeAvisID",
+            data: JSON.stringify(i),
+            headers: {"Content-Type": "application/json"},
+            success: (retour) => {
+                console.log(retour);
+            }
+        });
+    }
 });
 
 
@@ -184,9 +196,10 @@ $.ajax({
 
                 ),
                 // créer élement soit div/ p/ span
-                $(document.createElement('p')).prop({
+                $(document.createElement('div')).prop({
                     id: ("avis" + i)
                 }).append(
+                    //ajouter un i dans ce div
                    retour[i].note
                 ),
             )
