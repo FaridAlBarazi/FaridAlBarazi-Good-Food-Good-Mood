@@ -51,3 +51,7 @@
     flex-direction: column;
     justify-content: space-around;
 }
+.button:hover{
+    transform: scale(1.3);
+
+}

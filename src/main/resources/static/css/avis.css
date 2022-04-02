@@ -42,7 +42,10 @@
 .stylePseudo{
     font-weight: bold;
 }
+.button:hover{
+    transform: scale(1.3);
 
+}
 
 
 

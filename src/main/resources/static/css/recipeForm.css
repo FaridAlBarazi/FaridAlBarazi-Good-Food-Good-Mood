@@ -82,3 +82,7 @@ h1 {
     font-size: 48px;
     color: #232c3d;
 }
+.button:hover{
+    transform: scale(1.3);
+
+}
