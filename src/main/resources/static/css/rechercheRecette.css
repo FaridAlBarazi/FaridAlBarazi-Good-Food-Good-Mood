@@ -1,3 +1,8 @@
+#cursive{
+    font-family:'Monotype Corsiva','Apple Chancery','ITC Zapf Chancery','URW Chancery L',cursive;
+    font-size: x-large;
+}
+
 #recherche{
     flex-direction: column;
     display: flex;
