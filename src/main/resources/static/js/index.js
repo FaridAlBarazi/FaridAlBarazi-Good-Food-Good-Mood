@@ -283,10 +283,10 @@ $("#closePopupAllergies").click(() => {
 
 
 //------------------------Clé API ----------------------
-const apiKey = "462bcfeb80784d16aca500b08f087c0d";
+//const apiKey = "462bcfeb80784d16aca500b08f087c0d";
 //const apiKey = "c764f8af433b4b9093ecfed23493b886";
 //const apiKey = "0507b7d2299e4aea88421cfa97388b0e";
-//const apiKey = "4bc3a5e0a85742e09b08d3f0fce9a84e";
+const apiKey = "4bc3a5e0a85742e09b08d3f0fce9a84e";
 //const apiKey = "e259759e2eff4a1f91671009d2d9f1f3";
 
 function getImageRecette(id, specialite) {
@@ -325,12 +325,12 @@ function getApi(specialite) {
 }
 
 
-let cuisine = ["French", "American", "British", "African", "Caribbean", "Chinese", "Eastern European",
+let cuisine = ["French", "American", "British", "African", "Caribbean", "Mediterranean", "Chinese", "Eastern European",
     "European", "Cajun", "German", "Greek", "Indian", "Irish", "Italian", "Japanese", "Jewish", "Korean",
-    "Latin American", "Mediterranean", "Mexican", "Middle Eastern", "Nordic", "Southern", "Spanish", "Thai",
+    "Latin American", "Mexican", "Middle Eastern", "Nordic", "Southern", "Spanish", "Thai",
     "Vietnamese"]
 
-for (let i = 0; i < 4; i++) {
+for (let i = 0; i < 6; i++) {
     getApi(cuisine[i]);
 }
 
@@ -377,4 +377,8 @@ twitter.addEventListener('click', ()=> {
     // console.log('twitter button clicked')
     window.open(url=twitterApi,target="blank")
 
+})
+
+$("#buttonRecherche").click(()=>{
+    location.href = "rechercheRecette.html";
 })
