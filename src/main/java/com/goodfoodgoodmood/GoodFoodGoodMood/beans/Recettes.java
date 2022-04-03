@@ -2,6 +2,7 @@ package com.goodfoodgoodmood.GoodFoodGoodMood.beans;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class Recettes {
@@ -15,6 +16,8 @@ public class Recettes {
     private String preparation;
     private String specialite;
     private String image;
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<AvisRecette> avis;
 
     // indique le lien avec les ingredients
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -99,5 +102,13 @@ public class Recettes {
 
     public void setIngredients(List<Ingredients> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public Set<AvisRecette> getAvis() {
+        return avis;
+    }
+
+    public void setAvis(Set<AvisRecette> avis) {
+        this.avis = avis;
     }
 }

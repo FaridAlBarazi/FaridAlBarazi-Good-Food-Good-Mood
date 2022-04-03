@@ -1,3 +1,19 @@
+
+.card3{
+    /*display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;*/
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 1em 10px black;
+    margin: auto 3em;
+    padding: 1em;
+    margin-bottom: 5em;
+    margin-top: 2%;
+    height: fit-content;
+    align-items: center;
+}
 #cursive{
     font-family:'Monotype Corsiva','Apple Chancery','ITC Zapf Chancery','URW Chancery L',cursive;
     font-size: x-large;
@@ -18,11 +34,15 @@
     background-repeat: no-repeat;
     background-position: center top;
     background-size: cover;
-
+    height: 1053px;
 }
 
 #resultat{
     width: 50%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
 }
 .button:hover{
     transform: scale(1.3);
