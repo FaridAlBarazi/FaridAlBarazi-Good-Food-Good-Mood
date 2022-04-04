@@ -1,20 +1,29 @@
 package com.goodfoodgoodmood.GoodFoodGoodMood.controllers;
 
 
+import com.goodfoodgoodmood.GoodFoodGoodMood.beans.AvisRecette;
 import com.goodfoodgoodmood.GoodFoodGoodMood.beans.Ingredients;
 import com.goodfoodgoodmood.GoodFoodGoodMood.beans.Recettes;
+import com.goodfoodgoodmood.GoodFoodGoodMood.beans.User;
 import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.RecetteRepositories;
+import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.UserRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/API")
 public class RecettesController {
     @Autowired
     private RecetteRepositories recetteRepositories;
+
+    @Autowired
+    private UserRepositories userRepositories;
 
     @PostMapping("/recuperationRecette")
     public String recuperationRecette(@RequestBody Recettes recette) {
@@ -31,18 +40,6 @@ public class RecettesController {
 
     @GetMapping("/rechercheIngredient/{ingredients}")
     public List<Recettes> rechercheIngredient(@PathVariable("ingredients") String ingredients) {
-        List<Recettes> mesrecettes = recetteRepositories.findByIngredients(ingredients);
-        return mesrecettes;
-    }
-
-    @GetMapping("/rechercheNomRecette/{name}")
-    public List<Recettes> rechercheNomRecette(@PathVariable("name") String name) {
-        List<Recettes> mesrecettes = recetteRepositories.findByName(name);
-        return mesrecettes;
-    }
-
-    @GetMapping("/rechercheRecette/{ingredients}")
-    public List<Recettes> testIngredient(@PathVariable("ingredients") String ingredients) {
         List<Recettes> getRecettes = new ArrayList<>();
         List<Recettes> mesrecettes = recetteRepositories.findAll();
         for (int i = 0; i < mesrecettes.size(); i++) {
@@ -56,6 +53,18 @@ public class RecettesController {
         System.out.println(getRecettes);
 
         return getRecettes;
+    }
+
+    @GetMapping("/rechercheNomRecette/{name}")
+    public List<Recettes> rechercheNomRecette(@PathVariable("name") String name) {
+        List<Recettes> mesrecettes = recetteRepositories.findByName(name);
+        System.out.println(mesrecettes);
+        return mesrecettes;
+    }
+
+    @GetMapping("/getRecette/{id}")
+    public Recettes testIngredient(@PathVariable("id") int id) {
+        return recetteRepositories.findByID(id);
     }
 
     @GetMapping("/allspecialite")
@@ -83,4 +92,38 @@ public class RecettesController {
         return ingredientList;
     }
 
+    @PatchMapping("/avisRecettePoste")
+    public void avisRecettePoste(@RequestBody AvisRecette avis, HttpServletRequest request){
+        Cookie[] cookies = request.getCookies();
+
+        // Recuperation user pour avoir son id
+        User user = userRepositories.findByMail(cookies[0].getValue());
+
+        // on rajoute l'id du user dans l'avis
+        avis.setIdUtilisateur(user.getID());
+
+        // On récupère la recette qui où l'avis à été écrite
+        Recettes recette = recetteRepositories.findByID(avis.getIdRecette());
+
+        // On rajoute l'avis
+        recette.getAvis().add(avis);
+
+        // On sauvegarde les modif de la recette
+        recetteRepositories.save(recette);
+    }
+
+    @GetMapping("/getNbrAvisRecette/{id}")
+    public int getNbrAvisRecette(@PathVariable("id") int idRecette){
+        System.out.println("idRecetteee : " + idRecette);
+        // On récupère la recette qui où l'avis à été écrite
+        Recettes recette = recetteRepositories.findByID(idRecette);
+        System.out.println("tailleeeeee  :  " + recette.getAvis().size());
+        return recette.getAvis().size();
+    }
+
+    @GetMapping("/getAllAvisRecette/{id}")
+    public Set<AvisRecette> getAllAvisRecette(@PathVariable("id") int idRecette){
+        Recettes recette = recetteRepositories.findByID(idRecette);
+        return recette.getAvis();
+    }
 }

@@ -141,6 +141,7 @@ form ion-icon {
     }
 }
 
+
 /* ********************* */
 /* This Code is for only the floating card in right bottom corner */
 /* ********************** */
@@ -297,4 +298,8 @@ a {
 
 #webCifar-icon svg {
     max-width: 20px;
+}
+.button:hover{
+    transform: scale(1.3);
+
 }

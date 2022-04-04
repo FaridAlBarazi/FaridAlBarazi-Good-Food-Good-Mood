@@ -344,8 +344,6 @@ function afficherAvis(mesAvis) {
 
             )
         )
-
-
         //console.log(retour[i].note)
         for(let j=1; j <= mesAvis[i].note; j++){
             console.log("myStar"+j+i);
@@ -370,3 +368,106 @@ function getnbrAvis() {
 }
 
 getnbrAvis();
+
+function getAllAvisRecetteUser() {
+    $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/API/allAvisRecetteUser',
+        success: (retour) => {
+            console.log(retour);
+            afficherAllAvisRecetteUser(retour);
+        }
+    })
+}
+
+
+function afficherAllAvisRecetteUser(mesAvis) {
+    console.log(mesAvis);
+    for (let i = 0; i < mesAvis.length; i++) {
+        $("#avisPoste").append(
+            // Ajouter div dans le affichageAvis
+            $(document.createElement('div')).prop({
+                class: "avisPublie"
+            }).append(
+                // Ajouter li dans le div
+                $(document.createElement('p')).prop({
+                    class: "stylePseudo"
+                }).html(mesAvis[i].pseudo),
+                $(document.createElement('p')).prop({
+                    class: "styleDate"
+                }).html("Date :" + mesAvis[i].date),
+                $(document.createElement('p')).append(
+                    $(document.createElement('i')).prop({
+                        class: "las la-star",
+                        id: "myStar1" +i
+                    }),
+                    $(document.createElement('i')).prop({
+                        class: "las la-star",
+                        id: "myStar2" +i
+                    }),
+                    $(document.createElement('i')).prop({
+                        class: "las la-star",
+                        id: "myStar3" + i
+                    }),
+                    $(document.createElement('i')).prop({
+                        class: "las la-star",
+                        id: "myStar4" + i
+                    }),
+                    $(document.createElement('i')).prop({
+                        class: "las la-star",
+                        id: "myStar5" + i
+                    })
+                ),
+
+                $(document.createElement('p')).html(mesAvis[i].description),
+                $(document.createElement('input')).prop({
+                    id: ("avisPoste" + i),
+                    class: "btn btn-primary",
+                    value: "Supprimer cet avis"
+                }).click(() => {
+                    $.ajax({
+                        type: "PATCH",
+                        url: "http://localhost:8080/API/removeAvis",
+                        data: JSON.stringify(mesAvis[i].id),
+                        headers: {"Content-Type": "application/json"},
+                        success: (retour) => {
+                            location.reload();
+                        }
+                    });
+                }),
+                $(document.createElement('br'))
+
+
+            )
+        )
+        //console.log(retour[i].note)
+        for(let j=1; j <= mesAvis[i].note; j++){
+            console.log("myStar"+j+i);
+            $("#myStar" +j +i).css("color", "orange");
+        }
+    }
+
+}
+
+function getnbrAvisRecette() {
+    $.ajax({
+        type: "GET",
+        url: 'http://localhost:8080/API/nbrAvisRecetteUser',
+        success: (retour) => {
+            console.log(retour)
+            if (retour > 0) {
+                getAllAvisRecetteUser();
+            }
+        }
+    })
+}
+
+$("#selectAvis").change(()=>{
+    console.log($("#selectAvis").val())
+    $("#avisPoste").empty()
+    if($("#selectAvis").val() == "Avis du site"){
+        getnbrAvis();
+    }else{
+        getnbrAvisRecette();
+    }
+})

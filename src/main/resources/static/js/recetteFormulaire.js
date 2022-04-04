@@ -213,7 +213,7 @@ function enregistrerRecette(image) {
     for (let i = 1; i <= nombre; i++) {
         let ingr =
             {
-                nom: $("#ingredient" + i).val(),
+                nom: $("#ingredient" + i).val().toLowerCase(),
                 unit: $('#selectUnit' + i).find(":selected").text(),
                 quantite: $("#quantite" + i).val()
             }
