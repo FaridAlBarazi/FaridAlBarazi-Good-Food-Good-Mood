@@ -2,7 +2,7 @@ package com.goodfoodgoodmood.GoodFoodGoodMood.modeles;
 
 import java.util.List;
 
-public class Information {
+public class Information { // utiliser dans user controler dans JS besoin de deux parametre
     List<String> allergies;
     String mail;
 
