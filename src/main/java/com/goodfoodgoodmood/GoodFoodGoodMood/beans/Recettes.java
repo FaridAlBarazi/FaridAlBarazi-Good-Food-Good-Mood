@@ -1,5 +1,7 @@
 package com.goodfoodgoodmood.GoodFoodGoodMood.beans;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +16,8 @@ public class Recettes {
     private int idApiRecette;
     private String name;
     private int duree;
+    @Column(name = "PREPARATION")
+    @Type(type="text")
     private String preparation;
     private String specialite;
     private String image;

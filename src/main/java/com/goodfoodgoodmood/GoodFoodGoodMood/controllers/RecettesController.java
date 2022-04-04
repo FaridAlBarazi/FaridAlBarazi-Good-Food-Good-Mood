@@ -68,9 +68,9 @@ public class RecettesController {
         return recetteRepositories.findByID(id);
     }
 
-    @GetMapping("/allspecialite")
-    public ArrayList<String> allspecialite() {
-        List<Recettes> mesrecettes = recetteRepositories.findAll();
+    @GetMapping("/allspecialite/{source}")
+    public ArrayList<String> allspecialite(@PathVariable("source") String source) {
+        List<Recettes> mesrecettes = recetteRepositories.findBySource(source);
         ArrayList<String> specialiteList = new ArrayList<>();
         for (int i = 0; i < mesrecettes.size(); i++) {
             if (!specialiteList.contains(mesrecettes.get(i).getSpecialite()))
@@ -79,9 +79,9 @@ public class RecettesController {
         return specialiteList;
     }
 
-    @GetMapping("/allingredient")
-    public ArrayList<String> allingredient() {
-        List<Recettes> mesrecettes = recetteRepositories.findAll();
+    @GetMapping("/allingredient/{source}")
+    public ArrayList<String> allingredient(@PathVariable("source") String source) {
+        List<Recettes> mesrecettes = recetteRepositories.findBySource(source);
         ArrayList<String> ingredientList = new ArrayList<>();
         for (int i = 0; i < mesrecettes.size(); i++) {
             List<Ingredients> ingredientslist = mesrecettes.get(i).getIngredients();

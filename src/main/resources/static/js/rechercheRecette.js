@@ -1,51 +1,7 @@
-// Récupération du cookie
-function getCookie(name) {
-    let dc = document.cookie;
-    let prefix = name + "=";
-    let begin = dc.indexOf("; " + prefix);
-    if (begin == -1) {
-        begin = dc.indexOf(prefix);
-        if (begin != 0) return null;
-    } else {
-        begin += 2;
-        let end = document.cookie.indexOf(";", begin);
-        if (end == -1) {
-            end = dc.length;
-        }
-    }
-    return decodeURI(dc.substring(begin + prefix.length));
-}
-
-if (getCookie("pseudo") == null) {
-    $("#recette").css("display", "none");
-    $("#boutonAvis").css("display", "none");
-} else {
-    $("#connexionButton").css("display", "none");
-    $("#dropdown").css("display", "block");
-    $("#pseudo").html(getCookie("pseudo"));
-    $("#recette").css("display", "block");
-    $("#boutonAvis").css("display", "block");
-}
-
-// deconnexion
-
-$("#deconnexion").click(() => {
-    $.get("http://localhost:8080/API/deconnexion", () => {
-        $("#dropdown").css("display", "none")
-        $("#connexionButton").css("display", "block");
-        $("#pseudo").html("");
-        $("#pseudoConnexion").val('');
-        $("#passwordConnexion").val('');
-        $("#recette").css("display", "none");
-        $("#boutonAvis").css("display", "none");
-        document.location.href = "index.html";
-    })
-})
-
 function selectingredients() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/API/allingredient",
+        url: "http://localhost:8080/API/allingredient/utilisateur",
         success: (retour) => {
             console.log(retour)
             let spec =  [];
@@ -66,7 +22,7 @@ function selectingredients() {
 function selectspecialite() {
     $.ajax({
         type: "GET",
-        url: "http://localhost:8080/API/allspecialite",
+        url: "http://localhost:8080/API/allspecialite/utilisateur",
         success: (retour) => {
             console.log(retour);
             let spec =  [];
@@ -152,22 +108,15 @@ myselect2.addEventListener("change", function () {
     }else if(myselect1.value == "Recettes de notre site" && myselect2.value == "Par ingredient"){
         $("<input id='selectspecialiteingr'>").appendTo($("#SpecialiteOuIngr"));
     }
-
 });
 
-//------------------------Clé API ----------------------
-//const apiKey = "462bcfeb80784d16aca500b08f087c0d";
-//const apiKey = "c764f8af433b4b9093ecfed23493b886";
-//const apiKey = "0507b7d2299e4aea88421cfa97388b0e";
-const apiKey = "4bc3a5e0a85742e09b08d3f0fce9a84e";
-//const apiKey = "e259759e2eff4a1f91671009d2d9f1f3";
 const container = document.querySelector(".card-img-top");
 
 function resultatspecialite(inputRecherche){
     $("#resultat").empty();
     $.ajax({
         type: "GET",
-        url: "https://api.spoonacular.com/recipes/complexSearch?apiKey=" + apiKey + "&cuisine=" + inputRecherche ,
+        url: "https://api.spoonacular.com/recipes/complexSearch?apiKey=" + gestionCookiesAndApiKey + "&cuisine=" + inputRecherche ,
         success: (retour) => {
             console.log(retour)
             for(let i = 0; i < retour.results.length; i++){
@@ -189,7 +138,7 @@ function resultatspecialite(inputRecherche){
                                 id : "recette" + i,
                                 src: retour.results[i].image
                             }).click(()=>{
-                                window.location.href = "affichageRecette.html?id=" + retour.results[i].id;
+                                window.location.href = "affichageRecette.html?source=api&id=" + retour.results[i].id;
                             })
                         )
                     )
@@ -203,7 +152,7 @@ function resultatingredient(inputRecherche){
     $("#resultat").empty();
     $.ajax({
         type: "GET",
-        url: "https://api.spoonacular.com/recipes/findByIngredients?apiKey=" + apiKey + "&ingredients=" + inputRecherche ,
+        url: "https://api.spoonacular.com/recipes/findByIngredients?apiKey=" + gestionCookiesAndApiKey + "&ingredients=" + inputRecherche ,
         success: (retour) => {
             console.log(retour)
             for(let i = 0; i < retour.length; i++){
@@ -225,7 +174,7 @@ function resultatingredient(inputRecherche){
                                 id : "recette" + i,
                                 src: retour[i].image
                             }).click(()=>{
-                                window.location.href = "affichageRecette.html?id=" + retour[i].id;
+                                window.location.href = "affichageRecette.html?source=api&id=" + retour[i].id;
                             })
                         )
                     )

@@ -40,17 +40,6 @@ function verifCookies() {
     }
 }
 
-if (getCookie("pseudo") == null) {
-    $("#recette").css("display", "none");
-    $("#boutonAvis").css("display", "none");
-} else {
-    $("#connexionButton").css("display", "none");
-    $("#dropdown").css("display", "block");
-    $("#pseudo").html(getCookie("pseudo"));
-    $("#recette").css("display", "block");
-    $("#boutonAvis").css("display", "block");
-}
-
 let images = ["recette2.jpeg", "recette3.jpeg", "recette1.jpeg"];
 let numero = 0;
 
@@ -204,6 +193,8 @@ $("#deconnexion").click(() => {
         $("#passwordConnexion").val('');
         $("#recette").css("display", "none");
         $("#boutonAvis").css("display", "none");
+        $("#recetteRecherche").css("display", "none");
+        $("#appRecipe").css("display", "none");
         document.location.href = "index.html";
     })
 })
@@ -282,17 +273,11 @@ $("#closePopupAllergies").click(() => {
 })
 
 
-//------------------------Clé API ----------------------
-//const apiKey = "462bcfeb80784d16aca500b08f087c0d";
-//const apiKey = "c764f8af433b4b9093ecfed23493b886";
-//const apiKey = "0507b7d2299e4aea88421cfa97388b0e";
-const apiKey = "4bc3a5e0a85742e09b08d3f0fce9a84e";
-//const apiKey = "e259759e2eff4a1f91671009d2d9f1f3";
 
 function getImageRecette(id, specialite) {
     $.ajax({
         type: "GET",
-        url: 'https://api.spoonacular.com/recipes/' + id + '/information?includeNutrition=false&apiKey=' + apiKey,
+        url: 'https://api.spoonacular.com/recipes/' + id + '/information?includeNutrition=false&apiKey=' + gestionCookiesAndApiKey,
         success: (data) => {
             console.log(data);
             $("#imageCard" + specialite).attr("src", data.image);
@@ -303,7 +288,7 @@ function getImageRecette(id, specialite) {
 function affichageDescription(id, specialite) {
     $.ajax({
         type: "GET",
-        url: 'https://api.spoonacular.com/recipes/' + id + '/summary?apiKey=' + apiKey,
+        url: 'https://api.spoonacular.com/recipes/' + id + '/summary?apiKey=' + gestionCookiesAndApiKey,
         success: (data) => {
             $("#cardDescription" + specialite).html(data['summary']);
             $("#cardDescription" + specialite).css("font-size", "x-small")
@@ -315,7 +300,7 @@ function affichageDescription(id, specialite) {
 function getApi(specialite) {
     $.ajax({
         type: "GET",
-        url: 'https://api.spoonacular.com/recipes/search?cuisine=' + specialite + '&apiKey=' + apiKey,
+        url: 'https://api.spoonacular.com/recipes/search?cuisine=' + specialite + '&apiKey=' + gestionCookiesAndApiKey,
         success: (retour) => {
             $("#cardTitle" + specialite).html(retour.results[0].title + " - " + specialite);
             $("#valider" + specialite).attr("href", "affichageRecette.html?source=api&id=" + retour.results[0].id)

@@ -1,48 +1,3 @@
-// Récupération du cookie
-function getCookie(name) {
-    let dc = document.cookie;
-    let prefix = name + "=";
-    let begin = dc.indexOf("; " + prefix);
-    if (begin == -1) {
-        begin = dc.indexOf(prefix);
-        if (begin != 0) return null;
-    } else {
-        begin += 2;
-        let end = document.cookie.indexOf(";", begin);
-        if (end == -1) {
-            end = dc.length;
-        }
-    }
-    return decodeURI(dc.substring(begin + prefix.length));
-}
-
-if (getCookie("pseudo") == null) {
-    $("#recette").css("display", "none");
-    $("#boutonAvis").css("display", "none");
-} else {
-    $("#connexionButton").css("display", "none");
-    $("#dropdown").css("display", "block");
-    $("#pseudo").html(getCookie("pseudo"));
-    $("#recette").css("display", "block");
-    $("#boutonAvis").css("display", "block");
-}
-
-// deconnexion
-
-$("#deconnexion").click(() => {
-    $.get("http://localhost:8080/API/deconnexion", () => {
-        $("#dropdown").css("display", "none")
-        $("#connexionButton").css("display", "block");
-        $("#pseudo").html("");
-        $("#pseudoConnexion").val('');
-        $("#passwordConnexion").val('');
-        $("#recette").css("display", "none");
-        $("#boutonAvis").css("display", "none");
-        document.location.href = "index.html";
-    })
-})
-
-
 $("#profilNom").html("Bonjour " + getCookie("pseudo") + " 😃!");
 
 $.ajax({
@@ -70,17 +25,12 @@ $.ajax({
 $("#color").attr("stroke", "red");
 
 
-//const apiKey = "462bcfeb80784d16aca500b08f087c0d";
-const apiKey = "c764f8af433b4b9093ecfed23493b886";
-//const apiKey = "0507b7d2299e4aea88421cfa97388b0e";
-//const apiKey = "4bc3a5e0a85742e09b08d3f0fce9a84e";
-
 let nbr = 0
 
 function getInfoRecette(id) {
     $.ajax({
         type: "GET",
-        url: 'https://api.spoonacular.com/recipes/' + id + '/information?includeNutrition=false&apiKey=' + apiKey,
+        url: 'https://api.spoonacular.com/recipes/' + id + '/information?includeNutrition=false&apiKey=' + gestionCookiesAndApiKey,
         success: (data) => {
             console.log(data);
             $("#carouselDiv").append(
@@ -114,7 +64,7 @@ function getFavorisRecette() {
 }
 
 function afficherFavroisRecette(listFavoris) {
-    //console.log(listFavoris);
+    console.log(listFavoris);
     for (let i = 0; i < listFavoris.length; i++) {
         $("#cardFavoris").append(
             $(document.createElement('div')).prop({
@@ -136,7 +86,7 @@ function afficherFavroisRecette(listFavoris) {
                         class: "btn btn-primary",
                         value: "Retirer des favoris"
                     }).click(() => {
-                        console.log(i)
+                        //console.log(i)
                         $.ajax({
                             type: "PATCH",
                             url: "http://localhost:8080/API/removeFavoris",
@@ -152,16 +102,9 @@ function afficherFavroisRecette(listFavoris) {
                         class: "btn btn-primary",
                         value: "Voir la recette"
                     }).click(() => {
-                        console.log()
-                        $.ajax({
-                            type: "PATCH",
-                            url: "http://localhost:8080/API/removeFavorisID",
-                            data: JSON.stringify(i),
-                            headers: {"Content-Type": "application/json"},
-                            success: (retour) => {
-                                //console.log(retour);
-                            }
-                        });
+                        //console.log()
+                        location.href = "affichageRecette.html?source=" + listFavoris[i].source+ "&id="+listFavoris[i].idRecetteAPI
+
                     })
                 )
             )
@@ -202,55 +145,51 @@ function getRecettePubliee() {
 function afficherRecettePubliee(listRecette) {
     console.log(listRecette);
     for (let i = 0; i < listRecette.length; i++) {
-        $("#affichageRecettePubliee").append(
-            $(document.createElement('div')).prop({
-                class: "card recette",
-            }).append(
-                $(document.createElement('img')).prop({
-                    class: "card-img-top",
-                    src: listRecette[i].image
-                }),
-
+        if(listRecette[i].source != "api"){
+            $("#affichageRecettePubliee").append(
                 $(document.createElement('div')).prop({
-                    class: "card-body"
+                    class: "card recette",
                 }).append(
-                    $(document.createElement('h5')).prop({
-                        class: "card-title"
-                    }).html(listRecette[i].name),
-                    $(document.createElement('input')).prop({
-                        id: ("removeRecette" + i),
-                        class: "btn btn-primary",
-                        value: "Supprimer la recette"
-                    }).click(() => {
-                        console.log(i)
-                        $.ajax({
-                            type: "PATCH",
-                            url: "http://localhost:8080/API/removeRecettePublie",
-                            data: JSON.stringify(listRecette[i].id),
-                            headers: {"Content-Type": "application/json"},
-                            success: (retour) => {
-                                location.reload();
-                            }
-                        });
+                    $(document.createElement('img')).prop({
+                        class: "card-img-top",
+                        src: listRecette[i].image
                     }),
-                    $(document.createElement('input')).prop({
-                        id: ("recettePubliee" + i),
-                        class: "btn btn-primary",
-                        value: "Voir la recette"
-                    }).click(() => {
-                        console.log()
-                        $.ajax({
-                            type: "GET",
-                            url: "http://localhost:8080/API/removeFavorisID",
-                            headers: {"Content-Type": "application/json"},
-                            success: (retour) => {
-                                //console.log(retour);
-                            }
-                        });
-                    })
+
+                    $(document.createElement('div')).prop({
+                        class: "card-body"
+                    }).append(
+                        $(document.createElement('h5')).prop({
+                            class: "card-title"
+                        }).html(listRecette[i].name),
+                        $(document.createElement('input')).prop({
+                            id: ("removeRecette" + i),
+                            class: "btn btn-primary",
+                            value: "Supprimer la recette"
+                        }).click(() => {
+                            //console.log(i)
+                            $.ajax({
+                                type: "PATCH",
+                                url: "http://localhost:8080/API/removeRecettePublie",
+                                data: JSON.stringify(listRecette[i].id),
+                                headers: {"Content-Type": "application/json"},
+                                success: (retour) => {
+                                    location.reload();
+                                }
+                            });
+                        }),
+                        $(document.createElement('input')).prop({
+                            id: ("recettePubliee" + i),
+                            class: "btn btn-primary",
+                            value: "Voir la recette"
+                        }).click(() => {
+                            //console.log("affichageRecette.html?source=" + listRecette[i].source+ "&id="+listRecette[i].id)
+                            location.href = "affichageRecette.html?source=" + listRecette[i].source+ "&id="+listRecette[i].id
+                        })
+                    )
                 )
             )
-        )
+        }
+
     }
 
 }

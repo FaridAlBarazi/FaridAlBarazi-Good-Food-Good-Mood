@@ -154,9 +154,23 @@ public class UserController {
     @GetMapping("/nbrRecettesUser")
     public int nbrRecettes(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
+        // Récupération user
         User user = userRepositories.findByMail(cookies[0].getValue());
         //System.out.println(user.getRecettes().size());
-        return user.getRecettes().size();
+
+        // Récupération liste recette user
+        Set<Recettes> recettesSet = user.getRecettes();
+
+        // On cherche à récupérer que les recettes de source utilisateur
+        // Création d'une nouvelle liste
+        List<Recettes> recettesList = new ArrayList<>();
+        for(Recettes recette : recettesSet){
+            // Si la source == utilisateur on rajoute la recette dans la liste créée recettesList
+            if(recette.getSource().equals("utilisateur")){
+                recettesList.add(recette);
+            }
+        }
+        return recettesList.size();
     }
 
     @GetMapping("/allRecettesPubliees")
