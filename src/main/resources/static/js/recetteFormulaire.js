@@ -168,7 +168,6 @@ $("#buttonPlus").click(() => {
             id: ('br' + nombre),
         })
     );
-
 })
 
 // Suppression d'un champs de 3 inputs
