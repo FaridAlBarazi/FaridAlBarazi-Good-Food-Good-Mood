@@ -206,6 +206,7 @@ function rechercheimage(recetteName) {
     });
 }
 
+
 function enregistrerRecette(image) {
     console.log("image url : " + image);
     let ingredient = [];
