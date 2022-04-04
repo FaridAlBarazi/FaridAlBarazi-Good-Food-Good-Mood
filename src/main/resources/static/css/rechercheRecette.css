@@ -1,4 +1,6 @@
-
+*{
+    box-sizing: border-box;
+}
 .card3{
     /*display: flex;
     flex-direction: column;
@@ -37,8 +39,16 @@
     height: 1053px;
 }
 
+#divResultat{
+    padding: 3%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 #resultat{
-    width: 50%;
+    width: 30%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
