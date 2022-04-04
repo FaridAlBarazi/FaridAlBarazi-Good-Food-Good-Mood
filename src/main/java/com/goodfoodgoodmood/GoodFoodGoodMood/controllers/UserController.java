@@ -133,14 +133,22 @@ public class UserController {
 
     @PatchMapping("/recuperationRecetteUser")
     public String recuperationRecetteUser(@RequestBody Recettes recette, HttpServletRequest request) {
-        //System.out.println(recette);
-        Cookie[] cookies = request.getCookies();
-        User user = userRepositories.findByMail(cookies[0].getValue());
-        Set<Recettes> recettesList = user.getRecettes();
-        user.getRecettes().add(recette);
-        //System.out.println(cookies[0].getValue());
-        userRepositories.save(user);
-        return "ok";
+        System.out.println("Recettttte" + recette);
+
+        Recettes rec = recetteRepositories.findByIdApiRecette(recette.getIdApiRecette());
+        if(rec == null){
+            Cookie[] cookies = request.getCookies();
+            User user = userRepositories.findByMail(cookies[0].getValue());
+            Set<Recettes> recettesList = user.getRecettes();
+            user.getRecettes().add(recette);
+            //System.out.println(cookies[0].getValue());
+            userRepositories.save(user);
+            return "ok";
+        }else{
+            return "pas ok";
+        }
+
+
     }
 
     @GetMapping("/nbrRecettesUser")

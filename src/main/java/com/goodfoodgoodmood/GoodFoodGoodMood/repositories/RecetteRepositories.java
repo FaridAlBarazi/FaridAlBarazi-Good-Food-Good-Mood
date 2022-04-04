@@ -18,4 +18,6 @@ public interface RecetteRepositories extends JpaRepository<Recettes,Integer> {
     //List<Recettes> findByIngredientsByNom(String nom);
     Recettes findByID(int id);
 
+    Recettes findByIdApiRecette(int id);
+
 }

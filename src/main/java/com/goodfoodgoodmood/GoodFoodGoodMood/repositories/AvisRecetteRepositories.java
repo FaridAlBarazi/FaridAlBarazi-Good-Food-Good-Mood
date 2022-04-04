@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface AvisRecetteRepositories extends JpaRepository<AvisRecette, Integer> {
     List<AvisRecette> findByIdUtilisateur(int user);
+
+    AvisRecette findByID(int id);
 }
