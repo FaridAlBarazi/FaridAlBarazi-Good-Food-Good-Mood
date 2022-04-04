@@ -2,6 +2,21 @@
 const apiKey = "c764f8af433b4b9093ecfed23493b886";
 //const apiKey = "0507b7d2299e4aea88421cfa97388b0e";
 //const apiKey = "4bc3a5e0a85742e09b08d3f0fce9a84e";
+
+function saveRecette(recette){
+    //console.log(recette)
+    $.ajax({
+        type: "PATCH",
+        url: 'http://localhost:8080/API/recuperationRecetteUser',
+        data: JSON.stringify(recette),
+        headers: {"Content-Type": "application/json"},
+        success: (data) => {
+           // console.log(data);
+        }
+    })
+}
+
+
 function getInfoRecette(id, source) {
     if (source == "utilisateur") {
         //console.log("ici")
@@ -27,7 +42,7 @@ function getInfoRecette(id, source) {
             type: "GET",
             url: 'https://api.spoonacular.com/recipes/' + id + '/information?includeNutrition=false&apiKey=' + apiKey,
             success: (data) => {
-                console.log(data);
+                //console.log(data);
                 $("#titre").html(data.title);
                 $("#image").attr("src", data.image);
                 $("#dureeCuisson").html(data.readyInMinutes + " minutes");
@@ -36,9 +51,29 @@ function getInfoRecette(id, source) {
                 }
                 $("#healthy").html(data.veryHealthy);
                 $("#instruction").html(data.instructions);
+
+                let ingre = [];
                 for (let i = 0; i < data.extendedIngredients.length; i++) {
-                    $("#listeIngredient").append('<li>' + data.extendedIngredients[i].original + '</li>')
+                    $("#listeIngredient").append('<li>' + data.extendedIngredients[i].original + '</li>');
+                    let ing = {
+                        nom:data.extendedIngredients[i].originalName,
+                        unit: data.extendedIngredients[i].unit,
+                        quantite:data.extendedIngredients[i].amount
+                    }
+                    ingre.push(ing);
                 }
+
+                let recette = {
+                    name:data.title,
+                    duree: parseInt(data.readyInMinutes),
+                    preparation : data.instructions,
+                    specialite: data.cuisines[0],
+                    ingredients: ingre,
+                    image: data.image,
+                    source:"api",
+                    idApiRecette : parseInt(data.id)
+                }
+                saveRecette(recette);
             }
         })
     }
@@ -104,7 +139,9 @@ $("#buttonCoeur").click(() => {
             idRecetteAPI: new URL(location.href).searchParams.get('id'),
             nomRecette: $("#titre").html(),
             urlImage: $("#image").prop('src'),
-            specialite: $("#cuisine").html()
+            specialite: $("#cuisine").html(),
+            source : new URL(location.href).searchParams.get('source')
+
         }
         console.log(recetteFavoris)
         $.ajax({
@@ -278,10 +315,17 @@ function getnbrAvis() {
         success: (retour) => {
             console.log(retour)
             if (retour > 0) {
+                $("#nbrAvis").html(retour + " commentaire(s)");
                 getAvis();
+            }else{
+                $("#nbrAvis").html("0 commentaire");
+                $("#avisRecette").css("height", "15px");
             }
         }
     })
 }
 
 getnbrAvis();
+
+
+

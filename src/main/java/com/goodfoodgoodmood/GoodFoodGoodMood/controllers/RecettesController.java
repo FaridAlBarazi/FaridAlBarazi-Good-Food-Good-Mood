@@ -1,10 +1,8 @@
 package com.goodfoodgoodmood.GoodFoodGoodMood.controllers;
 
 
-import com.goodfoodgoodmood.GoodFoodGoodMood.beans.AvisRecette;
-import com.goodfoodgoodmood.GoodFoodGoodMood.beans.Ingredients;
-import com.goodfoodgoodmood.GoodFoodGoodMood.beans.Recettes;
-import com.goodfoodgoodmood.GoodFoodGoodMood.beans.User;
+import com.goodfoodgoodmood.GoodFoodGoodMood.beans.*;
+import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.AvisRecetteRepositories;
 import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.RecetteRepositories;
 import com.goodfoodgoodmood.GoodFoodGoodMood.repositories.UserRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +22,9 @@ public class RecettesController {
 
     @Autowired
     private UserRepositories userRepositories;
+
+    @Autowired
+    private AvisRecetteRepositories avisRecetteRepositories;
 
     @PostMapping("/recuperationRecette")
     public String recuperationRecette(@RequestBody Recettes recette) {
@@ -105,6 +106,9 @@ public class RecettesController {
         // On récupère la recette qui où l'avis à été écrite
         Recettes recette = recetteRepositories.findByID(avis.getIdRecette());
 
+        if(recette == null){
+            recette = recetteRepositories.findByIdApiRecette(avis.getIdRecette());
+        }
         // On rajoute l'avis
         recette.getAvis().add(avis);
 
@@ -117,6 +121,9 @@ public class RecettesController {
         System.out.println("idRecetteee : " + idRecette);
         // On récupère la recette qui où l'avis à été écrite
         Recettes recette = recetteRepositories.findByID(idRecette);
+        if(recette == null){
+            recette = recetteRepositories.findByIdApiRecette(idRecette);
+        }
         System.out.println("tailleeeeee  :  " + recette.getAvis().size());
         return recette.getAvis().size();
     }
@@ -124,6 +131,24 @@ public class RecettesController {
     @GetMapping("/getAllAvisRecette/{id}")
     public Set<AvisRecette> getAllAvisRecette(@PathVariable("id") int idRecette){
         Recettes recette = recetteRepositories.findByID(idRecette);
+        if(recette == null){
+            recette = recetteRepositories.findByIdApiRecette(idRecette);
+        }
         return recette.getAvis();
+    }
+
+    @PatchMapping("/removeAvisRecetteUser")
+    public String removeAvisRecetteUser(@RequestBody int idAvis) {
+        System.out.println(idAvis);
+
+        AvisRecette avis = avisRecetteRepositories.findByID(idAvis);
+
+        // Récupère avis à supprimer
+        Recettes recette = recetteRepositories.findByID(avis.getIdRecette());
+
+        recette.getAvis().remove(avis);
+
+        recetteRepositories.save(recette);
+        return "ok";
     }
 }

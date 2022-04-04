@@ -318,7 +318,7 @@ function getApi(specialite) {
         url: 'https://api.spoonacular.com/recipes/search?cuisine=' + specialite + '&apiKey=' + apiKey,
         success: (retour) => {
             $("#cardTitle" + specialite).html(retour.results[0].title + " - " + specialite);
-            $("#valider" + specialite).attr("href", "affichageRecette.html?id=" + retour.results[0].id)
+            $("#valider" + specialite).attr("href", "affichageRecette.html?source=api&id=" + retour.results[0].id)
             description = affichageDescription(retour.results[0].id, specialite);
         }
     })

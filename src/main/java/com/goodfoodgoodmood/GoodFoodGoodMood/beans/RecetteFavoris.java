@@ -14,6 +14,7 @@ public class RecetteFavoris {
     private String nomRecette;
     private String urlImage;
     private String specialite;
+    private String source;
 
     public RecetteFavoris() {
     }
@@ -26,14 +27,16 @@ public class RecetteFavoris {
                 ", nomRecette='" + nomRecette + '\'' +
                 ", urlImage='" + urlImage + '\'' +
                 ", specialite='" + specialite + '\'' +
+                ", source='" + source + '\'' +
                 '}';
     }
 
-    public RecetteFavoris(int idRecetteAPI, String nomRecette, String urlImage, String specialite) {
+    public RecetteFavoris(int idRecetteAPI, String nomRecette, String urlImage, String specialite, String source) {
         this.idRecetteAPI = idRecetteAPI;
         this.nomRecette = nomRecette;
         this.urlImage = urlImage;
         this.specialite = specialite;
+        this.source = source;
     }
 
     public int getIdRecetteAPI() {
@@ -74,5 +77,13 @@ public class RecetteFavoris {
 
     public void setSpecialite(String specialite) {
         this.specialite = specialite;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }

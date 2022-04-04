@@ -200,7 +200,7 @@ function getRecettePubliee() {
 }
 
 function afficherRecettePubliee(listRecette) {
-    //console.log(listRecette);
+    console.log(listRecette);
     for (let i = 0; i < listRecette.length; i++) {
         $("#affichageRecettePubliee").append(
             $(document.createElement('div')).prop({
@@ -240,9 +240,8 @@ function afficherRecettePubliee(listRecette) {
                     }).click(() => {
                         console.log()
                         $.ajax({
-                            type: "PATCH",
+                            type: "GET",
                             url: "http://localhost:8080/API/removeFavorisID",
-                            data: JSON.stringify(i),
                             headers: {"Content-Type": "application/json"},
                             success: (retour) => {
                                 //console.log(retour);
@@ -427,7 +426,7 @@ function afficherAllAvisRecetteUser(mesAvis) {
                 }).click(() => {
                     $.ajax({
                         type: "PATCH",
-                        url: "http://localhost:8080/API/removeAvis",
+                        url: "http://localhost:8080/API/removeAvisRecetteUser",
                         data: JSON.stringify(mesAvis[i].id),
                         headers: {"Content-Type": "application/json"},
                         success: (retour) => {
@@ -457,6 +456,9 @@ function getnbrAvisRecette() {
             console.log(retour)
             if (retour > 0) {
                 getAllAvisRecetteUser();
+            }else{
+                $("#nbrAvisPoste").html("Vous n'avez posté aucun avis recette🙁 ");
+                $("#nbrAvisPoste").css("padding", "4%");
             }
         }
     })
