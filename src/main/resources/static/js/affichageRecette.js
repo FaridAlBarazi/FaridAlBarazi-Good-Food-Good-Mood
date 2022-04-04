@@ -187,7 +187,11 @@ $("#envoyerAvis").click(() => {
         headers: {"Content-Type": "application/json"},
         success: (retour) => {
             console.log(retour);
-            location.reload();
+            $("#alertSucces").css("display", "block");
+            setTimeout(()=>{
+                $("#alertSucces").css("display", "none");
+                location.reload();
+            },3000)
 
         }
     });

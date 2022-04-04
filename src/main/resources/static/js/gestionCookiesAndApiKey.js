@@ -3,8 +3,8 @@
 //const gestionCookiesAndApiKey = "c764f8af433b4b9093ecfed23493b886";
 //const gestionCookiesAndApiKey = "0507b7d2299e4aea88421cfa97388b0e";
 //const gestionCookiesAndApiKey = "4bc3a5e0a85742e09b08d3f0fce9a84e";
-const gestionCookiesAndApiKey = "e259759e2eff4a1f91671009d2d9f1f3";
-
+//const gestionCookiesAndApiKey = "e259759e2eff4a1f91671009d2d9f1f3";
+const gestionCookiesAndApiKey = "46af063a8da04c10968886eacf0cd925"
 // CLE PRESENTATION
 //const gestionCookiesAndApiKey = "17a8bba3d8b040bc9504e4799a313ebc"
 
