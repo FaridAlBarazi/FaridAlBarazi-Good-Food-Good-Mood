@@ -1,3 +1,47 @@
+// Récupération du cookie
+function getCookie(name) {
+    let dc = document.cookie;
+    let prefix = name + "=";
+    let begin = dc.indexOf("; " + prefix);
+    if (begin == -1) {
+        begin = dc.indexOf(prefix);
+        if (begin != 0) return null;
+    } else {
+        begin += 2;
+        let end = document.cookie.indexOf(";", begin);
+        if (end == -1) {
+            end = dc.length;
+        }
+    }
+    return decodeURI(dc.substring(begin + prefix.length));
+}
+
+if (getCookie("pseudo") == null) {
+    $("#recette").css("display", "none");
+    $("#boutonAvis").css("display", "none");
+} else {
+    $("#connexionButton").css("display", "none");
+    $("#dropdown").css("display", "block");
+    $("#pseudo").html(getCookie("pseudo"));
+    $("#recette").css("display", "block");
+    $("#boutonAvis").css("display", "block");
+}
+
+// deconnexion
+
+$("#deconnexion").click(() => {
+    $.get("http://localhost:8080/API/deconnexion", () => {
+        $("#dropdown").css("display", "none")
+        $("#connexionButton").css("display", "block");
+        $("#pseudo").html("");
+        $("#pseudoConnexion").val('');
+        $("#passwordConnexion").val('');
+        $("#recette").css("display", "none");
+        $("#boutonAvis").css("display", "none");
+        document.location.href = "index.html";
+    })
+})
+
 function selectingredients() {
     $.ajax({
         type: "GET",
@@ -33,7 +77,7 @@ function selectspecialite() {
             let selec = $("<select id='selectspecialiteingr' >").appendTo($("#SpecialiteOuIngr"));
 
             $(spec).each(function () {
-               selec.append($("<option>").attr('value', this.val).text(this.text));
+                selec.append($("<option>").attr('value', this.val).text(this.text));
             });
         }
     });
@@ -43,8 +87,9 @@ function selectspecialite() {
 let myselect1 = document.getElementById("myselect1");
 
 myselect1.addEventListener("change", function () {
-    console.log(myselect1.value)
-    $("#selectspecialiteingr").remove();
+    console.log(myselect1.value);
+    $("#SpecialiteOuIngr").empty();
+    //$("#selectspecialiteingr").remove();
     console.log(myselect2.value)
     if(myselect1.value == "Recettes utilisateurs" && myselect2.value == "Par ingredient"){
         selectingredients();
@@ -96,9 +141,9 @@ let myselect2 = document.getElementById("myselect2");
 
 myselect2.addEventListener("change", function () {
     console.log(myselect1.value);
-    $("#selectspecialiteingr").remove();
+    $("#SpecialiteOuIngr").empty();
     console.log(myselect2.value)
-    if(myselect1.value == "Recettes utilisateurs" && myselect2.value == "Par ingrédient"){
+    if(myselect1.value == "Recettes utilisateurs" && myselect2.value == "Par ingredient"){
         selectingredients();
     }else if(myselect1.value == "Recettes utilisateurs" && myselect2.value == "Par specialité"){
         selectspecialite();
@@ -119,37 +164,143 @@ const apiKey = "4bc3a5e0a85742e09b08d3f0fce9a84e";
 const container = document.querySelector(".card-img-top");
 
 function resultatspecialite(inputRecherche){
-    document.querySelector(".test").classList.remove("test2");
-    //$("#resultat").remove("imageResult");
+    $("#resultat").empty();
     $.ajax({
         type: "GET",
         url: "https://api.spoonacular.com/recipes/complexSearch?apiKey=" + apiKey + "&cuisine=" + inputRecherche ,
-        // data: JSON.stringify(inputRecherche),
-        // headers:{"Content-Type":"application/json"},
         success: (retour) => {
             console.log(retour)
             for(let i = 0; i < retour.results.length; i++){
-                /*$("<img id='imageResult'>").appendTo($("#resultat")).prop({
-                    class: "card-img-top test",
-                    src: retour.results[i].image
-                }).click(()=>{
-                    window.location.href = "affichageRecette.html?id=" + retour.results[i].id;
-                })*/
                 $("#resultat").append(
-                    $(document.createElement('h3')).html(
-                        retour.results[i].title
-                    ).click(()=>{
-                        window.location.href = "affichageRecette.html?id=" + retour.results[i].id;
-                    }),
+                    $(document.createElement("div")).prop({
+                        class: "card3"
+                    }).append(
+                        $(document.createElement("div")).prop({
+                            class: "content3",
+                        }).append(
+                            $(document.createElement("h4")).html(
+                                retour.results[i].title
+                            )
+                        ),
+                        $(document.createElement("div")).prop({
+                            class:"imgBx3"
+                        }).append(
+                            $(document.createElement("img")).prop({
+                                id : "recette" + i,
+                                src: retour.results[i].image
+                            }).click(()=>{
+                                window.location.href = "affichageRecette.html?id=" + retour.results[i].id;
+                            })
+                        )
+                    )
+                )
+            }
+        }
+    });
+}
 
-                    $(document.createElement('img')).prop({
-                        id: "imageResult",
-                        class: "card-img-top",
-                        src: retour.results[i].image
-                    }).click(()=>{
-                        window.location.href = "affichageRecette.html?id=" + retour.results[i].id;
-                    })
+function resultatingredient(inputRecherche){
+    $("#resultat").empty();
+    $.ajax({
+        type: "GET",
+        url: "https://api.spoonacular.com/recipes/findByIngredients?apiKey=" + apiKey + "&ingredients=" + inputRecherche ,
+        success: (retour) => {
+            console.log(retour)
+            for(let i = 0; i < retour.length; i++){
+                $("#resultat").append(
+                    $(document.createElement("div")).prop({
+                        class: "card3"
+                    }).append(
+                        $(document.createElement("div")).prop({
+                            class: "content3",
+                        }).append(
+                            $(document.createElement("h4")).html(
+                                retour[i].title
+                            )
+                        ),
+                        $(document.createElement("div")).prop({
+                            class:"imgBx3"
+                        }).append(
+                            $(document.createElement("img")).prop({
+                                id : "recette" + i,
+                                src: retour[i].image
+                            }).click(()=>{
+                                window.location.href = "affichageRecette.html?id=" + retour[i].id;
+                            })
+                        )
+                    )
+                )
+            }
+        }
+    });
+}
 
+function resultatspecialiteutilisateur(inputRecherche){
+    $("#resultat").empty();
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/API/rechercheSpecialite/" + inputRecherche ,
+        success: (retour) => {
+            console.log(retour)
+            for(let i = 0; i < retour.length; i++){
+                $("#resultat").append(
+                    $(document.createElement("div")).prop({
+                        class: "card3"
+                    }).append(
+                        $(document.createElement("div")).prop({
+                            class: "content3",
+                        }).append(
+                            $(document.createElement("h4")).html(
+                                retour[i].name
+                            )
+                        ),
+                        $(document.createElement("div")).prop({
+                            class:"imgBx3"
+                        }).append(
+                            $(document.createElement("img")).prop({
+                                id : "recette" + i,
+                                src: retour[i].image
+                            }).click(()=>{
+                                window.location.href = "affichageRecette.html?source=utilisateur&id=" + retour[i].id;
+                            })
+                        )
+                    )
+                )
+            }
+        }
+    });
+}
+
+function resultatingredientsutilisateur(inputRecherche){
+    $("#resultat").empty();
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/API/rechercheIngredient/" + inputRecherche ,
+        success: (retour) => {
+            console.log(retour)
+            for(let i = 0; i < retour.length; i++){
+                $("#resultat").append(
+                    $(document.createElement("div")).prop({
+                        class: "card3"
+                    }).append(
+                        $(document.createElement("div")).prop({
+                            class: "content3",
+                        }).append(
+                            $(document.createElement("h4")).html(
+                                retour[i].name
+                            )
+                        ),
+                        $(document.createElement("div")).prop({
+                            class:"imgBx3"
+                        }).append(
+                            $(document.createElement("img")).prop({
+                                id : "recette" + i,
+                                src: retour[i].image
+                            }).click(()=>{
+                                window.location.href = "affichageRecette.html?source=utilisateur&id=" + retour[i].id;
+                            })
+                        )
+                    )
                 )
             }
         }
@@ -158,18 +309,15 @@ function resultatspecialite(inputRecherche){
 
 $("#recherche").click(() => {
     let inputRecherche = $("#selectspecialiteingr").val();
-    console.log(myselect1);
-    console.log(myselect2);
     console.log(inputRecherche);
-
-    if(myselect1.value == "Recettes utilisateurs" && myselect2.value == "Par ingrédient"){
-        selectingredients();
+    if(myselect1.value == "Recettes utilisateurs" && myselect2.value == "Par ingredient"){
+        resultatingredientsutilisateur(inputRecherche);
     }else if(myselect1.value == "Recettes utilisateurs" && myselect2.value == "Par specialité"){
-        selectspecialite();
+        resultatspecialiteutilisateur(inputRecherche)
     }else if(myselect1.value == "Recettes de notre site" && myselect2.value == "Par specialité"){
         resultatspecialite(inputRecherche);
     }else if(myselect1.value == "Recettes de notre site" && myselect2.value == "Par ingredient"){
-        $("<input id='selectspecialiteingr'>").appendTo($("#SpecialiteOuIngr"));
+        resultatingredient(inputRecherche);
     }
     $.ajax({
         type: "GET",
@@ -181,4 +329,3 @@ $("#recherche").click(() => {
         }
     });
 })
-
