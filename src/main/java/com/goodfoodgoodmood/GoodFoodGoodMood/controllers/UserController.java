@@ -134,9 +134,8 @@ public class UserController {
     @PatchMapping("/recuperationRecetteUser")
     public String recuperationRecetteUser(@RequestBody Recettes recette, HttpServletRequest request) {
         System.out.println("Recettttte" + recette);
-
-        Recettes rec = recetteRepositories.findByIdApiRecette(recette.getIdApiRecette());
-        if(rec == null){
+        // Si c'est l'utilisateur qui enregistre une recette alors ok
+        if(recette.getSource().equals("utilisateur")){
             Cookie[] cookies = request.getCookies();
             User user = userRepositories.findByMail(cookies[0].getValue());
             Set<Recettes> recettesList = user.getRecettes();
@@ -144,9 +143,25 @@ public class UserController {
             //System.out.println(cookies[0].getValue());
             userRepositories.save(user);
             return "ok";
-        }else{
-            return "pas ok";
+        }else{ // Sinon on vérifie si l'id recette api n'est pas enregistré en base
+            // pour éviter les doublons
+            Recettes rec = recetteRepositories.findByIdApiRecette(recette.getIdApiRecette());
+            System.out.println(rec);
+            if(rec == null){
+                Cookie[] cookies = request.getCookies();
+                User user = userRepositories.findByMail(cookies[0].getValue());
+                Set<Recettes> recettesList = user.getRecettes();
+                user.getRecettes().add(recette);
+                //System.out.println(cookies[0].getValue());
+                userRepositories.save(user);
+                return "ok";
+            }else{
+                return "pas ok";
+            }
         }
+        // Recherche si recette existe déjà en base
+
+
     }
 
     @GetMapping("/nbrRecettesUser")

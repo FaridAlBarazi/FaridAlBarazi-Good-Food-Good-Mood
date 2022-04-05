@@ -27,7 +27,7 @@
     width:100%
 }
 
-#divEcrireAvis{
+#divEcrireAvis, #verificationCookies {
     width:100%;
     justify-content: center;
     display: flex;

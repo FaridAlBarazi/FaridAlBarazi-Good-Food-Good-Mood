@@ -219,7 +219,11 @@ $("#validerAllergies").click(() => {
             $("#errorAllergie").css("color", "green");
             $("#pseudo").html($("#pseudoCreation").val());
             nbrClick = 0;
-            document.location.href = "index.html";
+            setTimeout(()=>{
+                $("#allergies").css("display", "none");
+                $("#connexionCompte").css("display", "block");
+            },3000)
+
         },
         error: function (xhr, textStatus) {
             console.log(xhr.status);
@@ -322,11 +326,13 @@ for (let i = 0; i < 6; i++) {
 
 $("#boutonVersInscription").click(() => {
     $("#verificationCookies").css("display", "none");
+    $("#popupConnexion").css("display", "block");
     $("#createCompte").css("display", "block")
 })
 
 $("#boutonVersSeConnecter").click(() => {
     $("#verificationCookies").css("display", "none");
+    $("#popupConnexion").css("display", "block");
     $("#connexionCompte").css("display", "block")
 })
 
@@ -335,32 +341,33 @@ $("#closePopupCookies").click(() => {
 })
 
 // partie lien reseau
-let whatsapp = document.querySelector(".whatsapp")
-let telegram = document.querySelector(".telegram")
-let twitter = document.querySelector(".twitter")
+let whatsapp = document.querySelector(".whatsapp");
+let telegram = document.querySelector(".telegram");
+let twitter = document.querySelector(".twitter");
 
-let pageUrl = location.href
+//let pageUrl = location.href;
+let pageUrl = "https://github.com/Natha971/GoodFoodGoodMood.git";
 // console.log(pageUrl)
-let message="Enjoy this awesome recipe application enjoy Good Food Good Mood"
-console.log(message)
+let message="Enjoy this awesome recipe application enjoy Good Food Good Mood";
+console.log(message);
 
-let whatsappApi='https://wa.me/?text='+pageUrl+message;
-let telegramApi="https://t.me/share/url?url="+pageUrl+message;
+let whatsappApi='https://wa.me/?text='+pageUrl+" "+message;
+let telegramApi="https://t.me/share/url?url="+pageUrl+" "+message;
 console.log(telegramApi)
-let twitterApi=" https://twitter.com/intent/tweet?text="+pageUrl+message;
+let twitterApi=" https://twitter.com/intent/tweet?text="+pageUrl+" "+message;
 
 whatsapp.addEventListener('click', ()=> {
     // console.log('whatsapp button clicked')
-    window.open(url=whatsappApi,target="blank")
+    window.open(url=whatsappApi,target="blank");
 })
 telegram.addEventListener('click', ()=> {
     // console.log('telegram button clicked')
-    window.open(url=telegramApi,target="blank")
+    window.open(url=telegramApi,target="blank");
 
 })
 twitter.addEventListener('click', ()=> {
     // console.log('twitter button clicked')
-    window.open(url=twitterApi,target="blank")
+    window.open(url=twitterApi,target="blank");
 
 })
 

@@ -94,7 +94,6 @@ $("#buttonCoeur").click(() => {
             urlImage: $("#image").prop('src'),
             specialite: $("#cuisine").html(),
             source : new URL(location.href).searchParams.get('source')
-
         }
         console.log(recetteFavoris)
         $.ajax({

@@ -176,6 +176,7 @@ function enregistrerRecette(image) {
     recette.specialite = $("#selectspecialite").find(":selected").text()
     recette.ingredients = ingredient;
     recette.source = "utilisateur";
+    recette.idApiRecette = -1;
     if (image != "NULL") {
         recette.image = image;
     }

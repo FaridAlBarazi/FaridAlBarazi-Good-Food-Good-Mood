@@ -171,6 +171,22 @@ function getnbrAvis() {
 
 getnbrAvis();
 
+$("#boutonVersSeConnecter").click(()=>{
+    location.href = "index.html";
+})
+
+$("#boutonVersInscription").click(()=>{
+    location.href = "index.html";
+})
+
+if (getCookie("pseudo") == null) {
+    $("#verificationCookies").css("display", "flex");
+    $("#divEcrireAvis").css("display", "none");
+} else{
+    $("#verificationCookies").css("display", "none");
+}
+
+
 //affichage des 4 avis les mieux notés en html
 // BOUCLE SUR UN DIV
 /*$.get("http://localhost:8080/API/les4avis", (retour) => {
@@ -201,9 +217,149 @@ getnbrAvis();
 
 });*/
 
+/*if (getCookie("pseudo") == null) {
+    $("#verificationCookies").css("display", "block");
+    $("#divEcrireAvis").css("display", "none");
+} else{
+    $("#verificationCookies").css("display", "none");
+    $("#divEcrireAvis").css("display", "block");
+}
 
+$("#boutonVersSeConnecter").click(() => {
+    $("#popupConnexion").css("display", "block");
+    $("#verificationCookies").css("display", "none");
+    $("#connexionCompte").css("display", "block");
+})
 
+$("#boutonVersInscription").click(() => {
+    $("#popupConnexion").css("display", "block");
+    $("#verificationCookies").css("display", "none");
+    $("#connexionCompte").css("display", "none");
+    $("#createCompte").css("display", "block");
+})
 
+// Lorsqu'on clique sur le bouton connexion, faire apparaître le popup
+$("#connexionButton").click(() => {
+    $("#popupConnexion").css("display", "block")
+})
+
+// // Lorsqu'on clique sur le X, ça ferme le popup
+$("#closePopupConnexion").click(() => {
+    $("#popupConnexion").css("display", "none");
+    $("#verificationCookies").css("display", "block");
+})
+
+$("#createUser").click(() => {
+    $("#connexionCompte").css("display", "none");
+    $("#createCompte").css("display", "block");
+})
+
+// // Lorsqu'on clique sur le X, ça ferme le popup
+$("#closePopupCreationCompte").click(() => {
+    $("#createCompte").css("display", "none");
+    $("#verificationCookies").css("display", "block");
+})
+
+// quand on clique sur le bouton créer un compte
+$("#boutonCreationCompte").click(() => {
+    if (!document.getElementById('passwordCreation').validity.valid) {
+        $("#errorPassword").css("display", "block");
+    } else if (!document.getElementById('pseudoCreation').validity.valid) {
+        $("#errorPseudo").css("display", "block");
+    } else if (!document.getElementById('mailCreation').validity.valid) {
+        $("#errorMail").css("display", "block");
+    } else {
+        let utilisateur = {
+            pseudo: $("#pseudoCreation").val(),
+            mail: $("#mailCreation").val(),
+            password: $("#passwordCreation").val(),
+            allergie: [],
+        }
+        console.log(utilisateur)
+        $.ajax({
+            type: "POST",
+            headers: {"Content-Type": "application/json"},
+            url: "http://localhost:8080/API/inscription",
+            data: JSON.stringify(utilisateur),
+            success: function (resultat) {
+                console.log("ici success");
+                $("#createCompte").css("display", "none");
+                $("#allergies").css("display", "block");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                console.log("ici error");
+                $("#errorCreationCompte").html("Un compte est déjà associé à cet e-mail");
+                $("#redirectionConnexion").css("display", "block");
+            }
+        })
+    }
+})
+
+$("#forgotPassword").click(() => {
+    $("#mdpOublie").css("display", "block");
+    $("#connexionCompte").css("display", "none");
+})
+
+$("#closePopupMdpOublie").click(() => {
+    $("#mdpOublie").css("display", "none");
+})
+
+$("#boutonReinitialisation").click(() => {
+    let update = [$("#mail").val(),
+        $("#passwordUpdate").val()]
+    $.ajax({
+        type: "PATCH",
+        headers: {"Content-Type": "application/json"},
+        url: "http://localhost:8080/API/updatePassword",
+        data: JSON.stringify(update),
+        success: function (resultat) {
+            $("#validation").html("Votre mot de passe a bien été modifié");
+            $("#validation").css("color", "green");
+        },
+        error: function (xhr, textStatus) {
+            console.log(xhr.status);
+            $("#errorMailUpdatePassword").html("Aucun compte à ce nom existe");
+
+        }
+    })
+})
+$("#redirectionConnexion").click(() => {
+    $("#createCompte").css("display", "none");
+    $("#connexionCompte").css("display", "block");
+})
+
+$("#boutonSeConnecter").click(() => {
+    let utilisateur = {
+        mail: $("#pseudoConnexion").val(),
+        password: $("#passwordConnexion").val()
+    }
+    $.ajax({
+        type: "POST",
+        headers: {"Content-Type": "application/json"},
+        url: "http://localhost:8080/API/connexion",
+        data: JSON.stringify(utilisateur),
+        success: function (resultat) {
+            console.log(getCookie("mail"));
+            console.log(getCookie("pseudo"));
+            //console.log(getCookie("vi"));
+            $("#popupConnexion").css("display", "none");
+            $("#dropdown").css("display", "block")
+            $("#connexionButton").css("display", "none");
+            $("#pseudo").html(getCookie("pseudo"));
+            $("#recette").css("display", "block");
+            $("#boutonAvis").css("display", "block");
+        },
+        error: function (xhr, textStatus) {
+            console.log(xhr.status);
+            if (xhr.status == 400) {
+                $("#errorConnexion").html("Le mot de passe est incorrect");
+            } else {
+                $("#errorConnexion").html("Aucun compte à ce nom existe");
+            }
+
+        }
+    })
+})*/
 
 
 
