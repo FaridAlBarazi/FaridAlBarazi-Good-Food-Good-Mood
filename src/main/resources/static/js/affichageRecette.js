@@ -20,7 +20,7 @@ function getInfoRecette(id, source) {
             url: 'http://localhost:8080/API/getRecette/' + id,
             success: (data) => {
                 //console.log(data);
-                $("#titre").html(data.title);
+                $("#titre").html(data.name);
                 $("#image").attr("src", data.image);
                 $("#dureeCuisson").html(data.duree + " minutes");
                 $("#cuisine").append('<li>' + data.specialite + '</li>');
