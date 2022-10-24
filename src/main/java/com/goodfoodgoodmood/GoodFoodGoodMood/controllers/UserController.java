@@ -214,7 +214,9 @@ public class UserController {
     public String recuperationAvis(@RequestBody Avis monAvis, HttpServletRequest request) {
         //System.out.println(monAvis);
         Cookie[] cookies = request.getCookies();
+        System.out.println("cookie: "+cookies[0].getValue());
         User user = userRepositories.findByMail(cookies[0].getValue());
+        System.out.println("user: "+user);
         Set<Avis> avisSet = user.getAvis();
         user.getAvis().add(monAvis);
         //System.out.println(cookies[0].getValue());
